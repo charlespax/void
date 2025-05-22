@@ -1,0 +1,69 @@
+#
+# LINUX
+#
+
+                   Linux System Notes
+                ======================
+
+Things to Install
+-------------------
+void - distribution
+dwm - window manager
+wayland - composter
+tmux - terminal multiplexor
+git - version control
+vim - text editor
+zsh - shell
+kitty - terminal emulator
+gdb - debugger
+gdb-multiarch - debugger
+lprng - gives 'lp' command for terminal printing
+acpi - terminal battery information
+
+
+Things to Consider
+-------------------
+alacritty - terminal emulator
+fish - shell
+lazygit - git TUI and helper ('lz')
+vim - text editor
+viu - terminal image viewer
+greetd - display manager
+sddm - display manager
+emptty - display manager
+lamurs - display manager
+lightdm - display manager
+ly - display manager
+tbsm - display manager
+tmux-sessionizer - opens git repositories at tmux sessions
+screenkey - screencast keystrokes
+
+Things to  Research
+-------------------
+Find tools; search youtube for 'developer workflow'
+
+seer - GUI for gdb
+"org mode" for notes
+kickstart.nvim
+lunar vim
+nvchad
+vimwiki
+alacritty - terminal emulator
+nerd font - special characters in text (in termainl?)
+              atomatic if a character code is in the text?
+gnu parallel
+googler - cli google search tool (BROWSER=w3m)
+tldr - text summary tool (for googler?)
+ddgr - cli duckduckgo search tool(BROWSER=w3m)
+surfraw - cli internet search tool
+exa - enhanced 'ls' command
+bat - enhanced 'cat' command
+ripgrep - enhanced 'grep' command
+fzf - fuzzy finder
+zoxide - enhanced 'cd' command
+entr - run commands when a file changes
+mc - "Midnight Commander" TUI file manager
+uxn - interesting stack machine thing
+nixos - should I use this? Why?
+xwayland - x server running under wayland
+zvm - zsh vi mode

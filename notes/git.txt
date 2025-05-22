@@ -1,0 +1,7 @@
+#
+# GIT
+#
+
+when importing ~/.ssh from another computer, remember to change the
+permissions using the ssh_permissions.sh script. Also edit ~/.gitconfig and
+remove the gpg signing section. Otherwise, ssh signing will not work.

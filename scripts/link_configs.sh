@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# This script creates links for the dotfiles contained within this
+# Github repository.
+
+PWD=`pwd`
+
+# terminal
+ln -i -s $PWD/../configs/bash_profile ~/.bash_profile
+ln -i -s $PWD/../configs/bash_logout ~/.bash_logout
+ln -i -s $PWD/../configs/bashrc ~/.bashrc
+ln -i -s $PWD/../configs/tmux.conf ~/.tmux.conf
+ln -i -s $PWD/../local/scripts ~/.local/
+ln -i -s $PWD/../local/wallpapers ~/.local/
+ln -i -s $PWD/../configs/sxhkd ~/.config/
+
+# x server
+ln -i -s $PWD/../configs/xinitrc ~/.xinitrc
+
+# text editor
+ln -i -s $PWD/../configs/vimrc ~/.vimrc

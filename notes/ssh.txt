@@ -1,0 +1,13 @@
+#
+# SSH
+#
+
+Notes on ssh
+============
+
+sudo pacman -S openssh  # Install ssh
+sudo systemctl enable --now sshd
+ip route get 1.2.3.4 | grep -oP '(?<=src )\S+' # get my IP address
+
+
+chmod 600 ~/.ssh/id_*   # correct setting when copying .ssh from another computer

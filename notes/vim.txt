@@ -1,0 +1,47 @@
+#
+# VIM
+#
+
+=== Cursor Movement ===
+  :ijump <func name>    jump to named function
+
+=== File Control ===
+  <leader> w            write file
+
+=== Multiple Files ===
+Crtl-[hjkl]  navigation between panes
+
+  :vsp <filesname>      open file in a vertical split Ctrl-[hjkl]
+  :<num>sp <filename>   open file in horizontal split of NUM lines Ctrl-[hjkl]
+
+=== Search and replace ===
+  :%s/<search term>/<new text>/g      g means global; replace all instances
+  :%s/<search term>/<new text>/gc     c means confirm each replacement
+
+=== Indenting and Folding ===
+  =ap           indent paragraph
+  gg=G          indent whole document
+  zc            fold code block
+  zo            unfold code block
+
+=== Selecting test ===
+  *                     highlight all ocurances of word under cursor
+  :noh                  remove highlighting
+
+=== Screen Splitting ===
+Ctrl-w v        vertical split
+Ctrl-w s        horizontal split
+Ctrl-w [hjkl]   navigate screens
+Ctrl-w [<>]     increase/decrease screen width
+Ctrl-w [+-]     increase/decrease screen height
+Ctrl-w =        equalize screen heights
+
+=== Movement ===
+  e             forward word
+  b             backware word
+  f<c>          move to next character <c> on line
+  F<c>          move to previous character <c> on line
+  Ctrl+d        move down one chunk of lines
+  Ctrl+u        move up one chunk of lines
+  }             move to next empty line
+  {             move to previous empty line

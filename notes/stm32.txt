@@ -1,0 +1,13 @@
+#
+# STM32
+#
+
+* Install packages for stm32 development
+    $ sudo pacman -S \
+        base-devel \
+        arm-none-eabi-gcc \
+        arm-non-eabi \
+        newlib \
+        openocd \
+        stlink \
+        gdb-multiarch

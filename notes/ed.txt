@@ -1,0 +1,19 @@
+#
+# ED
+#
+
+
+Command
+-------
+  p         enable prompt (?)
+  a         append to the current buffer
+  .         stop appending
+  w         write to current file
+  w <file>  write to target file
+  q         edit ed
+  r <file>  open an existing file
+  p         print the current line
+  n         print the current line with line number
+  ,p        print the current buffer
+  ,n        print the current buffer with line numbers
+  <n>       go to line n. Print current line.

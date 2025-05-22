@@ -1,0 +1,51 @@
+#
+# DWM
+#
+
+dwm patches
+
+My Packages
+-----------------------------
+patch: attachbottom
+file: dwm-attachbottom-6.3.diff
+url: http://dwm.suckless.org/patches/attachbelow/
+description: New windows are spawned at the bottom of the stack. Thus, the
+window at the top of the stack will remain at the top of the stack.
+
+Suggested Packages
+-----------------------------
+Alpha - for the pretty
+
+alwayscenter - floating window is always centered.
+    I wonder if this would put dmenu in the center.
+
+Attach side - open stack next to master
+
+autostart - start applications
+    Instead of putting things in xinitrc, we can use autostart.
+
+Combo - lets you join 2 tags; functionality I miss most on other WMs
+
+Flextile deluxe - better layouts
+
+movestack - move windows through the stack with key commands
+
+pertag - each tag tracks is own layout.
+
+scratchpad - open a terminal or app in a floating window?
+
+Stacker - makes working with stack easy
+
+Systray - nice to have a systray
+
+Swallow - for when I start program somewhere besides dmenu
+
+vanity gaps - for the pretty
+
+Zoomswap - swapping master/stack sides
+
+
+
+
+
+

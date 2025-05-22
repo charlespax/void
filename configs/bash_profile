@@ -1,0 +1,15 @@
+#
+# ~/.bash_profile
+#
+
+# test of .bashrc exists. If so, load run it
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+
+if [ -n "$TMUX" ]
+then
+	:
+else
+	startx # start the xserver and execute .xinitrc
+fi
+
+
