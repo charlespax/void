@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-# This is a post-installation script to create a functioning system built
-# on top of a Void Linux base installation.
+# This is a Void Linux post-installation script intended to
+# create a suckless system.
+
+echo "Welcome to the Void Linux Post-Installation Script!"
+echo ""
 
 
 #############################################################################
@@ -9,9 +12,6 @@
 #   Environment Verification Testing                                        #
 #                                                                           #
 #############################################################################
-
-echo "Welcome to the Void Linux Post-Installation Script!"
-echo ""
 
 # Test if this is a live environment
 if grep -q "VOID_LIVE" "/proc/cmdline"; then
@@ -71,11 +71,11 @@ applist=''
 
 # X Display server
 applist+=' xorg-server'      # x window server
-applist+=' xorg-xinit'
+#applist+=' xorg-xinit'
 applist+=' terminus-font'    # necessary to start x server ('startx')
-applist+=' libx11'           # dwm dependency
-applist+=' libxft'           # dwm dependency
-applist+=' libxinerama'      # dwm dependency
+#applist+=' libx11'           # dwm dependency
+#applist+=' libxft'           # dwm dependency
+#applist+=' libxinerama'      # dwm dependency
 
 # Keyboard Management
 applist+=' sxhkd'            # keyboard shortcut daemon
@@ -87,76 +87,55 @@ applist+=' acpi'             # battery information
 applist+=' htop'             # system monitor
 applist+=' fzf'              # fuzzy finder used in tmux-sessionizer script
 applist+=' tmux'             # terminal mulplexor
-applist+=' less'             # enhanced version of more
-applist+=' tree'             # view a directory structure
-applist+=' udisks2'          # usb disk mounting
+#applist+=' less'             # enhanced version of more
+#applist+=' tree'             # view a directory structure
+#applist+=' udisks2'          # usb disk mounting
 
 # Multimedia
-applist+=' gimp'             # image editor
+#applist+=' gimp'             # image editor
+#applist+=' mpv'              # video player
 
 # Development
 applist+=' git'              # version control
-applist+=' base-devel'       # core build utilities
-applist+=' android-tools'    # required to install grapheneos on phone
-
-
-
-
+#applist+=' base-devel'       # core build utilities
+#applist+=' android-tools'    # required to install grapheneos on phone
 
 # watch YouTube videos at the terminal
-applist+=' yt-dlp'           # youtube downloader (consider plasmatube?)
-applist+=' mpv'              # video player
-applist+=' ytfzf'            # find and watch youtube via terminal
+#applist+=' yt-dlp'           # youtube downloader (consider plasmatube?)
+#applist+=' ytfzf'            # find and watch youtube via terminal
 
 # Network Control
-#applist+=' iwd'              # $ iwctl station wlan0 connect <ssid>
 
 # Fonts
-applist+=' adobe-source-code-pro-fonts' # nice font from Adobe
+#applist+=' adobe-source-code-pro-fonts' # nice font from Adobe
 #applist+=' ttf-font-awesome' #
 #applist+=' ttf-roboto-mono'  #
 
 # Desktop Environment
-applist+=' feh'              # desktop background
-applist+=' pamixer'           # volume control
+#applist+=' feh'              # desktop background
+#applist+=' pamixer'           # volume control
 #applist+=' brightnessctl'    # brightness control (ubuntu sway)
-#applist+=' pavucontrol'      # (ubuntu sway)
 
 # Web
 applist+=' firefox'          # heavy web browser
-applist+=' gtk3'             # required to build surf web browser
+#applist+=' gtk3'             # required to build surf web browser
 applist+=' gcr'              # required to build surf web browser
 applist+=' webkit2gtk'       # required to build surf web browser
 #applist+=' w3m'              # terminal web browser
 
 # Documentation
-applist+=' mandoc'           # man pages
-applist+=' tldr'             # man page chreatsheets
+#applist+=' mandoc'           # man pages
+#applist+=' tldr'             # man page chreatsheets
 
-
-
-
-# clipboard manager
-# color picker
-# document viewer
-# email client
-# file manager
-# gamma and day/night adjustment
-# image viewer
-# login manager
-# notification daemon
-# power menu wlogout
-# sc
-
-
-
-
-
-
-
-
+# Extra applications
+#applist+=' ctags'       # tagging tool, used with vim
+#applist+=' doxygen'
+#applist+=' graphviz'
+#applist+=' iwd'         # WiFi control
+#applist+=' speedcrunch' # calculator
 
 echo $applist
+sudo xbps-install -S $applist
 
 #############################################################################
 #                                                                           #
@@ -177,116 +156,7 @@ exit
 #############################################################################
 
 
-#!/usr/bin/env bash
 
-. /etc/os-release
-OS=$ID
-
-if [ $OS == 'void' ]; then
-        echo Welecome to Void the app installer!!!
-else
-        echo ERROR: this script only works on Void
-        exit
-fi
-
-# Applications in the APPLIST are installed on top of
-# the Void base install
-APPLIST=''
-
-# Desktop Environment 
-DE=''
-#DE+=' brightnessctl' # brightness control
-#DE+=' dmenu'   # application launcher for xorg
-#DE+=' foot'     # terminal emulator
-#DE+=' grim'     # screenshot tool
-#DE+=' pavucontrol'
-#DE+=' polkit'   # system-wide privilege manager
-#DE+=' slurp'    # screenshot tool region selector
-#DE+=' sway'     # sway desktop
-#DE+=' swaybg'   # desktop background image tool
-#DE+=' swayidle' # idle manager
-#DE+=' swaylock' # screen lock
-#DE+=' waybar'   # status bar
-#DE+=' wofi'     # application launcher
-#DE+=' xorg-xwayland'
-# clipboard manager
-# color picker
-# document viewer
-# email client
-# file manager
-# gamma and day/night adjustment
-#DE+=' gimp'     # image editor
-# image viewer
-# login manager
-# notification daemon
-# power menu wlogout
-# sc
-
-echo ''
-echo 'Desktop Environment apps: ' $DE
-read -p 'Install apps? [y,n] ' choice
-case $choice in
-        y|Y)   APPLIST+=$DE ;;
-        n|N|*) echo ' skiping apps' ;;
-esac
-
-# Fonts
-FONTS=''
-FONTS+=' adobe-source-code-pro-fonts'
-FONTS+=' ttf-font-awesome'
-FONTS+=' ttf-roboto-mono'
-
-echo ''
-echo 'Fonts: ' $FONTS
-read -p "Install fonts? [y,n] " choice
-case $choice in
-        y|Y)   APPLIST+=$FONTS ;;
-        n|N|*) echo ' skiping fonts' ;;
-esac
-
-# Development Tools
-DEVTOOLS=''
-DEVTOOLS+=' base-devel'  # base development tools
-DEVTOOLS+=' git'         # version control
-DEVTOOLS+=' tmux'        # terminal session multiplexer
-DEVTOOLS+=' vim'         # text editor
-
-echo ''
-echo 'Dev tools: ' $DEVTOOLS
-read -p "Install development tools? [y,n] " choice
-case $choice in
-        y|Y)  APPLIST+=$DEVTOOLS ;;
-        n|N|*) echo 'skipping dev tools' ;;
-esac
-
-# Extra applications
-EXTRAS=''
-EXTRAS+=' acpi'        # battery information
-EXTRAS+=' ctags'       # tagging tool, used with vim
-EXTRAS+=' doxygen'
-EXTRAS+=' firefox'     # web browser
-EXTRAS+=' graphviz'
-EXTRAS+=' iwd'         # WiFi control
-EXTRAS+=' neofetch'
-EXTRAS+=' speedcrunch' # calculator
-EXTRAS+=' w3m'         # tui web browser
-
-echo ''
-echo 'Extras: ' $EXTRAS
-read -p "Install extras? [y,n] " choice
-case $choice in
-        y|Y)   APPLIST+=$EXTRAS ;;
-        n|N|*) echo 'Skipping extras' ;;
-esac
-
-# Confirm installation
-echo ''
-echo 'Applications to install: ' $APPLIST
-read -p "Continue with installation? [y,n] " choice
-case $choice in
-        y|Y) sudo pacman -S --needed $APPLIST ;;
-        n|N) echo 'Exiting installation...' ;;
-esac
 
 ## SC-IM stuff (vim-like spreadsheets)
 # This is needed to build scim
@@ -329,16 +199,7 @@ sudo make install
 
 Things to Install
 -------------------
-void - distribution
-dwm - window manager
-wayland - composter
-tmux - terminal multiplexor
-git - version control
-vim - text editor
-gdb - debugger
-gdb-multiarch - debugger
 lprng - gives 'lp' command for terminal printing
-acpi - terminal battery information
 
 
 Things to Consider
@@ -353,6 +214,19 @@ ly - display manager
 tbsm - display manager
 tmux-sessionizer - opens git repositories at tmux sessions
 screenkey - screencast keystrokes
+grim - screenshot tool
+slurp - screenshot tool region selector
+# clipboard manager
+# color picker
+# document viewer
+# email client
+# file manager
+# gamma and day/night adjustment
+# image viewer
+# login manager
+# notification daemon
+# power menu wlogout
+# sc
 
 Things to  Research
 -------------------
