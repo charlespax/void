@@ -4,8 +4,14 @@
 # create a suckless system.
 
 echo "Welcome to the Void Linux Post-Installation Script!"
-echo ""
+echo "
+__     __    _     _   _     _
+\ \   / /__ (_) __| | | |   (_)_ __  _   ___  __
+ \ \ / / _ \| |/ _\` | | |   | | '_ \| | | \ \/ /
+  \ V / (_) | | (_| | | |___| | | | | |_| |>  < 
+   \_/ \___/|_|\__,_| |_____|_|_| |_|\__,_/_/\_\\
 
+"
 
 #############################################################################
 #                                                                           #
@@ -135,7 +141,7 @@ applist+=' webkit2gtk'       # required to build surf web browser
 #applist+=' speedcrunch' # calculator
 
 echo $applist
-sudo xbps-install -S $applist
+#sudo xbps-install -S $applist
 
 #############################################################################
 #                                                                           #
@@ -227,6 +233,8 @@ slurp - screenshot tool region selector
 # notification daemon
 # power menu wlogout
 # sc
+# figlet - large ascii fonts
+# toilet - large ascii fonts
 
 Things to  Research
 -------------------

@@ -3,6 +3,9 @@
 # This script creates links for the dotfiles contained within this
 # Github repository.
 
+mkdir -p ~/.config
+mkdir -p ~/.local
+
 PWD=`pwd`
 
 # terminal
