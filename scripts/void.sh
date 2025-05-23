@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO search youtube for 'suckless developer workflow'
+
 # This is a Void Linux post-installation script intended to
 # create a suckless system.
 
@@ -12,11 +14,13 @@ __     __    _     _   _     _
 
 "
 
+
 #############################################################################
 #                                                                           #
 #   Environment Verification Testing                                        #
 #                                                                           #
 #############################################################################
+
 
 # Test if the system is a Void Linux
 . /etc/os-release # Get OS information
@@ -85,38 +89,58 @@ fi
 #                                                                           #
 #############################################################################
 
+
 # Packages that appear on the applist will be installed using xbps.
 applist=''
 
 # X Display server
 applist+=' xorg'      # x window server
 
+# Display Manager
+#greetd - display manager
+#sddm - display manager
+#emptty - display manager
+#lamurs - display manager
+#lightdm - display manager
+#ly - display manager
+#tbsm - display manager
+
 # Keyboard Management
 applist+=' sxhkd'            # keyboard shortcut daemon
+                             # sxhkd is referenced in configs/xinitrc
+
+# Text Editor
+applist+=' vim'              # text editor
 
 # Terminal Utilities
-applist+=' vim'              # text editor
-applist+=' fastfetch'        # show computer info
 applist+=' acpi'             # battery information
-applist+=' htop'             # system monitor
+applist+=' fastfetch'        # show computer info
 applist+=' fzf'              # fuzzy finder used in tmux-sessionizer script
+                             # fzf is referenced in local/scripts/tmux-sesionizer
+applist+=' htop'             # system monitor
 applist+=' tmux'             # terminal mulplexor
+                             # tmux is referenced in local/scripts/tmux-sessionizer
 #applist+=' less'             # enhanced version of more
 #applist+=' tree'             # view a directory structure
 #applist+=' udisks2'          # usb disk mounting
+#applist+=' figlet'           # large ascii fonts
+#applist+=' toilet'           # large ascii fonts
+#applist+=' viu'              # terminal image viewer
 
 # Multimedia
 #applist+=' gimp'             # image editor
 #applist+=' mpv'              # video player
-
-# Development
-applist+=' git'              # version control
-#applist+=' base-devel'       # core build utilities
-#applist+=' android-tools'    # required to install grapheneos on phone
-
-# watch YouTube videos at the terminal
 #applist+=' yt-dlp'           # youtube downloader (consider plasmatube?)
 #applist+=' ytfzf'            # find and watch youtube via terminal
+
+# Development
+applist+=' git'                # version control
+applist+=' base-devel'         # core build utilities
+applist+=' libX11-devel'       # required to build dwm on Void
+applist+=' libXft-devel'       # required to build dwm on Void
+applist+=' libXinerama-devel'  # required to build dwm on Void
+applist+=' freetype-devel'     # required to build dwm on Void
+applist+=' fontconfig-devel'   # required to build dwm on Void
 
 # Network Control
 
@@ -127,14 +151,15 @@ applist+=' git'              # version control
 
 # Desktop Environment
 #applist+=' feh'              # desktop background
+                              # feh is reverenced in configs/xinitrc
 #applist+=' pamixer'           # volume control
-#applist+=' brightnessctl'    # brightness control (ubuntu sway)
+#applist+=' brightnessctl'     # brightness control (ubuntu sway)
 
 # Web
-applist+=' firefox'          # heavy web browser
+#applist+=' firefox'          # heavy web browser
 #applist+=' gtk3'             # required to build surf web browser
-applist+=' gcr'              # required to build surf web browser
-applist+=' webkit2gtk'       # required to build surf web browser
+#applist+=' gcr'              # required to build surf web browser
+#applist+=' webkit2gtk'       # required to build surf web browser
 #applist+=' w3m'              # terminal web browser
 
 # Documentation
@@ -148,14 +173,51 @@ applist+=' webkit2gtk'       # required to build surf web browser
 #applist+=' iwd'         # WiFi control
 #applist+=' speedcrunch' # calculator
 
+# Other
+# lprng - gives 'lp' command for terminal printing
+#seer - GUI for gdb
+#lunar vim
+#nvchad
+#vimwiki
+#nerd font - special characters in text (in termainl?)
+#              atomotic if a character code is in the text?
+#gnu parallel
+#googler - cli google search tool (BROWSER=w3m)
+#tldr - text summary tool (for googler?)
+#ddgr - cli duckduckgo search tool(BROWSER=w3m)
+#surfraw - cli internet search tool
+#exa - enhanced 'ls' command
+#bat - enhanced 'cat' command
+#ripgrep - enhanced 'grep' command
+#zoxide - enhanced 'cd' command
+#entr - run commands when a file changes
+#mc - "Midnight Commander" TUI file manager
+#uxn - interesting stack machine thing
+#screenkey - screencast keystrokes
+#grim - screenshot tool
+#slurp - screenshot tool region selector
+# clipboard manager
+# color picker
+# document viewer
+# email client
+# file manager
+# gamma and day/night adjustment
+# image viewer
+# login manager
+# notification daemon
+# power menu wlogout
+# sc
+
 echo $applist
 #sudo xbps-install -S $applist
+
 
 #############################################################################
 #                                                                           #
 #   Post-Script Actions                                                     #
 #                                                                           #
 #############################################################################
+
 
 # Exit this script
 echo "SUCCESS: script complete!"
@@ -170,8 +232,6 @@ exit
 #############################################################################
 
 
-
-
 ## SC-IM stuff (vim-like spreadsheets)
 # This is needed to build scim
 #libzip-dev libxml2-dev bison  libncurses5-dev
@@ -180,13 +240,14 @@ exit
 
 # Install suckless utilties
 
-mkdir ~/gits/
+mkdir -p ~/gits/
 
+#TODO make my own git repositories for suckless tools
 cd ~/gits
 git clone https://git.suckless.org/dwm
 git clone https://git.suckless.org/dmenu
 git clone https://git.suckless.org/st
-git clone https://git.suckless.org/surf
+#git clone https://git.suckless.org/surf
 
 cd ~/gits/dwm/
 make clean
@@ -200,70 +261,20 @@ cd ~/gits/st/
 make clean
 sudo make install
 
-cd ~/gits/surf/
-make clean
-sudo make install
-
-#
-# LINUX
-#
-
-                   Linux System Notes
-                ======================
-
-Things to Install
--------------------
-lprng - gives 'lp' command for terminal printing
+#cd ~/gits/surf/
+#make clean
+#sudo make install
 
 
-Things to Consider
--------------------
-viu - terminal image viewer
-greetd - display manager
-sddm - display manager
-emptty - display manager
-lamurs - display manager
-lightdm - display manager
-ly - display manager
-tbsm - display manager
-tmux-sessionizer - opens git repositories at tmux sessions
-screenkey - screencast keystrokes
-grim - screenshot tool
-slurp - screenshot tool region selector
-# clipboard manager
-# color picker
-# document viewer
-# email client
-# file manager
-# gamma and day/night adjustment
-# image viewer
-# login manager
-# notification daemon
-# power menu wlogout
-# sc
-# figlet - large ascii fonts
-# toilet - large ascii fonts
 
-Things to  Research
--------------------
-Find tools; search youtube for 'developer workflow'
 
-seer - GUI for gdb
-lunar vim
-nvchad
-vimwiki
-nerd font - special characters in text (in termainl?)
-              atomotic if a character code is in the text?
-gnu parallel
-googler - cli google search tool (BROWSER=w3m)
-tldr - text summary tool (for googler?)
-ddgr - cli duckduckgo search tool(BROWSER=w3m)
-surfraw - cli internet search tool
-exa - enhanced 'ls' command
-bat - enhanced 'cat' command
-ripgrep - enhanced 'grep' command
-fzf - fuzzy finder
-zoxide - enhanced 'cd' command
-entr - run commands when a file changes
-mc - "Midnight Commander" TUI file manager
-uxn - interesting stack machine thing
+
+
+
+
+
+
+
+
+
+
