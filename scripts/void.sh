@@ -3,7 +3,6 @@
 # This is a Void Linux post-installation script intended to
 # create a suckless system.
 
-echo "Welcome to the Void Linux Post-Installation Script!"
 echo "
 __     __    _     _   _     _
 \ \   / /__ (_) __| | | |   (_)_ __  _   ___  __
@@ -19,24 +18,23 @@ __     __    _     _   _     _
 #                                                                           #
 #############################################################################
 
-# Test if this is a live environment
-if grep -q "VOID_LIVE" "/proc/cmdline"; then
-	echo "ERROR: This script will not run in a VOID_LIVE environment"
-	echo "exiting..."
-	exit
-else
-	echo "SUCCESS: this is not a live environment"
-fi
-
-# Test if the system is a Void Linux installation
+# Test if the system is a Void Linux
 . /etc/os-release # Get OS information
 OS=$ID
 
 if [ $OS == 'void' ]; then
-	echo "SUCCESS: this is the void"
+	echo "Operating System...  void"
 else
-	echo "ERROR: this script only works on Void"
+	echo "Operating System...  ERROR: this script only works on Void"
+	echo "exiting..."
 	exit
+fi
+
+# Test if this is a live environment
+if grep -q "VOID_LIVE" "/proc/cmdline"; then
+	echo "Environment...  VOID_LIVE"
+else
+	echo "Environment...  not VOID_LIVE"
 fi
 
 
@@ -58,9 +56,24 @@ fi
 HOST="8.8.8.8" # Google's DSN server
 
 if ping -c 1 -W 1 "$HOST" > /dev/null 2>&1; then
-	echo "SUCCESS: Network is reachable"
+	echo "Network...  connected"
 else
-	echo "ERROR: network is unreachable"
+	echo "Network...  ERROR: network is disconnected"
+	echo "
+This script requires an active internet connection. If your connection
+was not configured during installation, you can use the following commands
+to manually setup WiFi.
+
+  $ wpa_cli
+  > scan
+  > scan_results
+  > add_network
+  > set_network [0 1 ...] ssid <your ssid>
+  > set_network [0 1 ...] psk <your password>
+  > enable_network [0 1 ...]
+  > save config
+  > quit
+  "
 	echo "exiting..."
 	exit
 fi
@@ -76,12 +89,7 @@ fi
 applist=''
 
 # X Display server
-applist+=' xorg-server'      # x window server
-#applist+=' xorg-xinit'
-applist+=' terminus-font'    # necessary to start x server ('startx')
-#applist+=' libx11'           # dwm dependency
-#applist+=' libxft'           # dwm dependency
-#applist+=' libxinerama'      # dwm dependency
+applist+=' xorg'      # x window server
 
 # Keyboard Management
 applist+=' sxhkd'            # keyboard shortcut daemon
