@@ -9,7 +9,9 @@ if [ -n "$TMUX" ]
 then
 	:
 else
-	startx # start the xserver and execute .xinitrc
+# TODO wait for user input to start X org or continue to shell
+	#startx # start the xserver and execute .xinitrc
+	echo "Type 'startx' to start the X server"
 fi
 
 
