@@ -1,4 +1,8 @@
 #
 # ~/.bash_logout
 #
+
+# This script runs at logout
+
+# Clear the screen
 clear

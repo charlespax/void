@@ -1,9 +1,9 @@
 #
-# ~/.bash_profile
+# ~/.bash_login
 #
 
 # This script is run at login
-
+#
 # test of .bashrc exists. If so, load run it
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 

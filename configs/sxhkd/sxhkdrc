@@ -1,3 +1,13 @@
+#
+# ~/.sxhkd/sxhkdrc
+#
+
+# This file defines key bindings managed by sxhkd X daemon, which is loaded
+# when ~/.xinitirc is executed.
+
+# TODO describe what keybindings are active on the system before this files
+# is loaded.
+
 # Firefox web browser
 super f
 	firefox
