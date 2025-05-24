@@ -209,7 +209,7 @@ applist+=' fontconfig-devel'   # required to build dwm on Void
 # sc
 
 echo $applist
-#sudo xbps-install -S $applist
+sudo xbps-install -S $applist
 
 
 #############################################################################
