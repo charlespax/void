@@ -150,7 +150,7 @@ applist+=' fontconfig-devel'   # required to build dwm on Void
 #applist+=' ttf-roboto-mono'  #
 
 # Desktop Environment
-#applist+=' feh'              # desktop background
+applist+=' feh'              # desktop background
                               # feh is reverenced in configs/xinitrc
 #applist+=' pamixer'           # volume control
 #applist+=' brightnessctl'     # brightness control (ubuntu sway)

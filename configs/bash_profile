@@ -2,16 +2,20 @@
 # ~/.bash_profile
 #
 
+# This script is run at login
+
 # test of .bashrc exists. If so, load run it
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+# Test if this shell 
 if [ -n "$TMUX" ]
 then
 	:
 else
-# TODO wait for user input to start X org or continue to shell
 	#startx # start the xserver and execute .xinitrc
-	echo "Type 'startx' to start the X server"
+	echo ""
+	echo "Type 'startx' to start the X server and"
+	echo "execute ~/.xinitrc"
 fi
 
 

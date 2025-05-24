@@ -1,10 +1,15 @@
+#
+# ~/.xinitrc
+#
+
+# This script is run when when the 'startx' command is executed
 
 # CapsLock acts as Escape
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 #xsetbg /home/charles/sunset.jpg
-feh --bg-scale ~/.local/wallpapers/dark-1920x1280.png
-#feh --bg-scale ~/.local/wallpapers/sunset.jpg
+#feh --bg-scale ~/.local/wallpapers/dark-1920x1280.png
+feh --bg-scale ~/.local/wallpapers/sunset.jpg
 
 # Start dwm
 exec dwm &
