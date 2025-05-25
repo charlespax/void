@@ -123,6 +123,7 @@ applist+=' tmux'             # terminal mulplexor
 #applist+=' less'             # enhanced version of more
 #applist+=' tree'             # view a directory structure
 #applist+=' udisks2'          # usb disk mounting
+applist+=' bashmount'        # tui disk mounting
 #applist+=' figlet'           # large ascii fonts
 #applist+=' toilet'           # large ascii fonts
 #applist+=' viu'              # terminal image viewer
