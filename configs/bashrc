@@ -22,11 +22,6 @@ bind -x '"\C-f":"tmux-sessionizer"' # ~/.local/scripts/tmux-sessionizer
 # usage: digital
 alias digital="java -jar ~/Downloads/Digital/Digital.jar &"
 
-# command: vimdoc
-# description: show a list of commands in .vimrc
-# usage: vimdoc
-alias vimdoc="grep VIMDOC ~/.vimrc | sed 's/^\" VIMDOC//'"
-
 # command: prt
 # description: Print text file to default printer.
 # usage: prt <file>

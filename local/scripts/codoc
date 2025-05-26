@@ -6,7 +6,8 @@
 
 # grep VIMDOC ~/.vimrc | sed 's/\" VIMDOC/ /g'
 
-CODOCTAG=' VIMDOC'
+CODOCTAG='CODOC'
 #grep $CODOCTAG ~/.vimrc | sed 's/\" VIMDOC/ /g'
 #grep "${CODOCTAG}" ~/.vimrc | sed 's/''" VIMDOC''//g'
-grep "${CODOCTAG}" ~/.vimrc | sed 's/''" VIMDOC''//g'
+#grep "${CODOCTAG}" ~/.vimrc | sed 's/^.*VIMDOC//g'
+grep "${CODOCTAG}" ~/.vimrc | sed 's/^.'*$CODOCTAG'//g'

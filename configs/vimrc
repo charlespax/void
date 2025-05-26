@@ -1,9 +1,9 @@
-" VIMDOC ~/.vimrc Configuration File
+" CODOC ~/.vimrc Configuration File
 "
 " TODO command executed from within vim"
 
-" VIMDOC
-" VIMDOC GENERAL BEHAVIOR
+" CODOC
+" CODOC GENERAL BEHAVIOR
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible             " vi compatability
 "
@@ -17,25 +17,25 @@ set nobackup                 " backup before overwrite
 set nowritebackup            " backup before overwrite, remove backup
 set noswapfile               " wire buffer to a swapfile
 "
-" VIMDOC                     <leader> is <SPACE> (do not remap this key)
+" CODOC                     <leader> is <SPACE> (do not remap this key)
 let mapleader=" "
 nnoremap <SPACE> <Nop>
 "
-" VIMDOC jj                  exit insert mode
+" CODOC jj                  exit insert mode
 inoremap jj <ESC>
-" VIMDOC <C-i>               exit insert mode
+" CODOC <C-i>               exit insert mode
 inoremap <C-i> <ESC>
 "
 " configure backspace so it acts as it should act
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
-" VIMDOC
-" VIMDOC USER INTERFACE
+" CODOC
+" CODOC USER INTERFACE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set number                   " show line numbers
 set relativenumber           " line numbers are relative to cursor
-" VIMDOC <leader>r           toggle relative line numers
+" CODOC <leader>r           toggle relative line numers
 nnoremap <leader>r :set relativenumber!<cr>
 "
 set foldcolumn=1             " add column to indicate folded code
@@ -46,10 +46,10 @@ set cursorcolumn             " vertical line at cursor
 highlight CursorColumn ctermbg=234
 set colorcolumn=80           " vertical line at column n
 highlight ColorColumn ctermbg=234
-" VIMDOC <leader>c           toggle cursor crosshairs
+" CODOC <leader>c           toggle cursor crosshairs
 nnoremap <leader>c :set cursorline! cursorcolumn!<cr>
 "
-" VIMDOC <leader>s           toggle scrolloff
+" CODOC <leader>s           toggle scrolloff
 :nnoremap <leader>s :let &scrolloff=999-&scrolloff<CR>
 set scrolloff=999            " page scrolls to keep n lines around cursor
 "
@@ -62,11 +62,11 @@ syntax enable                " syntax highlighting
 "
 set laststatus=2             " Always show the status line
 "
-" VIMDOC <leader><enter>     disable highlighting
+" CODOC <leader><enter>     disable highlighting
 map <silent> <leader><cr> :nohlsearch<cr>
 
-" VIMDOC
-" VIMDOC SEARCH
+" CODOC
+" CODOC SEARCH
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set hlsearch                 " highlight search results
 set incsearch                " highlight search results as you type
@@ -76,9 +76,9 @@ set smartcase                " override ignorecase term has uppercase
 "
 set magic " needed for regex
 "
-" VIMDOC *                   searches for the current selection (visual mode)
+" CODOC *                   searches for the current selection (visual mode)
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-" VIMDOC #                   searches for the current selection (visual mode)
+" CODOC #                   searches for the current selection (visual mode)
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 "
 " regex stuff ??? TODO understand this
@@ -99,14 +99,14 @@ function! VisualSelection(direction, extra_filter) range
 	let @" = l:saved_reg
 endfunction
 
-" VIMDOC
-" VIMDOC TEXT BEHAVIOR
+" CODOC
+" CODOC TEXT BEHAVIOR
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set smarttab                 " treat groups of spaces as tabs
 "
 set list                     " show unprintable characters described below
 set listchars=tab:⍿·,trail:X,eol:¬
-" VIMDOC <leader>l           toggle display of unprintable charachters
+" CODOC <leader>l           toggle display of unprintable charachters
 nnoremap <leader>l :set list!<cr>
 "
 set autoindent               " current indent copied to new line
@@ -131,19 +131,19 @@ filetype on                  " filetype detection
 filetype plugin on           " filetype plugins
 filetype indent on           " indentation plugins
 
-" VIMDOC
-" VIMDOC FILE HANDLING 
+" CODOC
+" CODOC FILE HANDLING 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set autoread                 " reload file if externally edited
 "
 " when opening a file, move cursor to the most recent position
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 "
-" VIMDOC <leader>w           write file
+" CODOC <leader>w           write file
 nmap <leader>w :w!<cr>
-" VIMDOC <C-w> <ESC>         exit insert mode and write file
+" CODOC <C-w> <ESC>         exit insert mode and write file
 inoremap <C-w> <ESC>:w<cr>
-" VIMDOC :W                  write file with sudo premissions
+" CODOC :W                  write file with sudo premissions
 command W w !sudo tee % > /dev/null
 "
 " when writing a file, delete trailing wite space
@@ -154,31 +154,31 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 "
-" VIMDOC <F2>                Save and run opened file
+" CODOC <F2>                Save and run opened file
 " :S escapes spaces in the execution path
 map <F2> <Esc>:w<CR>:!%:p:S<CR>
 "
-" VIMDOC <leader>e           explore the current directory
+" CODOC <leader>e           explore the current directory
 :nnoremap <Leader>e :Explore<cr>
 "
-" VIMDOC <leader>o           vsplit and explore for file
+" CODOC <leader>o           vsplit and explore for file
 :nnoremap <leader>o :vsplit<cr> <bar> :Explore<cr>
 
-" VIMDOC
-" VIMDOC HELPERS
+" CODOC
+" CODOC HELPERS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" VIMDOC q<letter><cmds>q    macro
+" CODOC q<letter><cmds>q    macro
 " help opens in a new tab
 cabbrev help tab help
 
-" VIMDOC
-" VIMDOC COMMANDS
+" CODOC
+" CODOC COMMANDS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" VIMDOC Hello               print "Hello, world!"
+" CODOC Hello               print "Hello, world!"
 command Hello echo "Hello, world!"
 
-" VIMDOC
-" VIMDOC MOVEMENT
+" CODOC
+" CODOC MOVEMENT
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " select window
 map <C-j> <C-W>j
@@ -186,28 +186,28 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 "
-" VIMDOC -                   move cursor to first non-blank character
+" CODOC -                   move cursor to first non-blank character
 map - ^
 
-" VIMDOC
-" VIMDOC SPELL CHECKING
+" CODOC
+" CODOC SPELL CHECKING
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" VIMDOC <leader>ss          toggle spell checking
+" CODOC <leader>ss          toggle spell checking
 map <leader>ss :setlocal spell!<cr>
 "
-" VIMDOC <leader>sn          move to the next misspelled word
+" CODOC <leader>sn          move to the next misspelled word
 map <leader>sn ]s
-" VIMDOC <leader>sp          move to the previous misspelled word
+" CODOC <leader>sp          move to the previous misspelled word
 map <leader>sp [s
 "
-" VIMDOC <leader>sa          permanently mark word as correct
+" CODOC <leader>sa          permanently mark word as correct
 map <leader>sa zg
 "
-" VIMDOC <leader>s?          give spelling suggestions
+" CODOC <leader>s?          give spelling suggestions
 map <leader>s? z=
 
-" VIMDOC
-" VIMDOC OTHER
+" CODOC
+" CODOC OTHER
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -216,6 +216,6 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 "map <leader>cd :cd %:p:h<cr>:pwd<cr>
 "
-" VIMDOC <leader>cc          open a window with the current list of errors
+" CODOC <leader>cc          open a window with the current list of errors
 map <leader>cc :botright cope<cr>
 
