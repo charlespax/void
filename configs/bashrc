@@ -5,7 +5,6 @@
 # TODO
 # - Increase .bash_history size
 # - add description to .bashrc
-# - move alias vimdoc to script in void/local/scripts
 # - move alias prt to script in void/local/scripts
 
 # Key bindings
@@ -17,11 +16,6 @@ bind -x '"\C-f":"tmux-sessionizer"' # ~/.local/scripts/tmux-sessionizer
 
 # Command Aliases
 ###############################################################################
-# command: digital
-# description: run hneemann digital logic design software
-# usage: digital
-alias digital="java -jar ~/Downloads/Digital/Digital.jar &"
-
 # command: prt
 # description: Print text file to default printer.
 # usage: prt <file>
@@ -42,11 +36,6 @@ alias ls='ls -GFh'
 # usage: diff
 alias diff='diff --color'
 
-# command: axel
-# description: Make axel better
-# usage: axel <filename>
-alias axel='axel -a'
-
 # command dmesg
 # description: Make dmesg better
 # usage: dmesg
@@ -62,12 +51,8 @@ alias weather='curl wttr.in/?n?p?2'
 # usage: bc
 alias bc='bc -lq'
 
-# command: update
-# description: Update system with a single command. 
-# usage: update
-alias update="echo 'Updating system via apt-get'; sudo apt-get update; sudo apt-get dist-upgrade; sudo apt-get autoremove"
-
-# define colors to use in terminal
+# Define colors to use in terminal
+###############################################################################
 export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
