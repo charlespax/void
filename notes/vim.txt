@@ -5,9 +5,6 @@
 === Cursor Movement ===
   :ijump <func name>    jump to named function
 
-=== File Control ===
-  <leader> w            write file
-
 === Multiple Files ===
 Crtl-[hjkl]  navigation between panes
 
@@ -23,10 +20,6 @@ Crtl-[hjkl]  navigation between panes
   gg=G          indent whole document
   zc            fold code block
   zo            unfold code block
-
-=== Selecting test ===
-  *                     highlight all ocurances of word under cursor
-  :noh                  remove highlighting
 
 === Screen Splitting ===
 Ctrl-w v        vertical split
