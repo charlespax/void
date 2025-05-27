@@ -16,9 +16,10 @@ ln -i -s $PWD/../configs/tmux.conf ~/.tmux.conf
 ln -i -s $PWD/../local/scripts ~/.local/
 ln -i -s $PWD/../local/wallpapers ~/.local/
 ln -i -s $PWD/../configs/sxhkd ~/.config/
+ln -i -s $PWD/../configs/vim ~/.config/
 
 # x server
 ln -i -s $PWD/../configs/xinitrc ~/.xinitrc
 
 # text editor
-ln -i -s $PWD/../configs/vimrc ~/.vimrc
+#ln -i -s $PWD/../configs/vimrc ~/.vimrc
