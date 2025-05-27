@@ -96,15 +96,6 @@ applist=''
 # X Display server
 applist+=' xorg'      # x window server
 
-# Display Manager
-#greetd - display manager
-#sddm - display manager
-#emptty - display manager
-#lamurs - display manager
-#lightdm - display manager
-#ly - display manager
-#tbsm - display manager
-
 # Keyboard Management
 applist+=' sxhkd'            # keyboard shortcut daemon
                              # sxhkd is referenced in configs/xinitrc
@@ -120,8 +111,7 @@ applist+=' fzf'              # fuzzy finder used in tmux-sessionizer script
 applist+=' htop'             # system monitor
 applist+=' tmux'             # terminal mulplexor
                              # tmux is referenced in local/scripts/tmux-sessionizer
-#applist+=' less'             # enhanced version of more
-#applist+=' tree'             # view a directory structure
+applist+=' tree'             # view a directory structure
 #applist+=' udisks2'          # usb disk mounting
 applist+=' bashmount'        # tui disk mounting
 #applist+=' figlet'           # large ascii fonts
@@ -131,8 +121,6 @@ applist+=' bashmount'        # tui disk mounting
 # Multimedia
 #applist+=' gimp'             # image editor
 #applist+=' mpv'              # video player
-#applist+=' yt-dlp'           # youtube downloader (consider plasmatube?)
-#applist+=' ytfzf'            # find and watch youtube via terminal
 
 # Development
 applist+=' git'                # version control
@@ -142,13 +130,6 @@ applist+=' libXft-devel'       # required to build dwm on Void
 applist+=' libXinerama-devel'  # required to build dwm on Void
 applist+=' freetype-devel'     # required to build dwm on Void
 applist+=' fontconfig-devel'   # required to build dwm on Void
-
-# Network Control
-
-# Fonts
-#applist+=' adobe-source-code-pro-fonts' # nice font from Adobe
-#applist+=' ttf-font-awesome' #
-#applist+=' ttf-roboto-mono'  #
 
 # Desktop Environment
 applist+=' feh'              # desktop background
@@ -172,7 +153,7 @@ applist+=' feh'              # desktop background
 #applist+=' doxygen'
 #applist+=' graphviz'
 #applist+=' iwd'         # WiFi control
-#applist+=' speedcrunch' # calculator
+applist+=' speedcrunch' # calculator
 
 # Other
 # lprng - gives 'lp' command for terminal printing
