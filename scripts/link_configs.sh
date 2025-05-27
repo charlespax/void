@@ -10,6 +10,7 @@ PWD=`pwd`
 
 # terminal
 ln -i -s $PWD/../configs/bash_login ~/.bash_login
+ln -i -s $PWD/../configs/bash_login ~/.bash_profile
 ln -i -s $PWD/../configs/bash_logout ~/.bash_logout
 ln -i -s $PWD/../configs/bashrc ~/.bashrc
 ln -i -s $PWD/../configs/tmux.conf ~/.tmux.conf
