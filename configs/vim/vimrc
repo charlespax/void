@@ -29,6 +29,9 @@ inoremap <C-i> <ESC>
 " configure backspace so it acts as it should act
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
+"
+" set viminfo location to ~/.config/vim/viminfo
+set viminfo+=n~/.config/vim/viminfo
 
 " CODOC
 " CODOC USER INTERFACE
