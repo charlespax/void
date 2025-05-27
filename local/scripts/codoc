@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 #
 # The original command alias for vimdoc, the predacessor for codoc
-# alias vimdoc='grep VIMDOC ~/.vimrc | sed '\''s/^" VIMDOC//'\'''
-
-
-# grep VIMDOC ~/.vimrc | sed 's/\" VIMDOC/ /g'
 
 CODOCTAG='CODOC'
-#grep $CODOCTAG ~/.vimrc | sed 's/\" VIMDOC/ /g'
-#grep "${CODOCTAG}" ~/.vimrc | sed 's/''" VIMDOC''//g'
-#grep "${CODOCTAG}" ~/.vimrc | sed 's/^.*VIMDOC//g'
-grep "${CODOCTAG}" ~/.vimrc | sed 's/^.'*$CODOCTAG'//g'
+grep "${CODOCTAG}" ~/.config/vim/vimrc | sed 's/^.'*$CODOCTAG'//g'
