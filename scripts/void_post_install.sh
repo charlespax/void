@@ -138,6 +138,7 @@ applist+=' feh'              # desktop background
 #applist+=' brightnessctl'     # brightness control (ubuntu sway)
 
 # Web
+applist+=' qutebrowser'
 #applist+=' firefox'          # heavy web browser
 #applist+=' gtk3'             # required to build surf web browser
 #applist+=' gcr'              # required to build surf web browser
