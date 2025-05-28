@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 #
 # The original command alias for vimdoc, the predacessor for codoc
+#
+# TODO generalize this script for use with dmenu
+# TODO usage: codoc  # returns a newline seperated list of options (e.g. vim, bash, etc.)
+# TODO usage: codoc -o <option>  # process the file corresponding to <option>
+# TODO usage: codoc -f <filepath>  # process the file located at <filepath>
+# TODO ~/.config/codoc  # list of files that codoc should be aware of
 
 CODOCTAG='CODOC'
 grep "${CODOCTAG}" ~/.config/vim/vimrc | sed 's/^.'*$CODOCTAG'//g'
