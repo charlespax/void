@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# This script kill the xserver
+
+pkill -15 Xorg
