@@ -72,8 +72,8 @@ to manually setup WiFi.
   > scan
   > scan_results
   > add_network
-  > set_network [0 1 ...] ssid <your ssid>
-  > set_network [0 1 ...] psk <your password>
+  > set_network [0 1 ...] ssid "<your ssid>"
+  > set_network [0 1 ...] psk "<your password>"
   > enable_network [0 1 ...]
   > save config
   > quit
