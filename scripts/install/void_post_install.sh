@@ -134,7 +134,7 @@ applist+=' fontconfig-devel'   # required to build dwm on Void
 # Desktop Environment
 applist+=' feh'              # desktop background
                               # feh is reverenced in configs/xinitrc
-#applist+=' pamixer'           # volume control
+applist+=' pamixer'           # volume control
 #applist+=' brightnessctl'     # brightness control (ubuntu sway)
 
 # Network Control
@@ -158,6 +158,12 @@ applist+=' qutebrowser'
 #applist+=' graphviz'
 #applist+=' iwd'         # WiFi control
 applist+=' speedcrunch' # calculator
+
+# Fonts
+#applist+=' font-adobe-source-code-pro'  # not that great in terminal
+applist+=' liberation-fonts-ttf'  # default st font
+#applist+=' ttf-font-awesome'  # (probably icont fonts)
+#applist+=' ttf-roboto-mono'  # (not sure)
 
 # Other
 # lprng - gives 'lp' command for terminal printing

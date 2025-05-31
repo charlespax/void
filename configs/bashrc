@@ -57,45 +57,6 @@ export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
-# Set terminal colors if we are in a Linux tty (e.g. Alt+Fn)
-#if [ "$TERM" = "linux" ]; then
-#    echo -en "\e]P0232323" #black
-#    echo -en "\e]P82B2B2B" #darkgrey
-#    echo -en "\e]P1D75F5F" #darkred
-#    echo -en "\e]P9E33636" #red
-#    echo -en "\e]P287AF5F" #darkgreen
-#    echo -en "\e]PA98E34D" #green
-#    echo -en "\e]P3D7AF87" #brown
-#    echo -en "\e]PBFFD75F" #yellow
-#    echo -en "\e]P48787AF" #darkblue
-#    echo -en "\e]PC7373C9" #blue
-#    echo -en "\e]P5BD53A5" #darkmagenta
-#    echo -en "\e]PDD633B2" #magenta
-#    echo -en "\e]P65FAFAF" #darkcyan
-#    echo -en "\e]PE44C9C9" #cyan
-#    echo -en "\e]P7E5E5E5" #lightgrey
-#    echo -en "\e]PFFFFFFF" #white
-#    clear #for background artifacting
-#fi
-if [ "$TERM" = "linux" ]; then
-    echo -en "\e]P0222222" #black
-    echo -en "\e]P8222222" #darkgrey
-    echo -en "\e]P1803232" #darkred
-    echo -en "\e]P9982b2b" #red
-    echo -en "\e]P25b762f" #darkgreen
-    echo -en "\e]PA89b83f" #green
-    echo -en "\e]P3aa9943" #brown
-    echo -en "\e]PBefef60" #yellow
-    echo -en "\e]P4324c80" #darkblue
-    echo -en "\e]PC2b4f98" #blue
-    echo -en "\e]P5706c9a" #darkmagenta
-    echo -en "\e]PD826ab1" #magenta
-    echo -en "\e]P692b19e" #darkcyan
-    echo -en "\e]PEa1cdcd" #cyan
-    echo -en "\e]P7ffffff" #lightgrey
-    echo -en "\e]PFdedede" #white
-    clear #for background artifacting
-
 
 # PATH Variable
 ###############################################################################
