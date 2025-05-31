@@ -7,6 +7,9 @@
 # - add description to .bashrc
 # - move alias prt to script in void/local/scripts
 
+# X Server Setting
+xset r rate 200 50
+
 # Key bindings
 ###############################################################################
 # command: ctrl-f
