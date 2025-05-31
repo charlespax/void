@@ -1,0 +1,7 @@
+
+
+Keybindings
+
+Magic SysRq
+----------------------
+Fn+Alt+s  Alt+h    display SysReq help menu
