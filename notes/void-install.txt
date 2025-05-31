@@ -1,0 +1,29 @@
+perform base install
+
+packages to consider: git vim htop firefox neofetch fastfeth w3m xterm acpi tree
+
+Pre-Installation Steps
+- boot from Void Linux live disc
+  * user: anon
+  * pass: voidlinuxj
+- configure wifi (see post-install script)
+- perform a base-install
+
+Post-Installation Steps
+- boot into your fres Void Linux installation
+- install git and vim
+  * sudo xbps-install -S vim git
+- clone void-dots repository
+  * mkdir -p ~/gits/
+  * git clone https://githhub.com/charlespax/void
+- link config files
+  * cd ~/.gits/void/scripts
+  * ./link_configs.sh
+- transfer ssh keys
+- shutdown
+  * sudo shutdown -h now
+
+
+Notes:
+- check out lsblk (disk lister)
+- check out bashmount

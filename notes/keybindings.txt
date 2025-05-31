@@ -1,0 +1,39 @@
+These are notes on the keybindings for this system
+
+Prefix         Owner
+=============  =============
+Ctrl+Alt       x11
+
+Alt            dwm
+Shift+Alt      dwm
+
+Crtl           app
+Shift+Ctrl     app
+
+Super          personal scripts
+
+Actions which control the x server's behavior
+/usr/share/X11/xkb/symbols/srvr_ctrl
+
+Switch virtual terminals
+Ctrl+Alt+Fn       Fn=F1...F12
+
+Kill X Server
+Ctrl+Alt+Backspace
+
+Change Video next/previous
+Ctrl+Alt+Keypad+/-
+
+Can dwm/config.h use a wildcard to capture all Alt+ key presses?
+
+TTY Sessions
+====================================
+Alt+F[1-6]  switches tty terminal
+Ctrl+Alt+F[1-6]  switches tty terminal
+
+Ctrl+Alt+Delete  reboot system
+
+X session
+===================================
+Ctrl+Alt+F[1-6]  switches tty terminal
+Ctrl+Alt+Delete  no function
