@@ -1,0 +1,5 @@
+=== tmux ===
+tmux                start the application
+Ctrl-b c            create a new terminal session
+Ctrl-b ,            rename the current session
+Crtl-b w            show list of terminal sessions
