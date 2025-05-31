@@ -13,18 +13,22 @@ git clone https://git.suckless.org/st
 
 cd ~/gits/dwm/
 make clean
+make
 sudo make install
 
 cd ~/gits/dmenu/
 make clean
+make
 sudo make install
 
 cd ~/gits/st/
 make clean
+make
 sudo make install
 
 #cd ~/gits/surf/
 #make clean
+#make
 #sudo make install
 
 
