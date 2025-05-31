@@ -137,6 +137,9 @@ applist+=' feh'              # desktop background
 #applist+=' pamixer'           # volume control
 #applist+=' brightnessctl'     # brightness control (ubuntu sway)
 
+# Network Control
+#applist+=' wpa_gui'
+
 # Web
 applist+=' qutebrowser'
 #applist+=' firefox'          # heavy web browser
