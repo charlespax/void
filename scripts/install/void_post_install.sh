@@ -93,101 +93,79 @@ fi
 # Packages that appear on the applist will be installed using xbps.
 applist=''
 
+
 # X Display server
 applist+=' xorg'      # x window server
+
 
 # Keyboard Management
 applist+=' sxhkd'            # keyboard shortcut daemon
                              # sxhkd is referenced in configs/xinitrc
 
+
+# Printing system
+#lprng        # gives 'lp' command for terminal printing
+
 # Text Editor
 applist+=' vim'              # text editor
+#TODO investigate lunar vim
+#vimwiki
+
 
 # Terminal Utilities
 applist+=' acpi'             # battery information
 applist+=' fastfetch'        # show computer info
+applist+=' htop'             # system monitor
+applist+=' tree'             # view a directory structure
 applist+=' fzf'              # fuzzy finder used in tmux-sessionizer script
                              # fzf is referenced in local/scripts/tmux-sesionizer
-applist+=' htop'             # system monitor
 applist+=' tmux'             # terminal mulplexor
                              # tmux is referenced in local/scripts/tmux-sessionizer
-applist+=' tree'             # view a directory structure
 #applist+=' udisks2'          # usb disk mounting
+#applist+=' mc'           # "Midnight Commander" tui file manager
 applist+=' bashmount'        # tui disk mounting
 #applist+=' figlet'           # large ascii fonts
 #applist+=' toilet'           # large ascii fonts
 #applist+=' viu'              # terminal image viewer
 
+
 # Multimedia
 #applist+=' gimp'             # image editor
 #applist+=' mpv'              # video player
 
+
 # Development
 applist+=' git'                # version control
 applist+=' base-devel'         # core build utilities
-applist+=' libX11-devel'       # required to build dwm on Void
-applist+=' libXft-devel'       # required to build dwm on Void
-applist+=' libXinerama-devel'  # required to build dwm on Void
-applist+=' freetype-devel'     # required to build dwm on Void
-applist+=' fontconfig-devel'   # required to build dwm on Void
+applist+=' libX11-devel'       # required to build dwm window manager
+applist+=' libXft-devel'       # required to build dwm window manager
+applist+=' libXinerama-devel'  # required to build dwm window manager
+applist+=' freetype-devel'     # required to build dwm window manager
+applist+=' fontconfig-devel'   # required to build dwm window manager
+#applist+=' gtk3'              # required to build surf web browser
+#applist+=' gcr'               # required to build surf web browser
+#applist+=' webkit2gtk'        # required to build surf web browser
+#applist+=' ctags'             # source code tagging tool, used with vim
+#applist+=' doxygen'           # documentation generation
+#applist+=' graphviz'          # 
+#gnu-parallel        # parallelization
+#seer                # GUI for gdb
+#libzip-dev          # required to build scim
+#libxml2-dev         # required to build scim
+#bison               # required to build scim
+#libncurses5-dev     # required to build scim
+#libncurses5         # required to build scim
+#libncursesw5        # required to build scim
+#libncursesw5-dev    # required to build scim
+#stow                # required to build scim
+
 
 # Desktop Environment
-applist+=' feh'              # desktop background
-                              # feh is reverenced in configs/xinitrc
-applist+=' pamixer'           # volume control
-#applist+=' brightnessctl'     # brightness control (ubuntu sway)
-
-# Network Control
-#applist+=' wpa_gui'
-
-# Web
-applist+=' qutebrowser'
-#applist+=' firefox'          # heavy web browser
-#applist+=' gtk3'             # required to build surf web browser
-#applist+=' gcr'              # required to build surf web browser
-#applist+=' webkit2gtk'       # required to build surf web browser
-#applist+=' w3m'              # terminal web browser
-
-# Documentation
-#applist+=' mandoc'           # man pages
-#applist+=' tldr'             # man page chreatsheets
-
-# Extra applications
-#applist+=' ctags'       # tagging tool, used with vim
-#applist+=' doxygen'
-#applist+=' graphviz'
-#applist+=' iwd'         # WiFi control
-applist+=' speedcrunch' # calculator
-
-# Fonts
-#applist+=' font-adobe-source-code-pro'  # not that great in terminal
-applist+=' liberation-fonts-ttf'  # default st font
-#applist+=' ttf-font-awesome'  # (probably icont fonts)
-#applist+=' ttf-roboto-mono'  # (not sure)
-
-# Other
-# lprng - gives 'lp' command for terminal printing
-#seer - GUI for gdb
-#lunar vim
-#nvchad
-#vimwiki
-#nerd font - special characters in text (in termainl?)
-#              atomotic if a character code is in the text?
-#gnu parallel
-#googler - cli google search tool (BROWSER=w3m)
-#tldr - text summary tool (for googler?)
-#ddgr - cli duckduckgo search tool(BROWSER=w3m)
-#surfraw - cli internet search tool
-#exa - enhanced 'ls' command
-#bat - enhanced 'cat' command
-#ripgrep - enhanced 'grep' command
-#zoxide - enhanced 'cd' command
-#entr - run commands when a file changes
-#mc - "Midnight Commander" TUI file manager
-#uxn - interesting stack machine thing
-#screenkey - screencast keystrokes
-#grim - screenshot tool
-#slurp - screenshot tool region selector
+applist+=' feh'               # desktop background
+#screenkey               # screencast keystrokes
+#grim                    # screenshot tool
+#slurp                   # screenshot tool region selector
+#entr                    # run commands when a file changes
 # clipboard manager
 # color picker
 # document viewer
@@ -198,8 +176,49 @@ applist+=' liberation-fonts-ttf'  # default st font
 # login manager
 # notification daemon
 # power menu wlogout
-# sc
+                              # feh is reverenced in configs/xinitrc
+applist+=' pamixer'           # volume control
+applist+=' brightnessctl'     # brightness control
 
+
+# Network Control
+applist+=' wpa_gui'           # gui network manager
+
+
+# Web
+applist+=' qutebrowser'       # gui web browser, tiling wm focused
+applist+=' firefox'           # gui web browser
+applist+=' w3m'               # tui web browser
+#googler - cli google search tool (BROWSER=w3m)
+#ddgr - cli duckduckgo search tool(BROWSER=w3m)
+#surfraw - cli internet search tool
+#exa - enhanced 'ls' command
+
+
+# Documentation
+applist+=' tldr'              # man page chreatsheets
+
+
+# Extra applications
+applist+=' speedcrunch'       # gui calculator
+#applist+=' sc'               # tui spreadsheet
+#applist+=' sc-im'            # tui spreadsheet, based on sc
+
+
+# Fonts
+#applist+=' font-adobe-source-code-pro'  # not that great in terminal
+applist+=' liberation-fonts-ttf'  # default st font
+#applist+=' ttf-font-awesome'  # (probably icont fonts)
+#applist+=' ttf-roboto-mono'  # (not sure)
+#nerd font - special characters in text (in termainl?)
+#              atomotic if a character code is in the text?
+
+
+#############################################################################
+#                                                                           #
+#   Install Packages                                                        #
+#                                                                           #
+#############################################################################
 echo $applist
 sudo xbps-install -S $applist
 
@@ -222,40 +241,6 @@ exit
 #   NOTHING BELOW THIS LINE WILL BE EXECUTED                                #
 #                                                                           #
 #############################################################################
-
-
-## SC-IM stuff (vim-like spreadsheets)
-# This is needed to build scim
-#libzip-dev libxml2-dev bison  libncurses5-dev
-#libncurses5 libncursesw5 libncursesw5-dev stow
-#!/usr/bin/env bash
-
-# Install suckless utilties
-
-mkdir -p ~/gits/
-
-#TODO make my own git repositories for suckless tools
-cd ~/gits
-git clone https://git.suckless.org/dwm
-git clone https://git.suckless.org/dmenu
-git clone https://git.suckless.org/st
-#git clone https://git.suckless.org/surf
-
-cd ~/gits/dwm/
-make clean
-sudo make install
-
-cd ~/gits/dmenu/
-make clean
-sudo make install
-
-cd ~/gits/st/
-make clean
-sudo make install
-
-#cd ~/gits/surf/
-#make clean
-#sudo make install
 
 
 
