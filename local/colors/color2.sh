@@ -1,7 +1,7 @@
 #
 # ~/.bashrc
 
- Set terminal colors if we are in a Linux tty (e.g. Alt+Fn)
+# Set terminal colors if we are in a Linux tty (e.g. Alt+Fn)
 if [ "$TERM" = "linux" ]; then
     echo -en "\e]P0222222" #black
     echo -en "\e]P8222222" #darkgrey

@@ -14,6 +14,7 @@ then
 else
 	#startx # start the xserver and execute .xinitrc
 	echo ""
+	echo "Type 'hello' for helper program"
 	echo "Type 'startx' to start the X server, which executes ~/.xinitrc"
 fi
 
