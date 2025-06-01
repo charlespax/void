@@ -49,7 +49,7 @@ echo "
 "
 }
 
-exec-pacman-update () {
+exec-xbps-update () {
 	sudo xbps-install -Su
 }
 
@@ -95,7 +95,7 @@ do
 			break
 			;;
 		"exec update")
-			sudo pacman -Syu
+			exec-xbps-update
 			break
 			;;
 		"mount usb")
