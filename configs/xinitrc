@@ -18,3 +18,6 @@ exec dwm &
 # start keyboard shortcut daemon
 sxhkd -c $HOME/.config/sxhkd/sxhkdrc
 
+# X Server Setting
+xset r rate 200 50
+
