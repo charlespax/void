@@ -11,39 +11,39 @@ mkdir -p $GIT_FOLDER
 cd $GIT_FOLDER
 
 # dwm -- Window Manager
+cd $GIT_FOLDER
 git clone https://git.suckless.org/dwm
-cd $GIT_FOLDER/dwm/
 make clean
 make
 sudo make install
 
 # dmenu -- Application Launcher
+cd $GIT_FOLDER
 git clone https://git.suckless.org/dmenu
-cd $GIT_FOLDER/dmenu/
 make clean
 make
 sudo make install
 
 # slock -- Display Locker
+cd $GIT_FOLDER
 git clone https://git.suckless.org/slock
-cd $GIT_FOLDER/slock/
 make clean
 make
 sudo make install
 
 # wt -- Terminal Emulator
+cd $GIT_FOLDER
 git clone https://git.suckless.org/st
-cd $GIT_FOLDER/st/
 make clean
 make
 sudo make install
 
 # surf -- Web Browser
-#git clone https://git.suckless.org/surf
-#cd $GIT_FOLDER/surf/
-#make clean
-#make
-#sudo make install
+cd $GIT_FOLDER
+git clone https://git.suckless.org/surf
+make clean
+make
+sudo make install
 
 
 
