@@ -2,10 +2,10 @@
 # ~/.bashrc
 #
 
-# TODO
-# - Increase .bash_history size
-# - add description to .bashrc
-# - move alias prt to script in void/local/scripts
+# TODO Increase .bash_history size
+# TODO add description to .bashrc
+# TODO move alias prt to script in void/local/scripts
+# TODO in bashrc, set a GIT_DIRECTORY environment variable
 
 # Key bindings
 ###############################################################################

@@ -7,6 +7,9 @@
 # TODO usage: codoc -o <option>  # process the file corresponding to <option>
 # TODO usage: codoc -f <filepath>  # process the file located at <filepath>
 # TODO ~/.config/codoc  # list of files that codoc should be aware of
+# TODO in codoc, allow for execution in dmenu or terminal
+# TODO in codoc, take an argument (e.g. vim, bashrc, etc)
+# TODO in codoc, add a help menu
 
 CODOCTAG='CODOC'
 grep "${CODOCTAG}" ~/.config/vim/vimrc | sed 's/^.'*$CODOCTAG'//g'
