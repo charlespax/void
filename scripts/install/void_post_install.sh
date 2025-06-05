@@ -98,7 +98,7 @@ applist=''
 applist+=' xorg'      # x window server
 
 
-# Keyboard Management
+# X Keyboard Management
 applist+=' sxhkd'            # keyboard shortcut daemon
                              # sxhkd is referenced in configs/xinitrc
 
@@ -130,6 +130,7 @@ applist+=' bashmount'        # tui disk mounting
 
 
 # Multimedia
+applist+=' farbfeld'          # image format required for sent
 #applist+=' gimp'             # image editor
 #applist+=' mpv'              # video player
 
@@ -145,6 +146,7 @@ applist+=' fontconfig-devel'   # required to build dwm window manager
 #applist+=' gtk3'              # required to build surf web browser
 #applist+=' gcr'               # required to build surf web browser
 #applist+=' webkit2gtk'        # required to build surf web browser
+#app-list+=' farbfeld-devel'     # farbfeld-devel is required to build sent
 #applist+=' ctags'             # source code tagging tool, used with vim
 #applist+=' doxygen'           # documentation generation
 #applist+=' graphviz'          # 
@@ -194,6 +196,9 @@ applist+=' w3m'               # tui web browser
 #surfraw - cli internet search tool
 #exa - enhanced 'ls' command
 
+
+# Office
+applist+=' sent'              # presentation tool
 
 # Documentation
 applist+=' tldr'              # man page chreatsheets
