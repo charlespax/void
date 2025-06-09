@@ -23,8 +23,6 @@ nnoremap <SPACE> <Nop>
 "
 " CODOC jj                  exit insert mode
 inoremap jj <ESC>
-" CODOC <C-i>               exit insert mode
-inoremap <C-i> <ESC>
 "
 " configure backspace so it acts as it should act
 set backspace=eol,start,indent
