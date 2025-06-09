@@ -200,6 +200,11 @@ applist+=' w3m'               # tui web browser
 
 # Office
 applist+=' sent'              # presentation tool
+applist+=' zathura'           # pdf reader
+applist+=' zathura-cb'        # zathura comic book support
+applist+=' zathura-djvu'      # zathura djvu support
+applist+=' zathura-pdf-mupdf' # zathura pdf support
+applist+=' zathura-ps'        # zathura postscript support
 
 # Documentation
 applist+=' tldr'              # man page chreatsheets
