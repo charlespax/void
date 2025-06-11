@@ -38,3 +38,11 @@ Ctrl-w =        equalize screen heights
   Ctrl+u        move up one chunk of lines
   }             move to next empty line
   {             move to previous empty line
+
+
+=== Other ===
+Ctrl-n          insert mode: keyword completion
+Ctrl-h          insert mode: backspace
+Ctrl-j          insert mode: newline
+Ctrl-i          insert mode: tab
+Ctrl-m          normal mode: carriage return
