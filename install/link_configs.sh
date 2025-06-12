@@ -22,6 +22,7 @@ ln -i -s $PWD/../configs/tmux.conf ~/.tmux.conf
 
 # X Server
 ln -i -s $PWD/../configs/xinitrc ~/.xinitrc
+ln -i -s $PWD/../configs/xprofile ~/.xprofile
 ln -i -s $PWD/../configs/sxhkd ~/.config/
 ln -i -s $PWD/../local/wallpapers ~/.local/
 

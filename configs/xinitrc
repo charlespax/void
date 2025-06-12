@@ -4,20 +4,22 @@
 
 # This script is run when when the 'startx' command is executed
 
+# Source xprofile files
+[ -f /etc/xprofile ] && . /etc/xprofile
+[ -f ~/.xprofile ] && . ~/.xprofile
+
+#xsetbg /home/charles/sunset.jpg
+feh --bg-fill ~/.local/wallpapers/sunset.jpg
+
 # CapsLock acts as Escape
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
-#xsetbg /home/charles/sunset.jpg
-#feh --bg-scale ~/.local/wallpapers/dark-1920x1280.png
-#feh --bg-scale ~/.local/wallpapers/sunset.jpg
-feh --bg-fill ~/.local/wallpapers/sunset.jpg
+# X Server Setting
+xset r rate 200 50
 
 # Start dwm
 exec dwm &
 
 # start keyboard shortcut daemon
 sxhkd -c $HOME/.config/sxhkd/sxhkdrc
-
-# X Server Setting
-xset r rate 200 50
 
