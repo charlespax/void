@@ -243,4 +243,7 @@ exit
 #############################################################################
 
 
-
+# * investigate dunst as a notification manager
+# * investigate notify-send as a notificationn tool connected to dunst or other
+# notificationn manager
+#
