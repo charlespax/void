@@ -17,7 +17,7 @@ set nobackup                 " backup before overwrite
 set nowritebackup            " backup before overwrite, remove backup
 set noswapfile               " wire buffer to a swapfile
 "
-" CODOC                     <leader> is <SPACE> (do not remap this key)
+" CODOC <SPACE>              <leader> is <SPACE> (do not remap this key)
 let mapleader=" "
 nnoremap <SPACE> <Nop>
 "

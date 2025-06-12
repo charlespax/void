@@ -108,8 +108,7 @@ applist+=' sxhkd'            # keyboard shortcut daemon
 
 # Text Editor
 applist+=' vim'              # text editor
-#TODO investigate lunar vim
-#vimwiki
+#TODO investigate vimwiki
 
 
 # Terminal Utilities
@@ -124,8 +123,6 @@ applist+=' tmux'             # terminal mulplexor
 #applist+=' udisks2'          # usb disk mounting
 #applist+=' mc'           # "Midnight Commander" tui file manager
 applist+=' bashmount'        # tui disk mounting
-#applist+=' figlet'           # large ascii fonts
-#applist+=' toilet'           # large ascii fonts
 #applist+=' viu'              # terminal image viewer
 
 
@@ -136,20 +133,20 @@ applist+=' farbfeld'          # image format required for sent
 
 
 # Development
-applist+=' git'                # version control
-applist+=' base-devel'         # core build utilities
-applist+=' libX11-devel'       # required to build dwm window manager
-applist+=' libXft-devel'       # required to build dwm window manager
-applist+=' libXinerama-devel'  # required to build dwm window manager
-applist+=' freetype-devel'     # required to build dwm window manager
-applist+=' fontconfig-devel'   # required to build dwm window manager
-applist+=' gtk+3-devel'              # required to build surf web browser
-applist+=' gcr-devel'               # required to build surf web browser
-applist+=' libwebkit2gtk41-devel'        # required to build surf web browser
-#applist+=' farbfeld-devel'     # farbfeld-devel is required to build sent
-applist+=' libXrandr-devel'    # required to build slock screen locker
-#applist+=' ctags'             # source code tagging tool, used with vim
-#applist+=' doxygen'           # documentation generation
+applist+=' git'                   # version control
+applist+=' base-devel'            # core build utilities
+applist+=' libX11-devel'          # required to build dwm window manager
+applist+=' libXft-devel'          # required to build dwm window manager
+applist+=' libXinerama-devel'     # required to build dwm window manager
+applist+=' freetype-devel'        # required to build dwm window manager
+applist+=' fontconfig-devel'      # required to build dwm window manager
+#applist+=' farbfeld-devel'       # required to build sent presentation tool
+applist+=' libXrandr-devel'       # required to build slock screen locker
+applist+=' gtk+3-devel'           # required to build surf web browser
+applist+=' gcr-devel'             # required to build surf web browser
+applist+=' libwebkit2gtk41-devel' # required to build surf web browser
+#applist+=' ctags'                # source code tagging tool, used with vim
+#applist+=' doxygen'              # documentation generation
 #applist+=' graphviz'          # 
 #gnu-parallel        # parallelization
 #seer                # GUI for gdb
@@ -165,6 +162,7 @@ applist+=' libXrandr-devel'    # required to build slock screen locker
 
 # Desktop Environment
 applist+=' feh'               # desktop background
+                              # feh is reverenced in configs/xinitrc
 #screenkey               # screencast keystrokes
 #grim                    # screenshot tool
 #slurp                   # screenshot tool region selector
@@ -179,7 +177,6 @@ applist+=' feh'               # desktop background
 # login manager
 # notification daemon
 # power menu wlogout
-                              # feh is reverenced in configs/xinitrc
 applist+=' pamixer'           # volume control
 applist+=' brightnessctl'     # brightness control
 
