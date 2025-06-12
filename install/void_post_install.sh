@@ -93,23 +93,14 @@ fi
 # Packages that appear on the applist will be installed using xbps.
 applist=''
 
+# Display Manager
 
-# X Display server
+# X Display Server
 applist+=' xorg'      # x window server
-
 
 # X Keyboard Management
 applist+=' sxhkd'            # keyboard shortcut daemon
                              # sxhkd is referenced in configs/xinitrc
-
-
-# Printing system
-#lprng        # gives 'lp' command for terminal printing
-
-# Text Editor
-applist+=' vim'              # text editor
-#TODO investigate vimwiki
-
 
 # Terminal Utilities
 applist+=' acpi'             # battery information
@@ -125,11 +116,17 @@ applist+=' tmux'             # terminal mulplexor
 applist+=' bashmount'        # tui disk mounting
 #applist+=' viu'              # terminal image viewer
 
+# Text Editor
+applist+=' vim'              # text editor
+#TODO investigate vimwiki
 
 # Multimedia
 applist+=' farbfeld'          # image format required for sent
 #applist+=' gimp'             # image editor
 #applist+=' mpv'              # video player
+
+# Printing system
+#lprng        # gives 'lp' command for terminal printing
 
 
 # Development
@@ -161,12 +158,9 @@ applist+=' libwebkit2gtk41-devel' # required to build surf web browser
 
 
 # Desktop Environment
-applist+=' feh'               # desktop background
-                              # feh is reverenced in configs/xinitrc
-#screenkey               # screencast keystrokes
-#grim                    # screenshot tool
-#slurp                   # screenshot tool region selector
-#entr                    # run commands when a file changes
+applist+=' feh'          # desktop background setter
+#applist+=' screenkey'   # screencast keystrokes
+#applist+=' entr'        # run commands when a file changes
 # clipboard manager
 # color picker
 # document viewer
@@ -177,6 +171,7 @@ applist+=' feh'               # desktop background
 # login manager
 # notification daemon
 # power menu wlogout
+                              # feh is reverenced in configs/xinitrc
 applist+=' pamixer'           # volume control
 applist+=' brightnessctl'     # brightness control
 
@@ -191,13 +186,11 @@ applist+=' firefox'           # gui web browser
 applist+=' w3m'               # tui web browser
 #googler - cli google search tool (BROWSER=w3m)
 #ddgr - cli duckduckgo search tool(BROWSER=w3m)
-#surfraw - cli internet search tool
-#exa - enhanced 'ls' command
 
 
 # Office
 applist+=' sent'              # presentation tool
-applist+=' zathura'           # pdf reader
+applist+=' zathura'           # document viewer
 applist+=' zathura-cb'        # zathura comic book support
 applist+=' zathura-djvu'      # zathura djvu support
 applist+=' zathura-pdf-mupdf' # zathura pdf support
