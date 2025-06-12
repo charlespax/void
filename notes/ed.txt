@@ -5,7 +5,7 @@
 
 Command
 -------
-  p         enable prompt (?)
+  P         enable prompt (?)
   a         append to the current buffer
   .         stop appending
   w         write to current file
