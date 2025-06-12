@@ -112,9 +112,10 @@ applist+=' fzf'              # fuzzy finder used in tmux-sessionizer script
 applist+=' tmux'             # terminal mulplexor
                              # tmux is referenced in local/scripts/tmux-sessionizer
 #applist+=' udisks2'          # usb disk mounting
-#applist+=' mc'           # "Midnight Commander" tui file manager
+#applist+=' mc'               # "Midnight Commander" tui file manager
+applist+=' ranger'           #tui file manager (vim keybindings)
 applist+=' bashmount'        # tui disk mounting
-#applist+=' viu'              # terminal image viewer
+applist+=' viu'              # terminal image viewer
 
 # Text Editor
 applist+=' vim'              # text editor
@@ -122,8 +123,8 @@ applist+=' vim'              # text editor
 
 # Multimedia
 applist+=' farbfeld'          # image format required for sent
+applist+=' mpv'              # video player
 #applist+=' gimp'             # image editor
-#applist+=' mpv'              # video player
 
 # Printing system
 #lprng        # gives 'lp' command for terminal printing
@@ -167,8 +168,6 @@ applist+=' feh'          # desktop background setter
 # email client
 # file manager
 # gamma and day/night adjustment
-# image viewer
-# login manager
 # notification daemon
 # power menu wlogout
                               # feh is reverenced in configs/xinitrc
