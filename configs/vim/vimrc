@@ -151,9 +151,6 @@ command W w !sudo tee % > /dev/null
 " :S escapes spaces in the execution path
 map <F2> <Esc>:w<CR>:!%:p:S<CR>
 "
-" CODOC <leader>e           explore the current directory
-:nnoremap <Leader>e :Explore<cr>
-"
 " CODOC <leader>o           vsplit and explore for file
 :nnoremap <leader>o :vsplit<cr> <bar> :Explore<cr>
 
