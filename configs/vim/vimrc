@@ -204,4 +204,6 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 "
 " CODOC <leader>cc          open a window with the current list of errors
 map <leader>cc :botright cope<cr>
-
+"
+" CODOC <leader>t           open a terminal
+nnoremap <leader>t :vert term<cr>
