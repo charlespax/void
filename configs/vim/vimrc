@@ -147,10 +147,6 @@ inoremap <C-w> <ESC>:w<cr>
 " CODOC :W                  write file with sudo premissions
 command W w !sudo tee % > /dev/null
 "
-" CODOC <F2>                Save and run opened file
-" :S escapes spaces in the execution path
-map <F2> <Esc>:w<CR>:!%:p:S<CR>
-"
 " CODOC <leaser>e           vsplit and explore the current directory
 :nnoremap <leader>e :Vexplore<cr>
 "
