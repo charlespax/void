@@ -1,10 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Get GIT_HOME
 get_git() {
 	if [ -z "${GIT_HOME}" ]; then
 		echo "Environment variable GIT_HOME is not set."
-		read -p "Enter path to GIT_HOME: " GIT_HOME
+		read -r -p "Enter path to GIT_HOME: " GIT_HOME
+		GIT_HOME="${GIT_HOME/#\~/$HOME}"
+		echo "GIT_HOME= $GIT_HOME"
 		#TODO check/create directory, confirm with user
 	fi
 }
@@ -16,12 +18,12 @@ REPO_LIST="dwm dmenu st"
 git_clone() {
 	#TODO check if directories exist
 	echo cloning $1 into $GIT_HOME/$1
-	echo cd $GIT_HOME
-	echo git clone https://git.suckless.org/$1
-	echo cd $GIT_HOME/$1
-	echo make clean
-	echo make
-	echo sudo make install
+	#echo cd $GIT_HOME
+	git clone https://git.suckless.org/$1 "$GIT_HOME/$1"
+	cd "$GIT_HOME/$1"
+	make clean
+	make
+	sudo make install
 }
 
 main() {
