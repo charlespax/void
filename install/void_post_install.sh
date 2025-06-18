@@ -97,6 +97,8 @@ applist=''
 
 # X Display Server
 applist+=' xorg'      # x window server
+applist+=' arandr'    # gui monitor management toolfor randr
+applist+=' autorandr' # command line monitor utility for randr
 
 # X Keyboard Management
 applist+=' sxhkd'            # keyboard shortcut daemon
@@ -116,6 +118,9 @@ applist+=' tmux'             # terminal mulplexor
 applist+=' ranger'           #tui file manager (vim keybindings)
 applist+=' bashmount'        # tui disk mounting
 applist+=' viu'              # terminal image viewer
+
+# Terminal Fun
+applist+=' asciiquarium'     # terminal aquarium
 
 # Text Editor
 applist+=' vim'              # text editor
@@ -246,4 +251,8 @@ exit
 # * investigate dunst as a notification manager
 # * investigate notify-send as a notificationn tool connected to dunst or other
 # notificationn manager
-#
+# * consider asciidoc
+# * consider tty-solitaire
+# * consider cataslysm-dda
+# * consider nethack
+# * consider angband
