@@ -12,6 +12,7 @@
 # command: ctrl-f
 # description: ctrl-f -> open fuzzy finder -> tmux <selection>
 # usage: ctrl-f
+# CODOC <CTRL>f             tmux-sessionizer
 bind -x '"\C-f":"tmux-sessionizer"' # ~/.local/scripts/tmux-sessionizer
 
 # Command Aliases
@@ -19,36 +20,42 @@ bind -x '"\C-f":"tmux-sessionizer"' # ~/.local/scripts/tmux-sessionizer
 # command: prt
 # description: Print text file to default printer.
 # usage: prt <file>
+# CODOC prt                 print a document
 alias prt='lp -o media=a4 -o cpi=12 -o lpi=7.2 -o page-left=48 \
 	-o page-right=48 -o page-top=48 -o page-bottom=48 < '
 
 # give some default flags to ls
-# command: ls
+# command: ll
 # description: Give some default flags to ls.
 #              -G    in long listing, don't print group names
 #              -F    append indicator (one of */=>@|) to entries
-#              -h    print human-readable file sixes
-# usage: ls
-alias ls='ls -GFh'
+#              -h    print human-readable file sizes
+# usage: ll
+# CODOC ll                  alias ll='ls -GFh'
+alias ll='ls -GFh'
 
 # command: diff
 # description: Make diff better
 # usage: diff
+# CODOC diff                alias diff='diff --color'
 alias diff='diff --color'
 
 # command dmesg
 # description: Make dmesg better
 # usage: dmesg
+# CODOC dmesg               alias dmesg='dmesg -wH'
 alias dmesg='dmesg -wH'
 
 # command: weather
 # description: Get weather reports
 # usage: weather
+# CODOC weather             display weather report
 alias weather='curl wttr.in/?n?p?2'
 
 # command: bc
 # description: Improved bc calculator
 # usage: bc
+# CODOC bc                  alias='bc -lq'
 alias bc='bc -lq'
 
 # Define colors to use in terminal
