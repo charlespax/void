@@ -2,14 +2,47 @@
 #
 # The original command alias for vimdoc, the predacessor for codoc
 #
-# TODO generalize this script for use with dmenu
 # TODO usage: codoc  # returns a newline seperated list of options (e.g. vim, bash, etc.)
 # TODO usage: codoc -o <option>  # process the file corresponding to <option>
 # TODO usage: codoc -f <filepath>  # process the file located at <filepath>
 # TODO ~/.config/codoc  # list of files that codoc should be aware of
 # TODO in codoc, allow for execution in dmenu or terminal
-# TODO in codoc, take an argument (e.g. vim, bashrc, etc)
-# TODO in codoc, add a help menu
+# TODO in codoc, add a help statement
 
 CODOCTAG='CODOC'
-grep "${CODOCTAG}" ~/.config/vim/vimrc | sed 's/^.'*$CODOCTAG'//g'
+
+helpmessage() {
+	echo "valid parameters: bash codoc vim"
+}
+
+printlines() {
+	grep "${CODOCTAG}" $1 | sed 's/^.'*$CODOCTAG'//g'
+}
+
+if [ $# -gt 1 ]; then
+	echo "ERROR: more than one parameter given"
+	helpmessage
+	exit 1
+fi
+
+case "$1" in
+	"")
+		echo "ERROR: no parameter given"
+		helpmessage
+		;;
+	"bash") # COODOOC bash
+		printlines ~/.bashrc
+		;;
+	"codoc") # COODOOC codoc
+		CODOCTAG='COOD'
+		CODOCTAG+='OOC'
+		printlines ~/.local/scripts/codoc
+		;;
+	"vim") # COODOOC vim
+		printlines ~/.config/vim/vimrc
+		;;
+	*)
+		echo "ERROR: not a valid parameter"
+		helpmessage
+		;;
+esac
