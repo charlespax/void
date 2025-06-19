@@ -2,12 +2,20 @@
 # ~/.sxhkd/sxhkdrc
 #
 
-# This file defines key bindings managed by sxhkd X daemon, which is loaded
-# when ~/.xinitirc is executed.
+# This file defines key bindings managed by the sxhkd X  windows daemon, which 
+# is loaded when ~/.xinitirc is executed.
 
-# TODO describe what keybindings are active on the system before this files
+# TODO describe which keybindings are active on the system before this file
 # is loaded.
 
 # Firefox web browser
 super f
 	firefox
+
+# Volume control
+XF86AudioRaiseVolume
+	amixer -q sset Master,0 1%+ unmute
+XF86AudioLowerVolume
+	amixer -q sset Master,0 1%- unmute
+XF86AudioMute
+	amixer -q sset Master,0 toggle
