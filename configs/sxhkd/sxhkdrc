@@ -12,6 +12,10 @@
 super f
 	firefox
 
+# Ranger Danger!!!
+super r
+	rancher
+
 # Volume control
 XF86AudioRaiseVolume
 	amixer -q sset Master,0 1%+ unmute

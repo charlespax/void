@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+st -T "Ranger Danger!!!" -e bash -c ranger

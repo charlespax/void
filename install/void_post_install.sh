@@ -218,6 +218,11 @@ applist+=' liberation-fonts-ttf'  # default st font
 #nerd font - special characters in text (in termainl?)
 #              atomotic if a character code is in the text?
 
+# Bluetooth
+# https://docs.voidlinux.org/config/bluetooth.html
+# applist+=' bluez'   # bluetooth packages
+
+
 
 #############################################################################
 #                                                                           #
@@ -256,3 +261,6 @@ exit
 # * consider cataslysm-dda
 # * consider nethack
 # * consider angband
+# * consider gnu octave
+# * consider Solaar Logitech unifying receiver device manager
+#   Solaar must be run as root
