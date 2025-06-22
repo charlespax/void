@@ -1,6 +1,7 @@
 #!/bin/sh
 
 while true; do
-	xsetroot -name "$(date '+%Y-%m-%d %H:%M:%S')"
+	BATTERY=$(acpi)
+	xsetroot -name "$BATTERY   $(date '+%Y-%m-%d %H:%M') "
 	sleep 1
 done
