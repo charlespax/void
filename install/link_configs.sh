@@ -31,3 +31,6 @@ ln -i -s $PWD/../configs/vim ~/.config/
 
 # Web/Internet
 ln -i -s $PWD/../configs/qutebrowser ~/.config/
+
+# NetHack
+ln -i -s $PWD/../configs/nethackrc ~/.nethackrc
