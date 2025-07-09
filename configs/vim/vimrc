@@ -54,6 +54,11 @@ nnoremap <leader>c :set cursorline! cursorcolumn!<cr>
 :nnoremap <leader>s :let &scrolloff=999-&scrolloff<CR>
 set scrolloff=999            " page scrolls to keep n lines around cursor
 "
+" CODOC <leader>l           toggle display of unprintable charachters
+set list                     " show unprintable characters described below
+set listchars=tab:⍿·,trail:X,eol:¬
+nnoremap <leader>l :set list!<cr>
+"
 set termguicolors            " use 24-bit colors (consistent across terms)
 "
 colorscheme lunaperche       " default is lunaperche
@@ -65,7 +70,7 @@ set laststatus=2             " Always show the status line
 "
 " CODOC <leader><enter>     disable highlighting
 map <silent> <leader><cr> :nohlsearch<cr>
-
+"
 " CODOC
 " CODOC SEARCH
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -104,11 +109,8 @@ endfunction
 " CODOC TEXT BEHAVIOR
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set smarttab                 " treat groups of spaces as tabs
-"
-set list                     " show unprintable characters described below
-set listchars=tab:⍿·,trail:X,eol:¬
-" CODOC <leader>l           toggle display of unprintable charachters
-nnoremap <leader>l :set list!<cr>
+set tabstop=8                " should be same as shiftwidth
+set shiftwidth=8             " should be same at tabstop
 "
 set autoindent               " current indent copied to new line
 set smartindent              " move (de)indent brackets automatically
