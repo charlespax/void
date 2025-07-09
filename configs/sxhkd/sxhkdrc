@@ -7,6 +7,8 @@
 
 # TODO describe which keybindings are active on the system before this file
 # is loaded.
+#
+# NOTE ~/.xinitrx may have have keymappings
 
 # Firefox web browser
 super f
