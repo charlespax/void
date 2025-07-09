@@ -15,7 +15,8 @@ OPTIONS=role:rogue
 # archeologist, barbarian, caveman, healer, knight,
 # monk, priest, rogue, ranger, samurai, tourist, valkyrie, wizard, random
 OPTIONS=race:human
-# human, orc, random
+# dwarf, elf, gnome, human, orc, random
+# NOTE there are limitations for role-race pairings
 OPTIONS=gender:male
 # male, female, random
 OPTIONS=align:lawful
@@ -23,7 +24,7 @@ OPTIONS=align:lawful
 
 # Pet Options
 ###############################################################################
-OPTIONS=pettype:dog
+OPTIONS=pettype:none
 # cat, dog, none
 # NOTE the following roles always start with an associated pet.
 #      caveman:dog, knight:pony, ranger:dog, samurai:dog, wizard:cat
@@ -37,6 +38,24 @@ OPTIONS=safe_pet
 
 # Display Options
 ###############################################################################
+# NOTE below is an example set of status lines
+# Charles the Footpad            St:14 Dx:18 Co:14 In:12 Wi:9 Ch:8  Chaotic
+# Dlvl:2  $:5  HP:10(12)  Pw:2(2)  AC:7  Xp:1/2  T:346
+# <name> Charles
+# <rank> Footpad
+# <strength> 14
+# <desterity> 18
+# <constitution> 14
+# <intelligence> 12
+# <wisdon> 9
+# <charisma> 8
+# <alignment> Chaotic
+# <dungeon level> 2
+# <gold> 5
+# <hit points>(<max hitpoints>) 10(12)
+# <power>(<max power> 2(2)j
+# <armor class> 7
+# <experience level>/<experience points> 1/2
 OPTIONS=showexp
 OPTIONS=showscore
 OPTIONS=time
