@@ -15,7 +15,13 @@ feh --bg-fill ~/.local/wallpapers/sunset.jpg
 dwm_status_bar_date-time &
 
 # CapsLock acts as Escape
-xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+#xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
+# CapsLock acts as L_Control
+xmodmap -e 'clear lock' \
+        -e 'clear control' \
+	-e 'keycode 66 = Control_L' \
+	-e 'add control = Control_L Control_R'
 
 # X Server Setting
 xset r rate 250 45      # xset r <wait time in ms> <keys per secone>
@@ -25,4 +31,7 @@ exec dwm &
 
 # start keyboard shortcut daemon
 sxhkd -c $HOME/.config/sxhkd/sxhkdrc
+
+
+
 
