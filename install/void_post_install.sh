@@ -264,3 +264,16 @@ exit
 # * consider gnu octave
 # * consider Solaar Logitech unifying receiver device manager
 #   Solaar must be run as root
+# * consider fontmanager
+# * consider ttf-ubuntu-font-family
+# * consider console-setup
+# * consider sacc gopher browser
+# * consider typespeed typing speed tester
+#
+# Printing
+# suod xbps-install void-repo-nonfree
+# sudo xbps-install cups cups-filters foomatic-db foomatic-db-nonfree \
+#                   gutenprint brother-brlaser
+# sudo ln -s /etc/sv/cupsd /var/service/
+# sudo usermod -a -G lpadmin <username>
+# # https://localhost:631    then select MFC-L*
