@@ -1,0 +1,22 @@
+The tar command
+
+Flags
+---------
+-c create a new archive
+-z use gzip compression
+-v verbose
+-f file name parameter follows
+-x extract the compressed file
+
+Compress a folder
+---------------------
+$ tar -czvf <destination file>.tar.gz <source folder>
+
+Extract an archive
+---------------------
+tar -xzvf <filename>
+
+
+Display the contents of a archive
+----------------------------------------
+tar -tvf <filename>
