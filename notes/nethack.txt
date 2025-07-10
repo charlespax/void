@@ -1,0 +1,46 @@
+
+
+
+Armor
+###############################################################################
+Headgear
+----------------------------------------
+Blessed +1 hard hat               AC-3
+uncursed +1 iron skull cap        AC-2
+uncursed +0 iron skull cap        AC-1
+uncursed +0 plumed helmet         AC-1
+
+Torso Garments
+---------------------------------------
+blessed +1 hooded cloak           AC-1
+blessed +1 leather armor          AC-3
+uncursed -0 hooded cloak          AC-0
+uncursed +0 dwarven mithril-coat  AC-6
+uncursed +0 elven mithril-coat    AC-5
+uncursed _2 plate mail            AC-9
+
+Gloves
+--------------------------------------
+uncursed +0 pair of padded gloves AC-1
+
+Shields
+----------------------------------------
+Blessed +0 large round shield     AC-2
+uncursed +0 large round shield    AC-2
+
+Footwear
+---------------------------------------
+uncursed +0 uncursed pair of hard shoes AC-2
+
+Eating
+###############################################################################
+goblin                            safe
+kobold                            deadly
+ant                               safe
+orc
+
+Rings
+###############################################################################
+Dropping a ring in a fountain
+--------------------------------------
+the sink looks nothing like a fountain - ring of protectin (probably)
