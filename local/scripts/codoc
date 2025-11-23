@@ -12,7 +12,7 @@
 CODOCTAG='CODOC'
 
 helpmessage() {
-	echo "valid parameters: bash codoc vim"
+	echo "valid parameters: bash codoc vim wifi"
 }
 
 printlines() {
@@ -40,6 +40,9 @@ case "$1" in
 		;;
 	"vim") # COODOOC vim
 		printlines ~/.config/vim/vimrc
+		;;
+	"wifi") # COODOOC wifi
+		printlines ~/.local/scripts/wifi.sh
 		;;
 	*)
 		echo "ERROR: not a valid parameter"

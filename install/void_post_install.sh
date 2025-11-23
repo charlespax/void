@@ -123,7 +123,7 @@ applist+=' viu'              # terminal image viewer
 applist+=' asciiquarium'     # terminal aquarium
 
 # Text Editor
-applist+=' vim'              # text editor
+applist+=' vim-huge'              # text editor
 #TODO investigate vimwiki
 
 # Multimedia
@@ -277,3 +277,4 @@ exit
 # sudo ln -s /etc/sv/cupsd /var/service/
 # sudo usermod -a -G lpadmin <username>
 # # https://localhost:631    then select MFC-L*
+# install curl
