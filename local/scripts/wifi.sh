@@ -3,7 +3,10 @@
 # TODO one action when executed via dmenu
 # and another when executed via the shell
 
-# CODOC *** How to setup wifi ***
+# CODOC
+# CODOC #########################
+# CODOC ##  How to setup wifi  ##
+# CODOC #########################
 # CODOC 
 # CODOC wpa_cli scan
 # CODOC wpa_cli scan_results
@@ -26,16 +29,14 @@ else
 fi
 
 # Scan for Networks via the shell
-wpa_cli scan  # scan for networks
 echo "scanning for networks..."
+wpa_cli scan  # scan for networks
 sleep 2.5
-#wpa_cli scan_results
 
-# Scan for Networks via dmenu
-echo "WiFi Networks"
-echo "------------------------------"
-# Possibly useful:
-wpa_cli scan_results | cut -f 5- | grep -v '^$'
+# Send results to dmenu
+# TODO - put processed scan_results into a variable
+#      - set the variable list to dmenu
+#      - use the variable to sent the results to the terminal
 SSID="$(wpa_cli scan_results | \
 	sed 's/.*]//' | \
 	sed 's/\t//' | \
@@ -44,6 +45,10 @@ SSID="$(wpa_cli scan_results | \
 	grep -v 'Selected interface' | \
 	grep -v '/' | \
 	dmenu)"
+echo ""
+echo "WiFi Networks"
+echo "------------------------------"
+echo $SSID
 echo ""
 
 NET=`wpa_cli add_network | grep -E "[0-9]" | grep -v "[A-Z]"`
