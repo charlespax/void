@@ -165,6 +165,7 @@ applist+=' libwebkit2gtk41-devel' # required to build surf web browser
 
 # Desktop Environment
 applist+=' feh'          # desktop background setter
+applist+=' slock'        # screen locker
 #applist+=' screenkey'   # screencast keystrokes
 #applist+=' entr'        # run commands when a file changes
 # clipboard manager

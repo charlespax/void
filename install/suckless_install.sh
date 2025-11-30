@@ -29,13 +29,13 @@ make
 sudo make install
 
 # slock -- Display Locker
-cd $GIT_FOLDER
-git clone https://git.suckless.org/slock
-make clean
-make
-sudo make install
+#cd $GIT_FOLDER
+#git clone https://git.suckless.org/slock
+#make clean
+#make
+#sudo make install
 
-# wt -- Terminal Emulator
+# st -- Terminal Emulator
 cd $GIT_FOLDER
 git clone https://git.suckless.org/st
 make clean
