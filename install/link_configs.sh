@@ -10,6 +10,7 @@ PWD=`pwd`
 
 # Directory Structure
 ln -i -s $PWD/../local/scripts ~/.local/
+ln -i -s $PWD/../configs/user-dirs.dirs ~/.config/user-dirs.dirs
 
 # Bash
 ln -i -s $PWD/../configs/bash_login ~/.bash_login
