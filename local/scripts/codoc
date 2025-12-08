@@ -10,9 +10,10 @@
 # TODO in codoc, add a help statement
 
 CODOCTAG='CODOC'
+DWMDIR=~/gits/dwm/config.h
 
 helpmessage() {
-	echo "valid parameters: bash codoc vim wifi"
+	echo "For help try '$ codoc codoc'"
 }
 
 printlines() {
@@ -37,6 +38,9 @@ case "$1" in
 		CODOCTAG='COOD'
 		CODOCTAG+='OOC'
 		printlines ~/.local/scripts/codoc
+		;;
+	"dwm")  # COODOOC dwm
+		printlines $DWMDIR
 		;;
 	"vim") # COODOOC vim
 		printlines ~/.config/vim/vimrc
