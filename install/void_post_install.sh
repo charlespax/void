@@ -148,7 +148,7 @@ applist+=' libXrandr-devel'       # required to build slock screen locker
 applist+=' gtk+3-devel'           # required to build surf web browser
 applist+=' gcr-devel'             # required to build surf web browser
 applist+=' libwebkit2gtk41-devel' # required to build surf web browser
-#applist+=' ctags'                # source code tagging tool, used with vim
+applist+=' ctags'                # source code tagging tool, used with vim
 #applist+=' doxygen'              # documentation generation
 #applist+=' graphviz'          # 
 #gnu-parallel        # parallelization

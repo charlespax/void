@@ -209,3 +209,7 @@ map <leader>cc :botright cope<cr>
 "
 " CODOC <leader>t           open a terminal
 nnoremap <leader>t :vert term<cr>
+"
+" CODOC $ ctags -R <path>   generate ctags
+" CODOC <C-]>               jump to ctag under cursor
+" CODOC <C-t>               jump back to previous ctag 
