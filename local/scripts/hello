@@ -41,11 +41,11 @@ Updating All Software
 
 dwmShortcuts () {
 echo "
-  <alt>j,k -- Switch terminals
-  <alt>h,l -- move terminal split
-  <alt><shift>ENTER -- open new terminal
-  <alt>ENTER -- swap window with main
-  <shift><alt>q  exit DWM
+  <alt>j,k           Switch terminals
+  <alt>h,l           move terminal split
+  <alt><shift>ENTER  open new terminal
+  <alt>ENTER         swap window with main
+  <shift><alt>q      exit DWM
                  $ pkill -KILL -u $USER
   <alt>1-0 -- switch desktops
   <alt>p -- run dmenu

@@ -216,13 +216,18 @@ applist+=' speedcrunch'       # gui calculator
 applist+=' liberation-fonts-ttf'  # default st font
 #applist+=' ttf-font-awesome'  # (probably icont fonts)
 #applist+=' ttf-roboto-mono'  # (not sure)
-#nerd font - special characters in text (in termainl?)
+applist+=' nerd-fonts'         #special characters in text
+applist+=' dejavu-fonts-ttf'
+applist+=' noto-fonts-ttf'
+applist+=' noto-fonts-emoji'
 #              atomotic if a character code is in the text?
 
 # Bluetooth
 # https://docs.voidlinux.org/config/bluetooth.html
-# applist+=' bluez'   # bluetooth packages
-
+applist+=' bluez'   # bluetooth packages
+# ln -s /etc/sv/bluetoothd /var/service/
+# ln -s /etc/sv/dbus /var/service/
+#
 
 
 #############################################################################
