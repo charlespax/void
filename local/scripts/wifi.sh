@@ -21,8 +21,8 @@ HOST="8.8.8.8" # Google's DSN server
 
 if ping -c 1 -W 1 "$HOST" > /dev/null 2>&1; then
 	echo "Network...  connected"
-	#echo "exiting..."
-	#exit
+	echo "exiting..."
+	exit
 else
 	echo "Network...  ERROR: network is disconnected"
 	echo "configuring..."
