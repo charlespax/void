@@ -1,7 +1,5 @@
 #!/bin/env bash
 
-# TODO System Dope uses iwd instead of wpa_supplicant or other
-
 # Header Information ##########################################################
 #
 # Name: System Dope iwctl Wrapper
@@ -20,7 +18,7 @@ DOPE_VERSION="0.0.1"
 
 # Global Variables ############################################################
 COMMAND=""
-DEVICE=""  # TODO update via the devices list's first line or via the -d flag
+DEVICE=""
 
 # Usage #######################################################################
 USAGE="Usage: ${SCRIPT_NAME} [OPTION]... [COMMAND]...
@@ -76,13 +74,13 @@ done
 
 # Function Declarations #######################################################
 
-# function clean_lines
+# function: clean_iwctl_output
 # Clean the output of iwctl
 # - remove header lines
 # - remove leading white space on each line
 # - remove ansi color codes
 # - TODO explicitly remove blank footer line
-function clean_lines {
+function clean_iwctl_output {
 	local STR="${1}"
 	STR=$(sed '1,4d' <<< ${STR}) # select lies 1-4, delete
 	STR=$(sed -e 's/\x1b\[[0-9;]*m//g' <<< ${STR}) # remove ansi colors
@@ -90,62 +88,52 @@ function clean_lines {
 	return 0
 }
 
-# function col1
+# function: col1
 # Get the first column from a block of text
+# - input must be cleaned if necessary (e.g. clean_iwctl_output)
 # - outputs the first word of each line
 function col1 {
 	local STR="${1}"
-	STR="$(clean_lines "${STR}")"
 	STR="$(awk '{print $1}' <<< ${STR})" # select first column
 	printf "${STR}\n"
 	return 0
 }
 
-# function row1
-# TODO is there a use case for this function?
-# Get the first column from a block of text
-# - outputs the first word of each line
-function row1 {
-	local STR="${1}"
-	STR="$(clean_lines "${STR}")"
-	STR="$(head -n 1 <<< ${STR})"
-	printf "${STR}\n"
-	return 0
-}
-
-# function list_devices
+# function: list_devices
 # List available devices
 function list_devices {
 	local STR=""
-	STR="$(col1 "$(iwctl device list)")"
+	STR="$(iwctl device list)"
+	STR="$(clean_iwctl_output "${STR}")"
+	STR="$(col1 "${STR}")"
 	printf "${STR}\n"
 	return 0
 }
 
-# function list_networks
+# function: list_networks
 # Get a list of networks from a device
 function list_networks {
 	local STR=""  # working string
 	local NETS=""  # list of network names
 	# ensure DEVICE is defined
 	if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
-		DEVICE="$(head -n 1 <<< $(${0} devices))"
+		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
 	fi
-
 	# process working string
 	# TODO scan first
 	STR="$(iwctl station ${DEVICE} get-networks)\n"
+	STR="$(clean_iwctl_output "${STR}")"
 	STR="$(col1 "${STR}")"
 	NETS="${STR}"
 	printf "${NETS}\n"
 	return 0
 }
 
-# function use_dmenu
+# function: use_dmenu
 # utilize dmenu
 function use_dmenu {
 	if [[ "${DEVICE}" == "" ]]; then  # select DEVICE if not set using -d
-		DEVICE="$(${0} devices | dmenu -p "Select device")"
+		DEVICE="$("${0}" devices | dmenu -p "Select device")"
 	fi
 	NETWORK="$(${0} networks -d ${DEVICE} | dmenu -p "Select network")"
 	printf "Device: ${DEVICE}\n"
@@ -158,17 +146,11 @@ function use_dmenu {
 }
 
 # Main Logic ##################################################################
-# NOTE do the minimum here (e.g. each case calls a callback function)
+
 # TODO test for network connectivity
 case ${COMMAND} in
-	devices)
-		list_devices
-		;;
-	networks)
-		list_networks
-		;;
-	dmenu)
-		use_dmenu
-		;;
+	devices) list_devices ;;
+	networks) list_networks ;;
+	dmenu) use_dmenu ;;
 esac
 
