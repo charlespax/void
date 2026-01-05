@@ -114,7 +114,6 @@ function list_devices {
 # Get a list of networks from a device
 function list_networks {
 	local STR=""  # working string
-	local NETS=""  # list of network names
 	# ensure DEVICE is defined
 	if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
 		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
@@ -124,8 +123,7 @@ function list_networks {
 	STR="$(iwctl station ${DEVICE} get-networks)\n"
 	STR="$(clean_iwctl_output "${STR}")"
 	STR="$(col1 "${STR}")"
-	NETS="${STR}"
-	printf "${NETS}\n"
+	printf "${STR}\n"
 	return 0
 }
 
