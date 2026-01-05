@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Get GIT_HOME
-get_git() {
+function get_git {
 	if [ -z "${GIT_HOME}" ]; then
 		echo "Environment variable GIT_HOME is not set."
 		read -r -p "Enter path to GIT_HOME: " GIT_HOME
@@ -15,7 +15,7 @@ get_git() {
 REPO_LIST="dwm dmenu st"
 
 # Functions
-git_clone() {
+function git_clone {
 	#TODO check if directories exist
 	echo cloning $1 into $GIT_HOME/$1
 	#echo cd $GIT_HOME
@@ -26,7 +26,7 @@ git_clone() {
 	sudo make install
 }
 
-main() {
+function main {
 	get_git
 	echo ""
 	echo GIT_HOME: $GIT_HOME
@@ -40,7 +40,7 @@ main() {
 	done
 }
 
-# Execute the main() function
+# Execute the main function
 main first second third
 
 exit
