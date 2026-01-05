@@ -165,7 +165,7 @@ function scan_networks {
 	if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
 		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
 	fi
-	iwctl station ${DEVICE} scan
+	iwctl station "${DEVICE}" scan
 	return 0
 }
 
@@ -177,7 +177,6 @@ function list_networks {
 	if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
 		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
 	fi
-	scan_networks
 	# process working string
 	STR="$(iwctl station ${DEVICE} get-networks)\n"
 	STR="$(clean_iwctl_output "${STR}")"
@@ -189,10 +188,13 @@ function list_networks {
 # function: use_dmenu
 # utilize dmenu
 function use_dmenu {
+	# TODO automatically select first device if only one device
 	if [[ "${DEVICE}" == "" ]]; then
 		DEVICE="$("${0}" devices | \
 			dmenu -p "Select device")"
 	fi
+	scan_networks
+	sleep 2
 	if [[ "${NETWORK}" == "" ]]; then
 		NETWORK="$(${0} networks -d ${DEVICE} | \
 			dmenu -p "Select network")"
@@ -210,7 +212,7 @@ function use_dmenu {
 	printf "Device: ${DEVICE}\n"
 	printf "Network: ${NETWORK}\n"
 	printf "Password: ${PASSWORD}\n"
-	iwctl station ${DEVICE} connect ${NETWORK} -p ${PASSWORD}
+	iwctl --password "${PASSWORD}" station "${DEVICE}" connect "${NETWORK}"
 	# TODO confirm connection
 	return 0
 }
