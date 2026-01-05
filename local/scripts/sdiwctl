@@ -1,0 +1,245 @@
+#!/bin/env bash
+
+# Notes #######################################################################
+# DONE $ iwctl device list  # list devices
+# $ iwctl device <device>  set-property Powered on  # power on device
+# DONE $ iwctl station <device> scan  # scan for networks
+# DONE $ iwctl station <device> get-networks  # list available network ssids
+# DONE $ iwctl station <device> connect <ssid>  # connect to network
+# $ iwctl station <device connect-hidden <ssid>  # connect to hidden network
+# $ iwctl station <device> disconnect <ssid>  # disconnect from network
+# TODO manage device power (Powered on)
+# TODO connect to network
+# TODO connect to hidden network
+# TODO mechanism for password
+#      - DONE -p and --password
+#      - add password request to dmenu function
+#
+# BUG script does not handle ssid's with spaces
+# TODO handle ssid's with spaces
+#      - find the location of the second column header
+#      - ssid is everything up to that column
+#      - trim leading and trailing whitespace
+
+# Header Information ##########################################################
+#
+# Name: System Dope iwctl Wrapper
+#
+# Description: wrapper for iwctl to output clean lists for dmenu
+#
+# Version: ${SCRIPT_VERSION}
+# License: ${SCRIPT_LICENSE}
+# Author: Charles Edward Pax <charles@pax.net>
+
+# Script Metadata and Constants ###############################################
+SCRIPT_NAME="dope_iwdctl"
+SCRIPT_VERSION="0.0.1"
+SCRIPT_LICENSE="gplv3"
+DOPE_VERSION="0.0.1"
+
+# Global Variables ############################################################
+COMMAND=""
+DEVICE=""
+NETWORK=""
+PASSWORD=""
+
+# Usage #######################################################################
+USAGE="Usage: ${SCRIPT_NAME} [OPTION]... [COMMAND]...
+Wrapper for iwctl to output clean lists for dmenu
+Example: ${SCRIPT_NAME} networks
+
+Commands:
+  connect                  connect to a network
+  debug
+  devices                  print list of devices
+  dmenu                    use dmenu
+  networks                 print list of available networks
+  scan                     scan DEVICE for networks
+
+Flags:
+  -d, --device=DEVICE      define DEVICE
+  -h, --help               print this help message
+      --license            print license information
+  -n, --network=NETWORK    define NETWORK
+  -p, --password=PASSWORD  define PASSWORD
+  -v, --version            print this script's name and version"
+
+# Argument Processing #########################################################
+# NOTE Do the minimal (i.e. set variables, etc.)
+while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
+	case "${1}" in
+	# Flag Arguments
+	# - flags that exit
+	# - flags that set variables
+		-d|--device)
+			shift  # discard the -d flag
+			DEVICE="${1}"  # DEVICE is the next parameter
+			shift  # drop DEVICE parameter
+			;;
+		-h|--help)
+			printf "${USAGE}\n"
+			shift
+			;;
+		--license)
+			printf "${SCRIPT_LICENSE}\n"
+			exit
+			;;
+		-n|--network)
+			shift  # discard the -n flag
+			PASSWORD="${1}"  # NETWORK is the next parameter
+			shift  # drop NETWORK parameter
+			;;
+		-p|--password)
+			shift  # discard the -p flag
+			PASSWORD="${1}"  # PASSWORD is the next parameter
+			shift  # drop PASSWORD parameter
+			;;
+		-v|--version)
+			printf "${SCRIPT_NAME} ${SCRIPT_VERSION}\n"
+			exit
+			;;
+	# Non-flag Arguments
+		debug|dmenu|devices|connect|networks|scan)
+			COMMAND="${1}"
+			shift
+			;;
+		*)
+			printf "Unknown command: ${1}\n"
+			exit
+			;;
+	esac
+done
+# Exit if COMMAND is not set
+if [[ "${COMMAND}" == "" ]]; then
+	printf "no command set\n"
+	exit
+fi
+
+# Function Declarations #######################################################
+
+# function: clean_iwctl_output
+# Clean the output of iwctl
+# - remove ansi color codes
+# - remove leading white space on each line
+# - remove header lines
+# - TODO explicitly remove blank footer line
+function clean_iwctl_output {
+	local STR="${1}"
+	local HEADER=""
+	local SPACE_COUNT=0
+	STR="$(sed -e 's/\x1b\[[0-9;]*m//g' <<< "${STR}")" # remove ansi colors
+	STR="$(sed '1,2d' <<< ${STR})"  # delete header lines 1-2
+	HEADER="$(head -n 1 <<< ${STR})"  # grag the top line
+	SPACE_COUNT="$(expr match "${HEADER}" " *")"  # count spaces in header
+	STR="$(cut -c $((${SPACE_COUNT} + 1))- <<< "${STR}")"  # del left chars
+	STR="$(sed '1,2d' <<< ${STR})" # delete header lines 3-4
+	printf "${STR}\n"
+	return 0
+}
+
+# function: col1
+# Get the first column from a block of text
+# - input must be cleaned if necessary (e.g. clean_iwctl_output)
+# - outputs the first word of each line
+function col1 {
+	local STR="${1}"
+	STR="$(awk '{print $1}' <<< ${STR})" # select first column
+	printf "${STR}\n"
+	return 0
+}
+
+# function: list_devices
+# List available devices
+function list_devices {
+	local STR=""
+	STR="$(iwctl device list)"
+	STR="$(clean_iwctl_output "${STR}")"
+	STR="$(col1 "${STR}")"  # only column 1
+	printf "${STR}\n"
+	return 0
+}
+
+# function: scan_networks
+# Scan DEVICE for available networks
+function scan_networks {
+	if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
+		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
+	fi
+	iwctl station ${DEVICE} scan
+	return 0
+}
+
+# function: list_networks
+# Get a list of networks from a device
+function list_networks {
+	local STR=""  # working string
+	# ensure DEVICE is defined
+	if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
+		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
+	fi
+	scan_networks
+	# process working string
+	STR="$(iwctl station ${DEVICE} get-networks)\n"
+	STR="$(clean_iwctl_output "${STR}")"
+	STR="$(col1 "${STR}")"  # only column 1
+	printf "${STR}\n"
+	return 0
+}
+
+# function: use_dmenu
+# utilize dmenu
+function use_dmenu {
+	if [[ "${DEVICE}" == "" ]]; then
+		DEVICE="$("${0}" devices | \
+			dmenu -p "Select device")"
+	fi
+	if [[ "${NETWORK}" == "" ]]; then
+		NETWORK="$(${0} networks -d ${DEVICE} | \
+			dmenu -p "Select network")"
+	fi
+	if [[ "${PASSWORD}" == "" ]]; then
+		PASSWORD="$(dmenu -p "${NETWORK} password" < /dev/null)"
+	fi
+	# Use notify-send if installed
+	if command -v notify-send &> /dev/null; then
+		notify-send "iwctl status" "\
+			\rDevice: ${DEVICE}\
+			\rNetwork: ${NETWORK}\
+			\rPassword: ${PASSWORD}\n"
+	fi
+	printf "Device: ${DEVICE}\n"
+	printf "Network: ${NETWORK}\n"
+	printf "Password: ${PASSWORD}\n"
+	iwctl station ${DEVICE} connect ${NETWORK} -p ${PASSWORD}
+	# TODO confirm connection
+	return 0
+}
+
+# function: connect_network
+# Connect to a network
+# - TODO use -d to select device
+# - TODO use -n to select network
+# - TODO use -p to set password
+function connect_network {
+	printf "TODO implement connect function.\n"
+	return 0
+}
+
+# Main Logic ##################################################################
+
+# TODO test for network connectivity
+case ${COMMAND} in
+	connect) connect_network ;;
+	devices) list_devices ;;
+	dmenu) use_dmenu ;;
+	networks) list_networks ;;
+	scan) scan_networks ;;
+	debug)
+		printf "** clean_iwctl_output \"\$(iwctl device list)\" **\n"
+		clean_iwctl_output "$(iwctl device list)"
+		printf "\n"
+		printf "** clean_iwctl_output \"\$(iwctl station wlp0s20f3 get-networks)\" **\n"
+		clean_iwctl_output "$(iwctl station wlp0s20f3 get-networks)"
+		;;
+esac
+
