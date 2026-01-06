@@ -45,13 +45,13 @@ Wrapper for iwctl to output clean lists for dmenu
 Example: ${SCRIPT_NAME} networks
 
 Commands:
-  connect                  connect to a network
-  debug                    display debug information
-  devices                  display a list of devices
-  dmenu                    connect to network using dmenu
-  fzf                      connect to network using fzf
-  networks                 display a list of available networks
-  scan                     scan <device> for networks
+  connect      connect to a network
+  debug        display debug information
+  devices      display a list of devices
+  dmenu        connect to network using dmenu
+  fzf          connect to network using fzf
+  networks     display a list of available networks
+  scan         scan <device> for networks
 
 Flags:
   -d, --device=DEVICE      define DEVICE
@@ -76,6 +76,7 @@ while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
 		-h|--help)
 			printf "${USAGE}\n"
 			shift
+			exit
 			;;
 		--license)
 			printf "${SCRIPT_LICENSE}\n"

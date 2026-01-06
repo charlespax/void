@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+printf "This script is depricated. Use sdiwctl instead.\n"
+exit
+
+# TODO rewrite this script using sdiwctl as a reference
 # TODO one action when executed via dmenu
 # and another when executed via the shell
 

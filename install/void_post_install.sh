@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # TODO search youtube for 'suckless developer workflow'
+# TODO add a keybinding for opening the keybindings and shortcuts help page
+#      Add fzf to find the command from the list
 
 # This is a Void Linux post-installation script intended to
 # create a suckless system.
@@ -14,6 +16,10 @@ __     __    _     _   _     _
 
 "
 
+function exit_script () {
+	printf "exiting...\n"
+	exit
+}
 
 #############################################################################
 #                                                                           #
@@ -23,24 +29,28 @@ __     __    _     _   _     _
 
 
 # Test if the system is a Void Linux
-. /etc/os-release # Get OS information
-OS=$ID
-
-if [ $OS == 'void' ]; then
-	echo "Operating System...  void"
+OS=""
+OS=$(. /etc/os-release ; printf "${ID}")
+printf "Operating system: "
+if [[ ${OS} == 'void' ]]; then
+	printf "${OS}\n"
 else
-	echo "Operating System...  ERROR: this script only works on Void"
-	echo "exiting..."
-	exit
+	printf "${OS}\n"
+	printf "ERROR this script only works on Void\n"
+	exit_script
 fi
 
 # Test if this is a live environment
-if grep -q "VOID_LIVE" "/proc/cmdline"; then
-	echo "Environment...  VOID_LIVE"
+# TODO explicitly confirm which non-live environment we have.
+#      Can we detect explicitly if the environment is installed?
+OS_ENV=""
+OS_ENV=$(grep -q "VOID_LIVE" "/proc/cmdline")
+printf "OS environment: "
+if [[ ${OS_ENV} == 'VOID_LIVE' ]]; then
+	printf "${OS_ENV}\n"
 else
-	echo "Environment...  not VOID_LIVE"
+	printf "non-live\n"
 fi
-
 
 # This script requires an active internet connection. If your connection
 # was not configured during installation, you can use the following commands
@@ -60,9 +70,9 @@ fi
 HOST="8.8.8.8" # Google's DSN server
 
 if ping -c 1 -W 1 "$HOST" > /dev/null 2>&1; then
-	echo "Network...  connected"
+	echo "Network:  connected"
 else
-	echo "Network...  ERROR: network is disconnected"
+	echo "Network:  ERROR: network is disconnected"
 	echo "
 This script requires an active internet connection. If your connection
 was not configured during installation, you can use the following commands
@@ -93,66 +103,80 @@ fi
 # Packages that appear on the applist will be installed using xbps.
 applist=''
 
-# Display Manager
+# CODOC Display Manager
+# CODOC ** There is no display manager
 
-# X Display Server
-applist+=' xorg'      # x window server
-applist+=' arandr'    # gui monitor management toolfor randr
-applist+=' autorandr' # command line monitor utility for randr
+# CODOC X Display Server
+applist+=' xorg'             # CODOC xorg       x window server
+applist+=' arandr'           # CODOC arandr     gui monitor management tool for randr
+applist+=' autorandr'        # CODOC autorandr  command line monitor utility for randr
 
-# X Keyboard Management
-applist+=' sxhkd'            # keyboard shortcut daemon
-                             # sxhkd is referenced in configs/xinitrc
+# CODOC X Keyboard Management
+applist+=' sxhkd'            # CODOC sxhkd      keyboard shortcut daemon
+                             # CODOC            sxhkd is referenced in configs/xinitrc
 
-# Terminal Utilities
-applist+=' acpi'             # battery information
-applist+=' fastfetch'        # show computer info
-applist+=' htop'             # system monitor
-applist+=' tree'             # view a directory structure
-applist+=' fzf'              # fuzzy finder used in tmux-sessionizer script
-                             # fzf is referenced in local/scripts/tmux-sesionizer
-applist+=' tmux'             # terminal mulplexor
-                             # tmux is referenced in local/scripts/tmux-sessionizer
-#applist+=' udisks2'          # usb disk mounting
-#applist+=' mc'               # "Midnight Commander" tui file manager
-applist+=' ranger'           #tui file manager (vim keybindings)
-applist+=' bashmount'        # tui disk mounting
-applist+=' viu'              # terminal image viewer
+# CODOC Terminal Utilities
+applist+=' acpi'             # CODOC acpi       battery information
+applist+=' fastfetch'        # CODOC fastfetch  show computer info
+applist+=' htop'             # CODOC htop       system monitor
+applist+=' tree'             # CODOC tree       view a directory structure
+# fzf is used in the terminal and pressing ctrl-f, tmux sessionizer
+# fzf can also be used in dmenu scripts.
+# IDEA scripts can be dmenu-aware. Output types: terminal with opt flags, dmenu
+applist+=' fzf'              # CODOC fzf        fuzzy finder used in tmux-sessionizer script
+                             #                  fzf is referenced in local/scripts/tmux-sesionizer
+applist+=' tmux'             # CODOC tmux       terminal mulplexor
+                             #                  tmux is referenced in local/scripts/tmux-sessionizer
+#applist+=' udisks2'         # codoc udisks2    usb disk mounting
+#applist+=' mc'              # codoc mc         Midnight Commander tui file manager
+applist+=' ranger'           # CODOC ranger     tui file manager (vim keybindings)
+applist+=' bashmount'        # CODOC bashmount  tui disk mounting
+applist+=' viu'              # CODOC viu        terminal image viewer
 
-# Terminal Fun
-applist+=' asciiquarium'     # terminal aquarium
+# CODOC Terminal Fun and Games
+applist+=' asciiquarium'     # CODOC asciiquarium  terminal aquarium
 
-# Text Editor
-applist+=' vim-huge'              # text editor
+# CODOC Text Editor
+applist+=' vim-huge'         # CODOC vim        text editor
 #TODO investigate vimwiki
 
-# Multimedia
-applist+=' farbfeld'          # image format required for sent
-applist+=' mpv'              # video player
-#applist+=' gimp'             # image editor
+# CODOC Multimedia
+applist+=' farbfeld'         # CODOC farbfeld   image format required for sent
+applist+=' mpv'              # CODOC mpv        video player
+#applist+=' gimp'            # codoc gimp       image editor
 
-# Printing system
-#lprng        # gives 'lp' command for terminal printing
+# CODOC Printing system
+#lprng                       # CODOC lprng      'lp' terminal print command
 
+# CODOC Development
+applist+=' git'                   # CODOC git   version control
+applist+=' base-devel'            # CODOC base-devel core build utilities
+applist+=' ctags'                # source code tagging tool, used with vim
+#applist+=' doxygen'              # documentation generation
 
-# Development
-applist+=' git'                   # version control
-applist+=' base-devel'            # core build utilities
+# CODOC Build Dependencies: dwm
 applist+=' libX11-devel'          # required to build dwm window manager
 applist+=' libXft-devel'          # required to build dwm window manager
 applist+=' libXinerama-devel'     # required to build dwm window manager
 applist+=' freetype-devel'        # required to build dwm window manager
 applist+=' fontconfig-devel'      # required to build dwm window manager
+
+# CODOC Build Dependencies: sent
 #applist+=' farbfeld-devel'       # required to build sent presentation tool
+
+# CODOC Build Dependencies: slock
 applist+=' libXrandr-devel'       # required to build slock screen locker
+
+# CODOC Build Dependencies: surf
 applist+=' gtk+3-devel'           # required to build surf web browser
 applist+=' gcr-devel'             # required to build surf web browser
 applist+=' libwebkit2gtk41-devel' # required to build surf web browser
-applist+=' ctags'                # source code tagging tool, used with vim
-#applist+=' doxygen'              # documentation generation
+
 #applist+=' graphviz'          # 
 #gnu-parallel        # parallelization
 #seer                # GUI for gdb
+
+# CODOC Build Dependencies: scim
 #libzip-dev          # required to build scim
 #libxml2-dev         # required to build scim
 #bison               # required to build scim
@@ -163,11 +187,11 @@ applist+=' ctags'                # source code tagging tool, used with vim
 #stow                # required to build scim
 
 
-# Desktop Environment
-applist+=' feh'          # desktop background setter
-applist+=' slock'        # screen locker
-#applist+=' screenkey'   # screencast keystrokes
-#applist+=' entr'        # run commands when a file changes
+# CODOC Desktop Environment
+applist+=' feh'          # CODOC feh        desktop background setter
+applist+=' slock'        # CODOC slock      screen locker
+#applist+=' screenkey'   # CODOC screenkey  screencast keystrokes
+#applist+=' entr'        # CODOC entr       run commands when a file changes
 # clipboard manager
 # color picker
 # document viewer
@@ -175,6 +199,7 @@ applist+=' slock'        # screen locker
 # file manager
 # gamma and day/night adjustment
 # notification daemon
+applist+=' dunst'             # provides notify-send for notifications
 # power menu wlogout
                               # feh is reverenced in configs/xinitrc
 applist+=' pamixer'           # volume control
@@ -182,6 +207,7 @@ applist+=' brightnessctl'     # brightness control
 
 
 # Network Control
+# TODO replace wpa_supplicant with iwd
 applist+=' wpa_gui'           # gui network manager
 
 
@@ -235,8 +261,23 @@ applist+=' bluez'   # bluetooth packages
 #   Install Packages                                                        #
 #                                                                           #
 #############################################################################
-echo $applist
-sudo xbps-install -S $applist
+#my_list=("apple" "banana" "cherry")
+#my_list=( ${applist} )
+
+# Iterate over the array elements
+#for item in "${my_list[@]}"; do
+	#printf "$(xbps-query -p pkgver ${item})\n"
+#done
+printf "\n"
+
+PACK=$(echo "${applist}" | sed 's/ /\n/g' | dmenu -l 8 -nb red -nf blue -p "Select package: ")
+#echo Selected package: $PACK
+printf "$(xbps-query -p pkgver ${PACK})\n"
+
+exit
+
+#printf "Applist: $applist"
+#sudo xbps-install -S $applist
 
 
 #############################################################################
