@@ -49,10 +49,10 @@ Wrapper for iwctl to output clean lists for dmenu
 Example: ${SCRIPT_NAME} networks
 
 Commands:
-  connect                  connect to a network
+  fzf                      connect to a network using fzf
   debug
   devices                  print list of devices
-  dmenu                    use dmenu
+  dmenu                    connect to network using dmenu
   networks                 print list of available networks
   scan                     scan DEVICE for networks
 
@@ -99,7 +99,7 @@ while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
 			exit
 			;;
 	# Non-flag Arguments
-		debug|dmenu|devices|connect|networks|scan)
+		debug|dmenu|devices|fzf|networks|scan)
 			COMMAND="${1}"
 			shift
 			;;
@@ -185,9 +185,9 @@ function list_networks {
 	return 0
 }
 
-# function: use_dmenu
+# function: connect_dmenu
 # utilize dmenu
-function use_dmenu {
+function connect_dmenu {
 	# TODO automatically select first device if only one device
 	if [[ "${DEVICE}" == "" ]]; then
 		DEVICE="$("${0}" devices | \
@@ -217,13 +217,30 @@ function use_dmenu {
 	return 0
 }
 
-# function: connect_network
+# function: connect_fzf
 # Connect to a network
 # - TODO use -d to select device
 # - TODO use -n to select network
 # - TODO use -p to set password
-function connect_network {
-	printf "TODO implement connect function.\n"
+function connect_fzf {
+	# TODO automatically select first device if only one device
+	if [[ "${DEVICE}" == "" ]]; then
+		DEVICE="$("${0}" devices | fzf)"
+	fi
+	scan_networks
+	sleep 2
+	if [[ "${NETWORK}" == "" ]]; then
+		NETWORK="$(${0} networks -d ${DEVICE} | fzf)"
+	fi
+	if [[ "${PASSWORD}" == "" ]]; then
+		printf "Password for ${NETWORK}: "
+		read PASSWORD
+	fi
+	printf "Device: ${DEVICE}\n"
+	printf "Network: ${NETWORK}\n"
+	printf "Password: ${PASSWORD}\n"
+	iwctl --password "${PASSWORD}" station "${DEVICE}" connect "${NETWORK}"
+	# TODO confirm connection
 	return 0
 }
 
@@ -231,9 +248,9 @@ function connect_network {
 
 # TODO test for network connectivity
 case ${COMMAND} in
-	connect) connect_network ;;
+	fzf) connect_fzf ;;
 	devices) list_devices ;;
-	dmenu) use_dmenu ;;
+	dmenu) connect_dmenu ;;
 	networks) list_networks ;;
 	scan) scan_networks ;;
 	debug)
