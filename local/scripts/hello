@@ -4,7 +4,7 @@ echo "For details see
 ${0}
 "
 
-helpfulCommands () {
+function helpfulCommands {
 echo "
 Bash Aliases
   $ alias
@@ -22,7 +22,7 @@ Network Control
 	return
 }
 
-softwareManagement () {
+function softwareManagement {
 echo "
 Searching for Software
   $ xbps-query -Rs <package name>
@@ -39,7 +39,7 @@ Updating All Software
 	return
 }
 
-dwmShortcuts () {
+function dwmShortcuts {
 echo "
   <alt>j,k           Switch terminals
   <alt>h,l           move terminal split
@@ -56,16 +56,16 @@ echo "
 "
 }
 
-startxsession () {
+function startxsession {
 	startx
 	return
 }
 
-exec-xbps-update () {
+function exec-xbps-update {
 	sudo xbps-install -Su
 }
 
-mount-usb () {
+function mount-usb {
         bashmount
 }
 
