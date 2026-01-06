@@ -108,7 +108,8 @@ while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
 	esac
 done
 # Exit if COMMAND is not set
-if [[ "${COMMAND}" == "" ]]; then
+if [[ -z ${COMMAND} ]]; then
+#if [[ "${COMMAND}" == "" ]]; then
 	printf "no command set\n"
 	exit
 fi
@@ -160,7 +161,8 @@ function list_devices {
 # function: scan_networks
 # Scan DEVICE for available networks
 function scan_networks {
-	if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
+	if [[ -z ${DEVICE} ]]; then  # if -d is not set
+	#if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
 		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
 	fi
 	iwctl station "${DEVICE}" scan
@@ -172,7 +174,8 @@ function scan_networks {
 function list_networks {
 	local STR=""  # working string
 	# ensure DEVICE is defined
-	if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
+	if [[ -z ${DEVICE} ]]; then  # if -d is not set
+	#if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
 		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
 	fi
 	# process working string
@@ -187,17 +190,20 @@ function list_networks {
 # utilize dmenu
 function connect_dmenu {
 	# TODO automatically select first device if only one device
-	if [[ "${DEVICE}" == "" ]]; then
+	if [[ -z ${DEVICE} ]]; then
+	#if [[ "${DEVICE}" == "" ]]; then
 		DEVICE="$("${0}" devices | \
 			dmenu -p "Select device")"
 	fi
 	scan_networks
 	sleep 1
-	if [[ "${NETWORK}" == "" ]]; then
+	if [[ -z ${NETWORK} ]]; then
+	#if [[ "${NETWORK}" == "" ]]; then
 		NETWORK="$(${0} networks -d ${DEVICE} | \
 			dmenu -p "Select network")"
 	fi
-	if [[ "${PASSWORD}" == "" ]]; then
+	if [[ -z ${PASSWORD} ]]; then
+	#if [[ "${PASSWORD}" == "" ]]; then
 		PASSWORD="$(dmenu -p "${NETWORK} password" < /dev/null)"
 	fi
 	# Use notify-send if installed
@@ -219,14 +225,17 @@ function connect_dmenu {
 # Connect to a network
 function connect_fzf {
 	# TODO automatically select first device if only one device
-	if [[ "${DEVICE}" == "" ]]; then
+	if [[ -z ${DEVICE} ]]; then
+	#if [[ "${DEVICE}" == "" ]]; then
 		DEVICE="$("${0}" devices | fzf)"
 	fi
 	scan_networks
-	if [[ "${NETWORK}" == "" ]]; then
+	if [[ -z ${NETWORK} ]]; then
+	#if [[ "${NETWORK}" == "" ]]; then
 		NETWORK="$(${0} networks -d ${DEVICE} | fzf)"
 	fi
-	if [[ "${PASSWORD}" == "" ]]; then
+	if [[ -z ${PASSWORD} ]]; then
+	#if [[ "${PASSWORD}" == "" ]]; then
 		printf "Password for ${NETWORK}: "
 		read PASSWORD
 	fi
@@ -242,7 +251,8 @@ function connect_fzf {
 # Connect to a network using the terminal
 function connect_term {
 	# TODO automatically select first device if only one device
-	if [[ "${DEVICE}" == "" ]]; then
+	if [[ -z ${DEVICE} ]]; then
+	#if [[ "${DEVICE}" == "" ]]; then
 		printf "Devices:\n"
 		printf "$("${0}" devices)\n"
 		printf "\n"
@@ -251,7 +261,8 @@ function connect_term {
 	fi
 	scan_networks
 	# TODO present a network list to the user, select by number
-	if [[ "${NETWORK}" == "" ]]; then
+	if [[ -z ${NETWORK} ]]; then
+	#if [[ "${NETWORK}" == "" ]]; then
 		printf "\n"
 		printf "Networks:\n"
 		printf "$(${0} networks -d ${DEVICE})\n"
@@ -260,7 +271,8 @@ function connect_term {
 		read NETWORK
 		printf "\n"
 	fi
-	if [[ "${PASSWORD}" == "" ]]; then
+	if [[ -z ${PASSWORD} ]]; then
+	#if [[ "${PASSWORD}" == "" ]]; then
 		printf "Password for ${NETWORK}: "
 		read PASSWORD
 	fi
