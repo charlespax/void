@@ -1,74 +1,113 @@
 #!/bin/bash
 
-echo "For details see 
-${0}
-"
+# Notes #######################################################################
+# TODO use sdiwctl as template for this script
+# TODO remove tabs from text output, left justify
 
+# Header information ##########################################################
+#
+# Name: System Dope hello
+#
+# Desctiption: greeter and helper
+
+# Script Metadata and Constants ###############################################
+SCRIPT_NAME="dope_hello"
+SCRIPT_VERSION="0.0.1"
+SCRIPT_LICENSE="gplv3"
+DOPE_VERSION="0.0.1"
+
+# Global Variables ############################################################
+
+# Usage #######################################################################
+
+# Argument Processing #########################################################
+
+# Function Declarations #######################################################
+# TODO move this greeting to the main logic section
+printf "For details see\n${0}\n"
+
+# function: helpfulCommands
+# print a list of helpful commands
 function helpfulCommands {
-echo "
-Bash Aliases
-  $ alias
+	printf "
+	Bash Aliases
+	$ alias
 
-Configuration Information
-  $ codoc
+	Configuration Information
+	$ codoc
 
-X Session Management
-  $ startx     # Start the x server
-  $ killx      # Kill the x server
+	X Session Management
+	$ startx     # Start the x server
+	$ killx      # Kill the x server
 
-Network Control
-  $ wifi.sh    # Connect to wifi (under development)
-"
-	return
+	Network Control
+	$ wifi.sh    # Connect to wifi (under development)
+	"
+	return 0
 }
 
+# function: softwareManagement
+# print notes on xbps
 function softwareManagement {
-echo "
-Searching for Software
-  $ xbps-query -Rs <package name>
+	printf "
+	Searching for Software
+	$ xbps-query -Rs <package name>
 
-Installing Software
-  $ sudo xbps-install -S <package name>
+	Installing Software
+	$ sudo xbps-install -S <package name>
 
-Updating a single package
-  $ sudo xbps-install -Su <package name>
+	Updating a single package
+	$ sudo xbps-install -Su <package name>
 
-Updating All Software
-  $ sudo xbps-install -Su
-"
-	return
+	Updating All Software
+	$ sudo xbps-install -Su
+	"
+	return 0
 }
 
+# function: dwmShortcuts
+# print info about dwm shortcuts
+# TODO make this accessible to both dmenu and fzf
 function dwmShortcuts {
-echo "
-  <alt>j,k           Switch terminals
-  <alt>h,l           move terminal split
-  <alt><shift>ENTER  open new terminal
-  <alt>ENTER         swap window with main
-  <shift><alt>q      exit DWM
-                 $ pkill -KILL -u ${USER}
-  <alt>1-0 -- switch desktops
-  <alt>p -- run dmenu
-  <alt>m -- toggle monocle layout
-  <alt>SPACE -- toggle recent layout(s)
-  <alt>t -- tiled layout
-  <alt>m --  full-screen layout
-"
+	printf "
+	<alt>j,k           Switch terminals
+	<alt>h,l           move terminal split
+	<alt><shift>ENTER  open new terminal
+	<alt>ENTER         swap window with main
+	<shift><alt>q      exit DWM
+	$ pkill -KILL -u ${USER}
+	<alt>1-0 -- switch desktops
+	<alt>p -- run dmenu
+	<alt>m -- toggle monocle layout
+	<alt>SPACE -- toggle recent layout(s)
+	<alt>t -- tiled layout
+	<alt>m --  full-screen layout
+	"
 }
 
+# function: startxsession
+# Start an x session
 function startxsession {
 	startx
-	return
+	return 0
 }
 
+# function: exec-xbps-update
+# update the system
 function exec-xbps-update {
 	sudo xbps-install -Su
+	return 0
 }
 
+# function: mount-usb
+# mount a usb device using bashmount
 function mount-usb {
-        bashmount
+	bashmount
+	return 0
 }
 
+# TODO rewrite this menu system
+# TODO place menu system in function main
 PS3='Please enter your choice: '
 options=(
 	"Start X session" \
@@ -82,12 +121,12 @@ select opt in "${options[@]}"
 do
 	case ${opt} in
 		"Start X session")
-			echo ${opt}
+			printf "${opt}"
 			startxsession
 			break
 			;;
 		"Helpful Commands")
-			echo ${opt}
+			printf "${opt}"
 			helpfulCommands
 			break
 			;;
@@ -115,3 +154,5 @@ do
 		*) echo "invalid ${REPLY}";;
 	esac
 done
+
+# Main Logic ##################################################################
