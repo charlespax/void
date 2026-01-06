@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "For details see 
-$0
+${0}
 "
 
 helpfulCommands () {
@@ -46,7 +46,7 @@ echo "
   <alt><shift>ENTER  open new terminal
   <alt>ENTER         swap window with main
   <shift><alt>q      exit DWM
-                 $ pkill -KILL -u $USER
+                 $ pkill -KILL -u ${USER}
   <alt>1-0 -- switch desktops
   <alt>p -- run dmenu
   <alt>m -- toggle monocle layout
@@ -80,24 +80,24 @@ options=(
 	"Quit")
 select opt in "${options[@]}"
 do
-	case $opt in
+	case ${opt} in
 		"Start X session")
-			echo $opt
+			echo ${opt}
 			startxsession
 			break
 			;;
 		"Helpful Commands")
-			echo $opt
+			echo ${opt}
 			helpfulCommands
 			break
 			;;
 		"Software Management")
-			echo $opt
+			echo ${opt}
 			softwareManagement
 			break
 			;;
 		"DWM Shortcuts")
-			echo $opt
+			echo ${opt}
 			dwmShortcuts
 			break
 			;;
@@ -112,6 +112,6 @@ do
 		"Quit")
 			break
 			;;
-		*) echo "invalid $REPLY";;
+		*) echo "invalid ${REPLY}";;
 	esac
 done
