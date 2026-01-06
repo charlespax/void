@@ -9,11 +9,7 @@
 # $ iwctl station <device connect-hidden <ssid>  # connect to hidden network
 # $ iwctl station <device> disconnect <ssid>  # disconnect from network
 # TODO manage device power (Powered on)
-# TODO connect to network
 # TODO connect to hidden network
-# TODO mechanism for password
-#      - DONE -p and --password
-#      - add password request to dmenu function
 #
 # BUG script does not handle ssid's with spaces
 # TODO handle ssid's with spaces
@@ -49,12 +45,13 @@ Wrapper for iwctl to output clean lists for dmenu
 Example: ${SCRIPT_NAME} networks
 
 Commands:
-  fzf                      connect to a network using fzf
-  debug
-  devices                  print list of devices
+  connect                  connect to a network
+  debug                    display debug information
+  devices                  display a list of devices
   dmenu                    connect to network using dmenu
-  networks                 print list of available networks
-  scan                     scan DEVICE for networks
+  fzf                      connect to network using fzf
+  networks                 display a list of available networks
+  scan                     scan <device> for networks
 
 Flags:
   -d, --device=DEVICE      define DEVICE
@@ -99,7 +96,7 @@ while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
 			exit
 			;;
 	# Non-flag Arguments
-		debug|dmenu|devices|fzf|networks|scan)
+		connect|debug|devices|dmenu|fzf|networks|scan)
 			COMMAND="${1}"
 			shift
 			;;
@@ -194,7 +191,7 @@ function connect_dmenu {
 			dmenu -p "Select device")"
 	fi
 	scan_networks
-	sleep 2
+	sleep 1
 	if [[ "${NETWORK}" == "" ]]; then
 		NETWORK="$(${0} networks -d ${DEVICE} | \
 			dmenu -p "Select network")"
@@ -219,16 +216,12 @@ function connect_dmenu {
 
 # function: connect_fzf
 # Connect to a network
-# - TODO use -d to select device
-# - TODO use -n to select network
-# - TODO use -p to set password
 function connect_fzf {
 	# TODO automatically select first device if only one device
 	if [[ "${DEVICE}" == "" ]]; then
 		DEVICE="$("${0}" devices | fzf)"
 	fi
 	scan_networks
-	sleep 2
 	if [[ "${NETWORK}" == "" ]]; then
 		NETWORK="$(${0} networks -d ${DEVICE} | fzf)"
 	fi
@@ -244,21 +237,61 @@ function connect_fzf {
 	return 0
 }
 
+# function: connect_term
+# Connect to a network using the terminal
+function connect_term {
+	# TODO automatically select first device if only one device
+	if [[ "${DEVICE}" == "" ]]; then
+		printf "Devices:\n"
+		printf "$("${0}" devices)\n"
+		printf "\n"
+		printf "Device: "
+		read DEVICE
+	fi
+	scan_networks
+	# TODO present a network list to the user, select by number
+	if [[ "${NETWORK}" == "" ]]; then
+		printf "\n"
+		printf "Networks:\n"
+		printf "$(${0} networks -d ${DEVICE})\n"
+		printf "\n"
+		printf "Network SSID: "
+		read NETWORK
+		printf "\n"
+	fi
+	if [[ "${PASSWORD}" == "" ]]; then
+		printf "Password for ${NETWORK}: "
+		read PASSWORD
+	fi
+	printf "\n"
+	printf "Device: ${DEVICE}\n"
+	printf "Network: ${NETWORK}\n"
+	printf "Password: ${PASSWORD}\n"
+	iwctl --password "${PASSWORD}" station "${DEVICE}" connect "${NETWORK}"
+	# TODO confirm connection
+	return 0
+}
+
+# function: debug
+# Connect to a network using the terminal
+function debug {
+	printf "** clean_iwctl_output \"\$(iwctl device list)\" **\n"
+	clean_iwctl_output "$(iwctl device list)"
+	printf "\n"
+	printf "** clean_iwctl_output \"\$(iwctl station wlp0s20f3 get-networks)\" **\n"
+	clean_iwctl_output "$(iwctl station wlp0s20f3 get-networks)"
+	return 0
+}
 # Main Logic ##################################################################
 
 # TODO test for network connectivity
 case ${COMMAND} in
-	fzf) connect_fzf ;;
+	connect) connect_term ;;
+	debug) debug ;;
 	devices) list_devices ;;
 	dmenu) connect_dmenu ;;
+	fzf) connect_fzf ;;
 	networks) list_networks ;;
 	scan) scan_networks ;;
-	debug)
-		printf "** clean_iwctl_output \"\$(iwctl device list)\" **\n"
-		clean_iwctl_output "$(iwctl device list)"
-		printf "\n"
-		printf "** clean_iwctl_output \"\$(iwctl station wlp0s20f3 get-networks)\" **\n"
-		clean_iwctl_output "$(iwctl station wlp0s20f3 get-networks)"
-		;;
 esac
 
