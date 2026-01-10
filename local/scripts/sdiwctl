@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+# TODO Consider replacing this script with a wrapper for iw
+
 # Notes #######################################################################
 # DONE $ iwctl device list  # list devices
 # $ iwctl device <device>  set-property Powered on  # power on device
@@ -10,6 +12,8 @@
 # $ iwctl station <device> disconnect <ssid>  # disconnect from network
 # TODO manage device power (Powered on)
 # TODO connect to hidden network
+# TODO list know networks via "iwctl known-networks list"
+# TODO remove networks via "iwctl known-networks SSID forget"
 #
 # BUG script does not handle ssid's with spaces
 # TODO handle ssid's with spaces
@@ -62,20 +66,16 @@ Flags:
   -v, --version            print this script's name and version"
 
 # Argument Processing #########################################################
-# NOTE Do the minimal (i.e. set variables, etc.)
 while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
 	case "${1}" in
 	# Flag Arguments
-	# - flags that exit
-	# - flags that set variables
 		-d|--device)
-			shift  # discard the -d flag
-			DEVICE="${1}"  # DEVICE is the next parameter
-			shift  # drop DEVICE parameter
+			shift
+			DEVICE="${1}"
+			shift
 			;;
 		-h|--help)
 			printf "${USAGE}\n"
-			shift
 			exit
 			;;
 		--license)
@@ -83,14 +83,14 @@ while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
 			exit
 			;;
 		-n|--network)
-			shift  # discard the -n flag
-			PASSWORD="${1}"  # NETWORK is the next parameter
-			shift  # drop NETWORK parameter
+			shift
+			PASSWORD="${1}"
+			shift
 			;;
 		-p|--password)
-			shift  # discard the -p flag
-			PASSWORD="${1}"  # PASSWORD is the next parameter
-			shift  # drop PASSWORD parameter
+			shift
+			PASSWORD="${1}"
+			shift
 			;;
 		-v|--version)
 			printf "${SCRIPT_NAME} ${SCRIPT_VERSION}\n"
@@ -109,7 +109,6 @@ while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
 done
 # Exit if COMMAND is not set
 if [[ -z ${COMMAND} ]]; then
-#if [[ "${COMMAND}" == "" ]]; then
 	printf "no command set\n"
 	exit
 fi
@@ -121,7 +120,6 @@ fi
 # - remove ansi color codes
 # - remove leading white space on each line
 # - remove header lines
-# - TODO explicitly remove blank footer line
 function clean_iwctl_output {
 	local STR="${1}"
 	local HEADER=""
@@ -162,7 +160,6 @@ function list_devices {
 # Scan DEVICE for available networks
 function scan_networks {
 	if [[ -z ${DEVICE} ]]; then  # if -d is not set
-	#if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
 		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
 	fi
 	iwctl station "${DEVICE}" scan
@@ -175,7 +172,6 @@ function list_networks {
 	local STR=""  # working string
 	# ensure DEVICE is defined
 	if [[ -z ${DEVICE} ]]; then  # if -d is not set
-	#if [[ "${DEVICE}" == "" ]]; then  # if -d is not set
 		DEVICE="$(head -n 1 <<< "$(${0} devices)")"
 	fi
 	# process working string
@@ -191,19 +187,16 @@ function list_networks {
 function connect_dmenu {
 	# TODO automatically select first device if only one device
 	if [[ -z ${DEVICE} ]]; then
-	#if [[ "${DEVICE}" == "" ]]; then
 		DEVICE="$("${0}" devices | \
 			dmenu -p "Select device")"
 	fi
 	scan_networks
 	sleep 1
 	if [[ -z ${NETWORK} ]]; then
-	#if [[ "${NETWORK}" == "" ]]; then
 		NETWORK="$(${0} networks -d ${DEVICE} | \
 			dmenu -p "Select network")"
 	fi
 	if [[ -z ${PASSWORD} ]]; then
-	#if [[ "${PASSWORD}" == "" ]]; then
 		PASSWORD="$(dmenu -p "${NETWORK} password" < /dev/null)"
 	fi
 	# Use notify-send if installed
@@ -226,16 +219,13 @@ function connect_dmenu {
 function connect_fzf {
 	# TODO automatically select first device if only one device
 	if [[ -z ${DEVICE} ]]; then
-	#if [[ "${DEVICE}" == "" ]]; then
 		DEVICE="$("${0}" devices | fzf)"
 	fi
 	scan_networks
 	if [[ -z ${NETWORK} ]]; then
-	#if [[ "${NETWORK}" == "" ]]; then
 		NETWORK="$(${0} networks -d ${DEVICE} | fzf)"
 	fi
 	if [[ -z ${PASSWORD} ]]; then
-	#if [[ "${PASSWORD}" == "" ]]; then
 		printf "Password for ${NETWORK}: "
 		read PASSWORD
 	fi
@@ -252,7 +242,6 @@ function connect_fzf {
 function connect_term {
 	# TODO automatically select first device if only one device
 	if [[ -z ${DEVICE} ]]; then
-	#if [[ "${DEVICE}" == "" ]]; then
 		printf "Devices:\n"
 		printf "$("${0}" devices)\n"
 		printf "\n"
@@ -262,7 +251,6 @@ function connect_term {
 	scan_networks
 	# TODO present a network list to the user, select by number
 	if [[ -z ${NETWORK} ]]; then
-	#if [[ "${NETWORK}" == "" ]]; then
 		printf "\n"
 		printf "Networks:\n"
 		printf "$(${0} networks -d ${DEVICE})\n"
@@ -272,7 +260,6 @@ function connect_term {
 		printf "\n"
 	fi
 	if [[ -z ${PASSWORD} ]]; then
-	#if [[ "${PASSWORD}" == "" ]]; then
 		printf "Password for ${NETWORK}: "
 		read PASSWORD
 	fi
