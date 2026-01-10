@@ -8,6 +8,8 @@
 # TODO ~/.config/codoc  # list of files that codoc should be aware of
 # TODO in codoc, allow for execution in dmenu or terminal
 # TODO in codoc, add a help statement
+# TODO codoc tag can be specified directly within the file, overrides default
+# TODO codoc tag specifically for notes specified in file, --notes activates
 
 CODOCTAG='CODOC'
 DWMDIR=~/gits/dwm/config.h
