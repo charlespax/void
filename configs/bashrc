@@ -12,8 +12,8 @@
 # command: ctrl-f
 # description: ctrl-f -> open fuzzy finder -> tmux <selection>
 # usage: ctrl-f
-# CODOC <CTRL>f             tmux-sessionizer
-bind -x '"\C-f":"tmux-sessionizer"' # ~/.local/scripts/tmux-sessionizer
+# CODOC <CTRL>f             sdtmuxer
+bind -x '"\C-f":"sdtmuxer"' # ~/.local/scripts/sdtmuxer
 
 # Command Aliases
 ###############################################################################
