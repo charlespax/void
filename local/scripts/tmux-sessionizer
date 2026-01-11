@@ -85,11 +85,12 @@ function get_selection_fzf {
 # function: connect
 # Connect to an existing session
 function connect {
+	local CONNECT_NAME="${1}"
 	# TMUX is defined when inside of a tmux session
 	if [[ -z ${TMUX} ]]; then
-		tmux attach-session -t ${DIR_NAME}
+		tmux attach-session -t ${CONNECT_NAME}
 	else
-		tmux switch-client -t ${DIR_NAME}
+		tmux switch-client -t ${CONNECT_NAME}
 	fi
 	return 0
 }
@@ -97,7 +98,9 @@ function connect {
 # function: create
 # Create a new session
 function create {
-	tmux new-session -s ${DIR_NAME} -c ${DIR_PATH}
+	local CREATE_NAME="${1}"
+	local CREATE_PATH="${2}"
+	tmux new-session -s ${CREATE_NAME} -c ${CREATE_PATH}
 	exit 0
 	return 0
 }
@@ -120,9 +123,9 @@ SESSION_TEST="$(tmux has-session -t=${DIR_NAME} 2> /dev/null; echo $?)"
 
 # Connect to existing session DIR_NAME or create a new session named DIR_NAME
 if [[ "${SESSION_TEST}" == "0" ]]; then  # in this case 0 means session exists
-	connect
+	connect ${DIR_NAME}
 else
-	create
+	create ${DIR_NAME} ${DIR_PATH}
 fi
 
 exit 0
