@@ -61,7 +61,9 @@ nnoremap <leader>l :set list!<cr>
 "
 set termguicolors            " use 24-bit colors (consistent across terms)
 "
-colorscheme lunaperche       " default is lunaperche
+"colorscheme lunaperche       " default is lunaperche
+"colorscheme slate       " default is lunaperche
+colorscheme habamax
 set background=dark          " dark background
 "
 syntax enable                " syntax highlighting
