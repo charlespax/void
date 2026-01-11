@@ -1,30 +1,128 @@
 #!/usr/bin/env bash
 
-if [[ $# -eq 1 ]]; then
-	selected=$1
-else
-	selected=$(find ~/gits -mindepth 1 -maxdepth 1 -type d | fzf)
-fi
+# Notes #######################################################################
+# Present the user with a list of directories within PROJECTS_DIR
+# User selects from fzf list
+# If this script is run with a tmux session, switch to the selected session
 
-if [[ -z $selected ]]; then
+# Header Information ##########################################################
+#
+# Name: System Dope tmux Sessionizer
+#
+# Description: Starts and connects to tmux sessions
+#
+# Version: ${SCRIPT_VERSION}
+# License: ${SCRIPT_LICENSE}
+# Author: Charles Edward Pax <charles@pax.net>
+
+# Script Metadata and Constants ###############################################
+SCRIPT_NAME="dope_tmuxer"
+SCRIPT_VERSION="0.0.1"
+SCRIPT_LICENSE="gplv3"
+DOPE_VERSION="0.0.1"
+
+# Global Variables ############################################################
+PROJECTS_DIR=~/gits  # no quotes if using a tilde (~)
+DIR_PATH=""
+DIR_NAME=""
+
+# Usage #######################################################################
+USAGE="Usage: ${SCRIPT_NAME} [OPTION]... [COMMAND]...
+Starting and connecting to tmux sessions using fzf.
+Example: ${SCRIPT_NAME}
+
+Commands:
+
+Flags:
+  -d, --directory   define DIR_PATH
+  -h, --help        print this help message
+      --license
+  -v, --version     print this script's name and version"
+
+# Check dependencies ##########################################################
+# TODO check of fzf installation
+
+# Argument Processing #########################################################
+while [[ $# -gt 0 ]]; do
+	case "${1}" in
+	# Flag Arguments
+		-d|--directory)
+			shift
+			DIR_PATH="${1}"
+			shift
+			;;
+		-h|--help)
+			printf "${USAGE}\n"
+			exit
+			;;
+		--license)
+			printf "${SCRIPT_LICENSE}\n"
+			exit
+			;;
+		-v|--version)
+			printf "${SCRIPT_NAME} ${SCRIPT_VERSION}\n"
+			exit
+			;;
+	# Non-flag Arguments
+		*)
+			printf "Unknown command: ${1}\n"
+			exit
+			;;
+	esac
+done
+
+# Function Declaration ########################################################
+
+# function: get_selection_fzf
+# Get a fzf selection from the user
+function get_selection_fzf {
+	local SEL=""
+	SEL=$(find "${PROJECTS_DIR}" -mindepth 1 -maxdepth 1 -type d | fzf)
+	printf "${SEL}"
+	return 0
+}
+
+# function: connect
+# Connect to an existing session
+function connect {
+	# TMUX is defined when inside of a tmux session
+	if [[ -z ${TMUX} ]]; then
+		tmux attach-session -t ${DIR_NAME}
+	else
+		tmux switch-client -t ${DIR_NAME}
+	fi
+	return 0
+}
+
+# function: create
+# Create a new session
+function create {
+	tmux new-session -s ${DIR_NAME} -c ${DIR_PATH}
+	exit 0
+	return 0
+}
+
+# Main Program Logic ##########################################################
+# If DIR_PATH is not defined, prompt user
+if [[ -z ${DIR_PATH} ]]; then
+	DIR_PATH="$(get_selection_fzf)"
+fi
+# If DIR_PATH is still not defined, exit
+if [[ -z ${DIR_PATH} ]]; then
 	exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
+# DIR_NAME will be the name of the session, based on DIR_PATH
+DIR_NAME=$(basename "${DIR_PATH}" | tr . _)  # replace dots with '_'
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-	tmux new-session -s $selected_name -c $selected
-	exit 0
-fi
+# Test if session DIR_NAME already exists. 0=yes, 1=no
+SESSION_TEST="$(tmux has-session -t=${DIR_NAME} 2> /dev/null; echo $?)"
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-        tmux new-session -ds $selected_name -c $selected
-fi
-
-#tmux switch-client -t $selected_name
-if [[ -z $TMUX ]]; then
-	tmux attach-session -t $selected_name
+# Connect to existing session DIR_NAME or create a new session named DIR_NAME
+if [[ "${SESSION_TEST}" == "0" ]]; then  # in this case 0 means session exists
+	connect
 else
-	tmux switch-client -t $selected_name
+	create
 fi
+
+exit 0
