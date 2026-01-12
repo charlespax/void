@@ -11,8 +11,8 @@
 # command: ctrl-f
 # description: ctrl-f -> open fuzzy finder -> tmux <selection>
 # usage: ctrl-f
-# CODOC <CTRL>f             sdtmuxer
-bind -x '"\C-f":"sdtmuxer"' # ~/.local/scripts/sdtmuxer
+# CODOC <CTRL>f             tmuxer
+bind -x '"\C-f":"tmuxer"' # ~/.local/scripts/tmuxer
 
 # Command Aliases #############################################################
 # command: prt

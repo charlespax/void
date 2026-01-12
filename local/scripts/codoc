@@ -3,11 +3,11 @@
 # Notes #######################################################################
 # The original command alias for vimdoc, the predacessor for codoc
 #
-# TODO usage: codoc -f <filepath>  # process the file located at <filepath>
 # TODO ~/.config/codoc  # list of files that codoc should be aware of
 # TODO in codoc, allow for execution in dmenu or terminal
 # TODO codoc tag can be specified directly within the file, overrides default
 # TODO codoc tag specifically for notes specified in file, --notes activates
+# TODO find all codoc files in a specified directory
 
 # Header Information ##########################################################
 #
