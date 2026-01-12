@@ -1,60 +1,12 @@
 #!/usr/bin/env bash
 
-# TODO search youtube for 'suckless developer workflow'
-# TODO add a keybinding for opening the keybindings and shortcuts help page
-#      Add fzf to find the command from the list
-
-# This is a Void Linux post-installation script intended to
-# create a suckless system.
-
-echo "
-__     __    _     _   _     _
-\ \   / /__ (_) __| | | |   (_)_ __  _   ___  __
- \ \ / / _ \| |/ _\` | | |   | | '_ \| | | \ \/ /
-  \ V / (_) | | (_| | | |___| | | | | |_| |>  < 
-   \_/ \___/|_|\__,_| |_____|_|_| |_|\__,_/_/\_\\
-
-"
-
-function exit_script () {
-	printf "exiting...\n"
-	exit
-}
-
-#############################################################################
-#                                                                           #
-#   Environment Verification Testing                                        #
-#                                                                           #
-#############################################################################
-
-
-# Test if the system is a Void Linux
-OS=""
-OS=$(. /etc/os-release ; printf "${ID}")
-printf "Operating system: "
-if [[ ${OS} == 'void' ]]; then
-	printf "${OS}\n"
-else
-	printf "${OS}\n"
-	printf "ERROR this script only works on Void\n"
-	exit_script
-fi
-
-# Test if this is a live environment
-# TODO explicitly confirm which non-live environment we have.
-#      Can we detect explicitly if the environment is installed?
-OS_ENV=""
-OS_ENV=$(grep -q "VOID_LIVE" "/proc/cmdline")
-printf "OS environment: "
-if [[ ${OS_ENV} == 'VOID_LIVE' ]]; then
-	printf "${OS_ENV}\n"
-else
-	printf "non-live\n"
-fi
-
-# This script requires an active internet connection. If your connection
-# was not configured during installation, you can use the following commands
-# to manually setup WiFi.
+# Notes #######################################################################
+# - Packages that appear on the applist will be installed using xbps.
+# - This is a Void Linux post-installation script intended to
+#   create a suckless system.
+# - This script requires an active internet connection. If your connection
+#   was not configured during installation, you can use the following commands
+#   to manually setup WiFi.
 #
 # $ wpa_cli
 # > scan
@@ -65,6 +17,64 @@ fi
 # > enable_network [0 1 ...]
 # > save config
 # > quit
+# TODO search youtube for 'suckless developer workflow'
+# TODO add a keybinding for opening the keybindings and shortcuts help page
+#      Add fzf to find the command from the list
+
+# Script Metadata and Constants ###############################################
+
+# Global Variables ############################################################
+OS=""
+OS_ENV=""
+
+# Function Declarations #######################################################
+
+# function: script_header
+# Display the header
+function script_header {
+printf "
+__     __    _     _   _     _
+\ \   / /__ (_) __| | | |   (_)_ __  _   ___  __
+ \ \ / / _ \| |/ _\` | | |   | | '_ \| | | \ \/ /
+  \ V / (_) | | (_| | | |___| | | | | |_| |>  < 
+   \_/ \___/|_|\__,_| |_____|_|_| |_|\__,_/_/\_\\
+
+"
+}
+
+# function: exit_script
+# Exit the script
+function exit_script () {
+	printf "exiting...\n"
+	exit
+}
+
+# Environment Verification Testing ############################################
+
+script_header
+
+# Test if the system is Void Linux
+OS="$(. /etc/os-release ; printf "${ID}")"
+printf "Operating system: "
+printf "${OS}\n"
+if [[ ${OS} == "void" ]]; then
+	:  # null command
+else
+	printf "ERROR this script only works on Void\n"
+	exit_script
+fi
+
+# Test if this is a live environment
+# TODO explicitly confirm which non-live environment we have.
+#      Can we detect explicitly if the environment is installed?
+OS_ENV=$(grep -q "VOID_LIVE" "/proc/cmdline")
+printf "OS environment: "
+if [[ ${OS_ENV} == 'VOID_LIVE' ]]; then
+	printf "${OS_ENV}\n"
+else
+	printf "non-live\n"
+fi
+
 
 # Test for network connection
 HOST="8.8.8.8" # Google's DSN server
@@ -93,14 +103,8 @@ to manually setup WiFi.
 fi
 
 
-#############################################################################
-#                                                                           #
-#   Application List Generation                                             #
-#                                                                           #
-#############################################################################
+# Application List Generation #################################################
 
-
-# Packages that appear on the applist will be installed using xbps.
 applist=''
 
 # CODOC Display Manager
@@ -121,10 +125,10 @@ applist+=' fastfetch'        # CODOC fastfetch  show computer info
 applist+=' htop'             # CODOC htop       system monitor
 applist+=' tree'             # CODOC tree       view a directory structure
 # fzf is used in the terminal and pressing ctrl-f, tmux sessionizer
-# fzf can also be used in dmenu scripts.
+# fzf can also be used in dmenu scripts. TODO How?
 # IDEA scripts can be dmenu-aware. Output types: terminal with opt flags, dmenu
-applist+=' fzf'              # CODOC fzf        fuzzy finder used in tmux-sessionizer script
-                             #                  fzf is referenced in local/scripts/tmux-sesionizer
+applist+=' fzf'              # CODOC fzf        fuzzy finder used in sdtmuxer script
+                             #                  fzf is referenced in local/scripts/sdtmuxer
 applist+=' tmux'             # CODOC tmux       terminal mulplexor
                              #                  tmux is referenced in local/scripts/tmux-sessionizer
 #applist+=' udisks2'         # codoc udisks2    usb disk mounting

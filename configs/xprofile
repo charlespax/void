@@ -1,5 +1,7 @@
-# This file is sourced by xinitrc
-# This file contains any commands that you want executed when your x session begins
-#firefox &
+#!/bin/sh
+
+# Notes #######################################################################
+# - This file is sourced by xinitrc
+# - This file contains any commands that are executed when the x session begins
 
 xrandr --output eDP-1 --set TearFree on

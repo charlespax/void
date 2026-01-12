@@ -2,19 +2,22 @@
 # ~/.sxhkd/sxhkdrc
 #
 
-# This file defines key bindings managed by the sxhkd X  windows daemon, which 
+# Notes #######################################################################
+# This file defines key bindings managed by the sxhkd X  windows daemon, which
 # is loaded when ~/.xinitirc is executed.
-
+#
+# ~/.xinitrx may have have keymappings
+#
 # TODO describe which keybindings are active on the system before this file
 # is loaded.
-#
-# NOTE ~/.xinitrx may have have keymappings
+
+# Main Content ################################################################
 
 # Firefox web browser
 super f
 	firefox
 
-# Ranger Danger!!!
+# Ranger terminal file browser
 super r
 	rancher
 

@@ -1,12 +1,22 @@
-#
-# ~/.xinitrc
-#
+#!/bin/env bash
 
+# File information ############################################################
+# Location: ~/.xinitrc
+
+# Check Dependencies ##########################################################
+# TODO check for feh background setter
+
+# Notes #######################################################################
 # This script is run when when the 'startx' command is executed
 
+# Main Program Logic ##########################################################
 # Source xprofile files
-[ -f /etc/xprofile ] && . /etc/xprofile
-[ -f ~/.xprofile ] && . ~/.xprofile
+if [[ -f /etc/xprofile ]]; then
+	source /etc/xprofile
+fi
+if [[ -f ~/.xprofile ]]; then
+	source ~/.xprofile
+fi
 
 #xsetbg /home/charles/sunset.jpg
 feh --bg-fill ~/.local/wallpapers/sunset.jpg
@@ -18,13 +28,14 @@ dwm_status_bar_date-time &
 #xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 # CapsLock acts as L_Control
+# TODO add comments to explain what is happening here
 xmodmap -e 'clear lock' \
         -e 'clear control' \
 	-e 'keycode 66 = Control_L' \
 	-e 'add control = Control_L Control_R'
 
 # X Server Setting
-xset r rate 250 45      # xset r <wait time in ms> <keys per secone>
+xset r rate 250 45  # xset r <wait time in ms> <keys per second>
 
 # Start dwm
 exec dwm &

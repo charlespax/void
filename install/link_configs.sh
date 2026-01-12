@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+# Notes #######################################################################
 # This script creates links for the dotfiles contained within this Github 
 # repository.
 
+# Main Program Logic ##########################################################
 mkdir -p ~/.config
 mkdir -p ~/.local
 

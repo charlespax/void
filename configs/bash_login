@@ -1,21 +1,22 @@
 #
 # ~/.bash_login
 #
-
+# Notes #######################################################################
 # This script is run at login
 #
-# test of .bashrc exists. If so, load run it
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+# Test of .bashrc exists. If so, source it
+if [[ -f ~/.bashrc ]]; then
+	source ~/.bashrc
+fi
 
-# Test if this shell 
-if [ -n "$TMUX" ]
-then
-	:
+# Test if this shell is a tmux session
+# TODO determine the purpose of this tmux test and clarify
+if [[ -n "$TMUX" ]]; then  # if the length of string != 0
+	:  # null operation
 else
-	#startx # start the xserver and execute .xinitrc
-	echo ""
-	echo "Type 'hello' for helper program"
-	echo "Type 'startx' to start the X server, which executes ~/.xinitrc"
+	#startx  # start the xserver and execute .xinitrc
+	printf "Type 'hello' for helper program\n"
+	printf "Type 'startx' to start the X server, which executes ~/.xinitrc\n"
 fi
 
 

@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Global Variables ############################################################
+# List Suckless Repositories
+REPO_LIST="dwm dmenu st"
+
+# Function Declarations #######################################################
 # Get GIT_HOME
 function get_git {
 	if [ -z "${GIT_HOME}" ]; then
@@ -10,9 +15,6 @@ function get_git {
 		#TODO check/create directory, confirm with user
 	fi
 }
-
-# List Suckless Repositories
-REPO_LIST="dwm dmenu st"
 
 # Functions
 function git_clone {
@@ -40,6 +42,7 @@ function main {
 	done
 }
 
+# Main Program Logic ##########################################################
 # Execute the main function
 main first second third
 
