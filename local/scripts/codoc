@@ -34,7 +34,6 @@ Commands:
 Flags:
   -c, --config=CONFIG_FILE  define CONFIG_FILE
   -f, --file=TARGET_FILE    define TARGET_FILE
-      --fzf                 use fzf
   -h, --help                print this help message
   -t, --tag=CODOC_TAG       define CODOC_TAG
   -v, --version             print this script's name and version
@@ -59,10 +58,6 @@ while [[ $# -gt 0 ]]; do
 		-f|--file)
 			shift
 			TARGET_FILE="${1}"
-			shift
-			;;
-		--fzf)
-			FZF="fzf"
 			shift
 			;;
 		-h|--help)
@@ -98,18 +93,8 @@ function printlines {
 	grep "${CODOC_TAG}" "${TARGET_FILE}" | sed 's/^.'*$CODOC_TAG'//g'
 }
 
-# function: codoc_fzf
-# Interactive via fzf
-function codoc_fzf {
-	${0} list | fzf | xargs ${0}
-}
 
 # Main Program Logic ##########################################################
-
-# Get selection via fzf if --fzf flag been passed
-if [[ ${FZF} == "fzf" ]]; then
-	codoc_fzf
-fi
 
 # TODO put the known files into an array, iterate over array
 case "${COMMAND}" in
