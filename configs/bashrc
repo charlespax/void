@@ -7,16 +7,14 @@
 # TODO move alias prt to script in void/local/scripts
 # TODO in bashrc, set a GIT_DIRECTORY environment variable
 
-# Key bindings
-###############################################################################
+# Key bindings ################################################################
 # command: ctrl-f
 # description: ctrl-f -> open fuzzy finder -> tmux <selection>
 # usage: ctrl-f
 # CODOC <CTRL>f             sdtmuxer
 bind -x '"\C-f":"sdtmuxer"' # ~/.local/scripts/sdtmuxer
 
-# Command Aliases
-###############################################################################
+# Command Aliases #############################################################
 # command: prt
 # description: Print text file to default printer.
 # usage: prt <file>
@@ -58,8 +56,7 @@ alias weather='curl wttr.in/?n?p?2'
 # CODOC bc                  alias='bc -lq'
 alias bc='bc -lq'
 
-# Define colors to use in terminal
-###############################################################################
+# Define colors to use in terminal ############################################
 export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
@@ -86,8 +83,7 @@ if [ "$TERM" = "linux" ]; then
 fi
 
 
-# PATH Variable
-###############################################################################
+# PATH Variable ###############################################################
 export PATH='' # clear PATH variable
 
 export PATH=$PATH:/bin
