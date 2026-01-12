@@ -1,57 +1,103 @@
 #!/usr/bin/env bash
-#
+
+# Notes #######################################################################
 # The original command alias for vimdoc, the predacessor for codoc
 #
-# TODO usage: codoc  # returns a newline seperated list of options (e.g. vim, bash, etc.)
-# TODO usage: codoc -o <option>  # process the file corresponding to <option>
 # TODO usage: codoc -f <filepath>  # process the file located at <filepath>
 # TODO ~/.config/codoc  # list of files that codoc should be aware of
 # TODO in codoc, allow for execution in dmenu or terminal
-# TODO in codoc, add a help statement
 # TODO codoc tag can be specified directly within the file, overrides default
 # TODO codoc tag specifically for notes specified in file, --notes activates
 
-CODOCTAG='CODOC'
-DWMDIR=~/gits/dwm/config.h
+# Header Information ##########################################################
+#
+# Name: System Dope codoc in-line documentation viewer
 
-helpmessage() {
-	echo "For help try '$ codoc codoc'"
-}
+# Script Metadata and Constants ###############################################
+SCRIPT_NAME="codoc"
+SCRIPT_VERSION="0.0.1"
+SCRIPT_LICENSE="gplv3"
+DOPE_VERSION="0.0.1"
 
-printlines() {
-	grep "${CODOCTAG}" $1 | sed 's/^.'*$CODOCTAG'//g'
-}
+# Global Varaibles ############################################################
+CODOC_TAG='CODOC'
+COMMAND=""
+TARGET_FILE=""
 
-if [ $# -gt 1 ]; then
-	echo "ERROR: more than one parameter given"
-	helpmessage
-	exit 1
+# Usage #######################################################################
+USAGE="Usage: ${SCRIPT_NAME} [OPTION]... [COMMAND]...
+In-line documentation viewer
+Example ${SCRIPT_NAME} vim
+
+Commands:
+
+Flags:
+  -f, --file=TARGET_FILE  define TARGET_FILE
+  -h, --help              print this help message
+  -t, --tag=CODOC_TAG     define CODOC_TAG
+  -v, --version           print this script's name and version\n"
+
+# Argument Processing #########################################################
+if [[ $# == 0 ]]; then
+	printf "${USAGE}"
+	exit
 fi
+while [[ $# -gt 0 ]]; do
+	case "${1}" in
+	# Flag Arguments
+		-f|--file)
+			shift
+			TARGET_FILE="${1}"
+			shift
+			;;
+		-h|--help)
+			printf "${USAGE}\n"
+			exit
+			;;
+		-t|--tag)
+			shift
+			CODOC_TAG="${1}"
+			shift
+			;;
+		-v|--version)
+			printf "${SCRIPT_NAME} ${SCRIPT_VERSION}\n"
+			exit
+			;;
+	# Non-flag Arguments
+		bash|codoc|sdiwctl|vim)
+			COMMAND="${1}"
+			shift
+			;;
+		*)
+			printf "Unknown command: ${1}\n"
+			exit
+			;;
+	esac
+done
 
-case "$1" in
-	"")
-		echo "ERROR: no parameter given"
-		helpmessage
-		;;
+# Function Declarations #######################################################
+function printlines {
+	TARGET_FILE="${1}"
+	grep "${CODOC_TAG}" "${TARGET_FILE}" | sed 's/^.'*$CODOC_TAG'//g'
+}
+
+# Main Program Logic ##########################################################
+
+case "${COMMAND}" in
 	"bash") # COODOOC bash
-		printlines ~/.bashrc
+		TARGET_FILE=~/.bashrc
 		;;
 	"codoc") # COODOOC codoc
-		CODOCTAG='COOD'
-		CODOCTAG+='OOC'
-		printlines ~/.local/scripts/codoc
+		CODOC_TAG='COOD'
+		CODOC_TAG+='OOC'
+		TARGET_FILE=~/.local/scripts/codoc
 		;;
-	"dwm")  # COODOOC dwm
-		printlines $DWMDIR
+	"sdiwctl") # COODOOC sdiwctl
+		TARGET_FILE=~/.local/scripts/sdiwctl
 		;;
 	"vim") # COODOOC vim
-		printlines ~/.config/vim/vimrc
-		;;
-	"wifi") # COODOOC wifi
-		printlines ~/.local/scripts/wifi.sh
-		;;
-	*)
-		echo "ERROR: not a valid parameter"
-		helpmessage
+		TARGET_FILE=~/.config/vim/vimrc
 		;;
 esac
+
+printlines "${TARGET_FILE}"
