@@ -2,13 +2,7 @@
 
 # Notes #######################################################################
 # The original command alias for vimdoc, the predacessor for codoc
-# - All flag arguments must come before the command. The first unflagged
-#   argument defines COMMAND. All proceeding arguments will be ignored.j w
-#
-# TODO ~/.config/codoc  # list of files that codoc should be aware of
-# TODO in codoc, allow for execution in dmenu or terminal
 # TODO codoc tag can be specified directly within the file, overrides default
-# TODO codoc tag specifically for notes specified in file, --notes activates
 # TODO find all codoc files in a specified directory
 
 # Header Information ##########################################################
@@ -25,35 +19,54 @@ DOPE_VERSION="0.0.1"
 CODOC_TAG='CODOC'
 COMMAND=""
 TARGET_FILE=""
+# TODO ~/.config/codoc  # list of files that codoc should be aware of
+CONFIG_FILE=""
 
 # Usage #######################################################################
 USAGE="Usage: ${SCRIPT_NAME} [OPTION]... [COMMAND]...
 In-line documentation viewer
-Example ${SCRIPT_NAME} vim
+Example: ${SCRIPT_NAME} vimrc  # display vimrc codoc information
+Example: ${SCRIPT_NAME} list  # display list of supported files
 
 Commands:
+  list      print list of supported files
 
 Flags:
-  -f, --file=TARGET_FILE  define TARGET_FILE
-  -h, --help              print this help message
-  -t, --tag=CODOC_TAG     define CODOC_TAG
-  -v, --version           print this script's name and version\n"
+  -c, --config=CONFIG_FILE  define CONFIG_FILE
+  -f, --file=TARGET_FILE    define TARGET_FILE
+      --fzf                 use fzf
+  -h, --help                print this help message
+  -t, --tag=CODOC_TAG       define CODOC_TAG
+  -v, --version             print this script's name and version
+
+Notes
+- The first non-flag argument defines COMMAND
+- All arguments after the first non-flag argument will be ignored\n"
 
 # Argument Processing #########################################################
-if [[ $# == 0 ]]; then
+if [[ $# == 0 ]]; then  # if zero arguments, print USAGE and exit
 	printf "${USAGE}"
 	exit
 fi
 while [[ $# -gt 0 ]]; do
 	case "${1}" in
 	# Flag Arguments
+		-c|--config)
+			shift
+			CONFIG_FILE="${1}"
+			shift
+			;;
 		-f|--file)
 			shift
 			TARGET_FILE="${1}"
 			shift
 			;;
+		--fzf)
+			FZF="fzf"
+			shift
+			;;
 		-h|--help)
-			printf "${USAGE}\n"
+			printf "${USAGE}"
 			exit
 			;;
 		-t|--tag)
@@ -70,24 +83,37 @@ while [[ $# -gt 0 ]]; do
 			exit
 			;;
 	# Non-flag Arguments
-		# The first non-flag argument defined COMMAND
-		*)
+		*)  # The first non-flag argument defines COMMAND
 			COMMAND="${1}"
-			break
+			break  # ignore all proceeding argument
 			;;
 	esac
 done
 
 # Function Declarations #######################################################
+
+# function: printlines
 function printlines {
 	TARGET_FILE="${1}"
 	grep "${CODOC_TAG}" "${TARGET_FILE}" | sed 's/^.'*$CODOC_TAG'//g'
 }
 
+# function: codoc_fzf
+# Interactive via fzf
+function codoc_fzf {
+	${0} list | fzf | xargs ${0}
+}
+
 # Main Program Logic ##########################################################
 
+# Get selection via fzf if --fzf flag been passed
+if [[ ${FZF} == "fzf" ]]; then
+	codoc_fzf
+fi
+
+# TODO put the known files into an array, iterate over array
 case "${COMMAND}" in
-	"bash") # COODOOC bash
+	"bashrc") # COODOOC bashrc
 		TARGET_FILE=~/.bashrc
 		;;
 	"codoc") # COODOOC codoc
@@ -95,10 +121,14 @@ case "${COMMAND}" in
 		CODOC_TAG+='OOC'
 		TARGET_FILE=~/.local/scripts/codoc
 		;;
+	"list")
+		printf "$(${0} codoc)\n"
+		exit
+		;;
 	"sdiwctl") # COODOOC sdiwctl
 		TARGET_FILE=~/.local/scripts/sdiwctl
 		;;
-	"vim") # COODOOC vim
+	"vimrc") # COODOOC vimrc
 		TARGET_FILE=~/.config/vim/vimrc
 		;;
 	*)
