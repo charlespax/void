@@ -2,6 +2,8 @@
 
 # Notes #######################################################################
 # The original command alias for vimdoc, the predacessor for codoc
+# - All flag arguments must come before the command. The first unflagged
+#   argument defines COMMAND. All proceeding arguments will be ignored.j w
 #
 # TODO ~/.config/codoc  # list of files that codoc should be aware of
 # TODO in codoc, allow for execution in dmenu or terminal
@@ -63,14 +65,15 @@ while [[ $# -gt 0 ]]; do
 			printf "${SCRIPT_NAME} ${SCRIPT_VERSION}\n"
 			exit
 			;;
+		-*)
+			printf "Unknown flag: ${1}\n"
+			exit
+			;;
 	# Non-flag Arguments
-		bash|codoc|sdiwctl|vim)
+		# The first non-flag argument defined COMMAND
+		*)
 			COMMAND="${1}"
 			shift
-			;;
-		*)
-			printf "Unknown command: ${1}\n"
-			exit
 			;;
 	esac
 done
@@ -97,6 +100,10 @@ case "${COMMAND}" in
 		;;
 	"vim") # COODOOC vim
 		TARGET_FILE=~/.config/vim/vimrc
+		;;
+	*)
+		printf "Unknown command: ${COMMAND}\n"
+		exit
 		;;
 esac
 
