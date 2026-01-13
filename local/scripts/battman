@@ -3,17 +3,19 @@
 # battman battery information utility
 
 # Notes #######################################################################
-# TODO BATT_PERCENT = cat /sys/class/power_supply/BAT0/capacity
-# TODO BATT_NOW = /sys/class/power_supply/BAT0/energy_now
-# TODO BATT_MAX = cat /sys/class/power_supply/BAT0/energy_full
+# TODO BATT_PERCENT = cat ${BATT_DIR}/capacity
+# TODO BATT_NOW = ${BATT_DIR}/energy_now
+# TODO BATT_MAX = cat ${BATT_DIR}/energy_full
+
+BATT_DIR="/sys/class/power_supply/BAT0"
 
 
-
-
-BATT_PERCENT="$(cat /sys/class/power_supply/BAT0/capacity)"
-BATT_NOW="$(cat /sys/class/power_supply/BAT0/energy_now)"
-BATT_MAX="$(cat /sys/class/power_supply/BAT0/energy_full)"
+BATT_PERCENT="$(cat ${BATT_DIR}/capacity)"
+BATT_NOW="$(cat ${BATT_DIR}/energy_now)"
+BATT_MAX="$(cat ${BATT_DIR}/energy_full)"
+BATT_ALARM="$(cat ${BATT_DIR}/alarm)"
 
 printf "Battery percentage: ${BATT_PERCENT}\n"
 printf "Battery energy: ${BATT_NOW}\n"
 printf "Battery maximum: ${BATT_MAX}\n"
+printf "Battery alarm: ${BATT_ALARM}\n"
