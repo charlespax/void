@@ -13,6 +13,7 @@ SCRIPT_LICENSE="gplv3"
 DOPE_VERSION="0.0.1"
 
 # Codoc Directories List ######################################################
+CODOC_DIRS+=("${HOME}/.config/")
 CODOC_DIRS+=("${HOME}/.local/scripts/")
 
 # Codoc File List #############################################################
