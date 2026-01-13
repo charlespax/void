@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# battman battery information utility
+
+# Notes #######################################################################
+# TODO BATT_PERCENT = cat /sys/class/power_supply/BAT0/capacity
+# TODO BATT_NOW = /sys/class/power_supply/BAT0/energy_now
+# TODO BATT_MAX = cat /sys/class/power_supply/BAT0/energy_full
+
+
+
+
+BATT_PERCENT="$(cat /sys/class/power_supply/BAT0/capacity)"
+BATT_NOW="$(cat /sys/class/power_supply/BAT0/energy_now)"
+BATT_MAX="$(cat /sys/class/power_supply/BAT0/energy_full)"
+
+printf "Battery percentage: ${BATT_PERCENT}\n"
+printf "Battery energy: ${BATT_NOW}\n"
+printf "Battery maximum: ${BATT_MAX}\n"
