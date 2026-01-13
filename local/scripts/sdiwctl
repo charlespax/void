@@ -10,6 +10,7 @@
 # DONE $ iwctl station <device> connect <ssid>  # connect to network
 # $ iwctl station <device connect-hidden <ssid>  # connect to hidden network
 # $ iwctl station <device> disconnect <ssid>  # disconnect from network
+# CODOC This is a codoc test
 # TODO manage device power (Powered on)
 # TODO connect to hidden network
 # TODO list know networks via "iwctl known-networks list"

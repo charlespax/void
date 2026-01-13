@@ -23,8 +23,9 @@ ln -i -s $PWD/../configs/bashrc ~/.bashrc
 
 # Terminal Utilities
 ln -i -s $PWD/../configs/tmux.conf ~/.tmux.conf
+ln -i -s $PWD/../configs/codocrc ~/.config/codocrc
 
-# X Server
+ X Server
 ln -i -s $PWD/../configs/xinitrc ~/.xinitrc
 ln -i -s $PWD/../configs/xprofile ~/.xprofile
 ln -i -s $PWD/../configs/sxhkd ~/.config/

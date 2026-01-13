@@ -4,6 +4,7 @@
 # The original command alias for vimdoc, the predacessor for codoc
 # TODO codoc tag can be specified directly within the file, overrides default
 # TODO find all codoc files in a specified directory
+# COODOOC This is a test
 
 # Header Information ##########################################################
 #
@@ -19,8 +20,9 @@ DOPE_VERSION="0.0.1"
 CODOC_TAG='CODOC'
 COMMAND=""
 TARGET_FILE=""
-# TODO ~/.config/codoc  # list of files that codoc should be aware of
-CONFIG_FILE=""
+CONFIG_FILE="${HOME}/.config/codocrc"
+declare -A CODOCS=""
+CODOC_DIRS=""
 
 # Usage #######################################################################
 USAGE="Usage: ${SCRIPT_NAME} [OPTION]... [COMMAND]...
@@ -30,6 +32,7 @@ Example: ${SCRIPT_NAME} list  # display list of supported files
 
 Commands:
   list      print list of supported files
+  info      print list of supported files and locations
 
 Flags:
   -c, --config=CONFIG_FILE  define CONFIG_FILE
@@ -90,36 +93,70 @@ done
 # function: printlines
 function printlines {
 	TARGET_FILE="${1}"
-	grep "${CODOC_TAG}" "${TARGET_FILE}" | sed 's/^.'*$CODOC_TAG'//g'
+	grep "${CODOC_TAG}" "${TARGET_FILE}" | sed 's/^.'*$CODOC_TAG.'//g'
 }
 
+# function: list_files
+# List all the available codoc files
+# TODO sort list
+# TODO user local variables, printf output
+function list_files {
+	for entry in "${!CODOCS[@]}"; do
+		location="${CODOCS[${entry}]}"
+		printf "${entry}\n"
+	done
+}
+
+# function: list_info
+# List all the available codoc files and locations
+function list_info {
+	for entry in "${!CODOCS[@]}"; do
+		location="${CODOCS[${entry}]}"
+		printf "File: ${entry}: ${location}\n"
+	done
+	for entry in "${CODOC_DIRS[@]}"; do
+		printf "DIR: ${entry}\n"
+		for line in "${entry}"*; do
+			printf "${line}\n"
+			#printf "$(basename "${line}\n")"
+		done
+	done
+}
 
 # Main Program Logic ##########################################################
 
+# Import from Configuration File
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+	echo "Error: Config file not found at $CONFIG_FILE"
+	exit 1
+else
+	source "${CONFIG_FILE}"
+	unset CODOCS[0]  # remove the entry made during declaration
+	unset CODOC_DIRS[0]  # remove the entry made during declaration
+fi
+
 # TODO put the known files into an array, iterate over array
 case "${COMMAND}" in
-	"bashrc") # COODOOC bashrc
-		TARGET_FILE=~/.bashrc
+	bashrc|sdiwctl|vimrc)
 		;;
-	"codoc") # COODOOC codoc
+	codoc|codocrc)
 		CODOC_TAG='COOD'
 		CODOC_TAG+='OOC'
-		TARGET_FILE=~/.local/scripts/codoc
 		;;
-	"list")
-		printf "$(${0} codoc)\n"
+	info)
+		list_info
 		exit
 		;;
-	"sdiwctl") # COODOOC sdiwctl
-		TARGET_FILE=~/.local/scripts/sdiwctl
-		;;
-	"vimrc") # COODOOC vimrc
-		TARGET_FILE=~/.config/vim/vimrc
+	list)
+		list_files
+		exit
 		;;
 	*)
 		printf "Unknown command: ${COMMAND}\n"
 		exit
 		;;
 esac
+
+TARGET_FILE="${CODOCS["${COMMAND}"]}"
 
 printlines "${TARGET_FILE}"

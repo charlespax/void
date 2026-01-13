@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Notes #######################################################################
+
+# Header Information ##########################################################
+#
+# Description: Configuration file for codoc
+
+# Script Metadata and Constants ###############################################
+SCRIPT_NAME="codocrc"
+SCRIPT_VERSION="0.0.1"
+SCRIPT_LICENSE="gplv3"
+DOPE_VERSION="0.0.1"
+
+# Codoc Directories List ######################################################
+CODOC_DIRS+=("${HOME}/.local/scripts/")
+
+# Codoc File List #############################################################
+CODOCS["bashrc"]="${HOME}/.bashrc"  # COODOOC bashrc
+CODOCS["codoc"]="${HOME}/.local/scripts/codoc"  # COODOOC codoc
+CODOCS["codocrc"]="${HOME}/.config/codocrc"  # COODOOC codocrc
+CODOCS["sdiwctl"]="${HOME}/.local/scripts/sdiwctl"  # COODOOC sdiwctl
+CODOCS["vimrc"]="${HOME}/.config/vim/vimrc"  # COODOOC vimrc
