@@ -100,10 +100,17 @@ function printlines {
 # List all the available codoc files
 # TODO sort list
 # TODO unique entries only
+# TODO drop empty array elements
 # TODO use local variables, printf output
 function list_files {
+	local MYARRAY
+	local WORKING_LINE
 	for entry in "${!CODOCS[@]}"; do
-		location="${CODOCS[${entry}]}"
+		WORKING_LINE="${CODOCS[${entry}]}"
+		WORKING_LINE="$(basename ${WORKING_LINE} | tr -d .)"
+		MYARRAY+="${WORKING_LINE}\n"
+	done
+	for entry in "${MYARRAY[@]}"; do
 		printf "${entry}\n"
 	done
 }
