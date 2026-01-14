@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Notes #######################################################################
+# This file is executed by ~/.xinitrc
+
 while true; do
 	BATTERY=$(acpi)
 	xsetroot -name "$BATTERY   $(date '+%Y-%m-%d %H:%M') "
