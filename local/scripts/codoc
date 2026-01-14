@@ -93,7 +93,7 @@ done
 # function: printlines
 function printlines {
 	TARGET_FILE="${1}"
-	grep "${CODOC_TAG}" "${TARGET_FILE}" | sed 's/^.'*$CODOC_TAG.'//g'
+	grep "${CODOC_TAG}" "${TARGET_FILE}" | sed 's/^.'*$CODOC_TAG' *//g'
 }
 
 # function: list_files
