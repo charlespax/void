@@ -16,6 +16,9 @@ git config --global user.name "$EMAIL"
 # Push only the current branch rather than all branches when using 'git push'
 git config --global push.default simple
 
+# Use vim as the default editor
+git config --global core.editor vim
+
 # Use vim as difftool
 git config --global diff.tool vimdiff
 git config --global difftool.prompt false
