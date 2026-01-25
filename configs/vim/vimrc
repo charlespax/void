@@ -217,3 +217,8 @@ nnoremap <leader>tv :vertical terminal<cr>
 " CODOC $ ctags -R <path>   generate ctags
 " CODOC <C-]>               jump to ctag under cursor
 " CODOC <C-t>               jump back to previous ctag 
+nnoremap <leader>t :vert term<cr>
+"
+"
+" https://secluded.site/vim-as-a-markdown-editor/
+autocmd BufNewFile, BufRead *.md set filetype=markdown
