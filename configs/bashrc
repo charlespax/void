@@ -14,6 +14,9 @@
 # CODOC <CTRL>f             tmuxer
 bind -x '"\C-f":"tmuxer"' # ~/.local/scripts/tmuxer
 
+# go through bash history via fzf
+bind -x '"\C-h":"cat ~/.bash_history | sort | uniq | fzf"'
+
 # Command Aliases #############################################################
 # command: prt
 # description: Print text file to default printer.
