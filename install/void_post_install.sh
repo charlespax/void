@@ -120,7 +120,7 @@ applist+=' sxhkd'            # CODOC sxhkd      keyboard shortcut daemon
                              # CODOC            sxhkd is referenced in configs/xinitrc
 
 # CODOC Terminal Utilities
-applist+=' acpi'             # CODOC acpi       battery information
+#applist+=' acpi'             # CODOC acpi       battery information   # depricated by battman script
 applist+=' fastfetch'        # CODOC fastfetch  show computer info
 applist+=' htop'             # CODOC htop       system monitor
 applist+=' tree'             # CODOC tree       view a directory structure
