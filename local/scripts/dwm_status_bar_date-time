@@ -1,10 +1,15 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Notes #######################################################################
 # This file is executed by ~/.xinitrc
 
 while true; do
-	BATTERY=$(acpi)
+	#BATTERY=$(acpi)
+	BATTERY="$(battman -s "%t %n: %c%% and %s")"
+	if [[ "$(battman -s "%c")" -le "5"  ]]; then
+		notify-send -u critical "BATTERY ALERT" "The battery is fucked!"
+		sleep 10
+	fi
 	xsetroot -name "$BATTERY   $(date '+%Y-%m-%d %H:%M') "
-	sleep 1
+	sleep 5
 done
