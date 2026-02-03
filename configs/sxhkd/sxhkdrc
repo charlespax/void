@@ -1,4 +1,5 @@
 #
+fi
 # ~/.sxhkd/sxhkdrc
 #
 
@@ -6,20 +7,49 @@
 # This file defines key bindings managed by the sxhkd X  windows daemon, which
 # is loaded when ~/.xinitirc is executed.
 #
+# see also ~/.xinitrc
 # ~/.xinitrx may have have keymappings
 #
 # TODO describe which keybindings are active on the system before this file
 # is loaded.
 
-# Main Content ################################################################
+# Reload sxhkd
+super + shift + r
+	pkill -USR1 -x sxhkd && notify-send "sxhkd restarted"
+
+# Program Shortcuts ###########################################################
 
 # Firefox web browser
-super f
+super w
 	firefox
 
-# Ranger terminal file browser
-super r
-	rancher
+# Keyboard Shortcuts ##########################################################
+#
+# capslock is remapped to hyper key in .initrc
+
+# Backspace/delete
+#hyper + BackSpace
+#	xdotool key Delete && notify-send "key pressed"
+
+# vim motions
+hyper + h
+	xdotool keyup h key --clearmodifiers Left
+hyper + j
+	xdotool keyup j key --clearmodifiers Down
+hyper + k
+	xdotool keyup k key --clearmodifiers Up
+hyper + l
+	xdotool keyup l key --clearmodifiers Right
+
+# page navigation
+super + h
+	xdotool keyup h key --clearmodifiers Home
+super + j
+	xdotool keyup j key --clearmodifiers Next
+super + k
+	xdotool keyup k key --clearmodifiers Prior
+super + l
+	xdotool keyup l key --clearmodifiers End
 
 # Volume control
 XF86AudioRaiseVolume
