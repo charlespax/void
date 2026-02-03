@@ -1,0 +1,344 @@
+#!/usr/bin/env bash
+
+# Script Information ##########################################################
+
+# Script Name: bashplate
+# Description: bashplate - is a script template with several useful features:
+# - TODO gettext translation. For example see, $ vim $(which ldd)
+# - error handling
+# - argument processing
+# - temporary directory and files
+# - TODO config file
+# - TODO logging
+# - TODO debug
+# - parameter expansion substitution ${STR_VAR//old/new}
+# - TODO parameter expansion variable: MY_TERM="${TERM:-"xterm-256color"}"
+# - command processing (non-flag)
+# - TODO GNU parallel
+# - cleanup upon exit
+#
+# Author:
+# Email:
+# Project Homepage: https://github.com/systemdope/bashplate
+
+# Notes #######################################################################
+#
+# Notes can be added here as well as any script-wide todo items.
+#
+# TodDo Items
+# TODO place here all todo items with script-wide relevance
+# TODO try to keep the todo items grouped and ordered in a reasonable manner
+# TODO use FIXME codetags to document bugs or poorly-implemented code
+# TODO sparingly use XXX codetags to highlight critical or important issues
+# TODO debug by surrounding code blocks with -x and +x to see commands
+# TODO debug script via 'bash -x bashplate' to see executed commands
+# TODO style inline comments with two leading spaces  # like this
+# TODO style headers with "#" to column 79
+# TODO style headers with one blank line above
+# TODO style headers with one blank line or empty comment line below
+
+# Error Handling ##############################################################
+
+# Bash Settings. See 'man bash' for more information
+set -o errexit  # -e: exit immediately if a pipeline fails
+set -o nounset  # -u: during command expansion, unset variables cause an errors
+set -o pipefail  # the return value is equal to the  value of the last command
+
+# Signal Traps
+trap cleanup ERR
+#trap cleanup EXIT  # do not trap EXIT, call cleanup explicitly
+trap cleanup SIGTERM
+trap cleanup SIGINT  # generated on ctrl-c
+
+# Metadata Constants ##########################################################
+#
+# # Information about this script, held in constants.
+
+SCRIPT_NAME="bashplate"
+SCRIPT_VERSION="0.0.1"
+SCRIPT_RELEASE="main"
+SCRIPT_LICENSE="gplv3"
+SYSTEM_DOPE_VERSION="0.0.1"
+SCRIPT_HOMEPAGE="https://github.com/systemdope/bashplate"
+DESCRIPTION="Template for SystemDope bash scripts"
+AUTHOR_NAME=""
+AUTHOR_EMAIL=""
+
+# Colors ######################################################################
+#
+# The variable ${NORMAL} will reset the tput properties
+
+BLACK=$(tput setaf 0)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+LIME_YELLOW=$(tput setaf 190)
+POWDER_BLUE=$(tput setaf 153)
+BLUE=$(tput setaf 4)
+MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+WHITE=$(tput setaf 7)
+BRIGHT=$(tput bold)
+NORMAL=$(tput sgr0)
+BLINK=$(tput blink)
+REVERSE=$(tput smso)
+UNDERLINE=$(tput smul)
+
+# Global Variables ############################################################
+
+# Variables that should be defined later in the script
+CONFIG_PATH=""  # path to configuration file
+TMP_DIR=""  # temporary working directory, created later in this script
+COMMAND=""  # command passed to this script
+IN_STRING=""  # user-input string
+
+# Variables that hsould be defined HERE
+GREETING="Hello, World!"  # a string used for testing
+
+# Usage #######################################################################
+#
+# Use a variable, so usage info can appear above function declarations.
+
+USAGE="Usage: ${SCRIPT_NAME} [OPTION]...
+Description: ${DESCRIPTION}
+
+Example: ${SCRIPT_NAME}
+Output:
+
+Note: To display a literal %%, you must use %%%%
+
+Commands:
+  debug        display debug information
+  greet        display the greeting
+
+Flags:
+  -c, --config=CONFIG_PATH  define config file path
+  -g, --greeting=GREETING   defing GREETING
+  -h, --help                print this help message
+      --license             print license information
+  -s, --string=STRING       define a strings
+  -v, --version             print this script's name and version
+
+String Substitutions:
+  %%t    TERM      terminal name
+  %%u    USER      user name
+
+Author: ${AUTHOR_NAME}
+Source: ${SCRIPT_HOMEPAGE}"  # notice the closing quote on the last line here
+
+# Function Declarations #######################################################
+#
+# TODO improve how functions return/exit
+
+# Description: permaloop - loops forever, for testing and debugging
+# Arguments: none
+# Returns: none
+function permaloop {
+	local INVERSION="0"
+	local MYCOLOR=""
+	while true; do
+		if [[ "${INVERSION}" == "0" ]]; then
+			INVERSION="1"
+			MYCOLOR=""
+		else
+			INVERSION="0"
+			MYCOLOR="${REVERSE}"
+		fi
+			
+		printf "\rTo break infinite loop. ${MYCOLOR}Press Ctrl + C${NORMAL}."
+		sleep 1
+	done
+}
+
+# Description: cleanup - performs multiple tasks before script exit
+#		- remove temporary files
+#		- kill background processes
+#		TODO release file locks
+#		TODO close open files
+#		TODO error reporting
+# Arguments: none
+# Returns: 0 if successful, non-zero otherwise
+function cleanup {
+	printf "cleaning up...\n"
+	# Remove Temporary Directory
+	if [[ -d "${TMP_DIR}" ]]; then
+		rm -rf "${TMP_DIR}"
+	else
+		printf "no directory ${TMP_DIR}\n"
+	fi
+	exit
+}
+
+# Description: greet - display a greeting
+# Arguments: none
+# Returns: none
+function greet {
+	printf "this is the greeting function\n"
+}
+
+# Description: usage - displays usage information
+# Arguments: none
+# Returns: none
+function usage {
+	printf "${USAGE}\n"
+	exit 0
+}
+
+# Description: debug - displays debug information
+# Arguments: none
+# Returns: none
+function debug {
+	printf "debug function here!\n"
+	return 0
+}
+
+# Argument Processing #########################################################
+#
+# TODO create argument processing function(s)
+
+while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
+	case "${1}" in
+	# Flag Arguments
+		# Configuration file
+		-c|--config)
+			shift
+			if [[ $# -gt 0 ]]; then
+				CONFIG_PATH="${1}"
+			else
+				printf "missing argument\n"
+				exit 1
+			fi
+			shift
+			;;
+		-c=?*|--config=?*)  # format: --config="config.txt"
+			IN_STRING+=${1#*=}
+			shift
+			;;
+		-c=|--config=)  # format error: --string= "config.txt"
+			printf "bad format\n"
+			exit 1
+			;;
+		# Greeting string
+		-g|--greeting)
+			shift
+			if [[ $# -gt 0 ]]; then
+				GREETING="${1}"
+			else
+				printf "missing argument\n"
+				exit 1
+			fi
+			shift
+			;;
+		-g=?*|--greeting=?*)  # format: --config="Hello, world!"
+			IN_STRING+=${1#*=}
+			shift
+			;;
+		-g=|--greeting=)  # format error: --string= "Hello, world!"
+			printf "bad format\n"
+			exit 1
+			;;
+		# Help message
+		-h|--help)
+			usage
+			#printf "${USAGE}\n"
+			exit
+			;;
+		# License
+		--license)
+			printf "${SCRIPT_LICENSE}\n"
+			exit
+			;;
+		# user-input string
+		-s|--string)  # format: --string "hello there"
+			shift
+			if [[ $# -gt 0 ]]; then
+				IN_STRING+="${1}"
+			else
+				printf "missing argument\n"
+				exit 1
+			fi
+			shift
+			;;
+		-s=?*|--string=?*)  # format: --string="hello there"
+			IN_STRING+=${1#*=}
+			shift
+			;;
+		-s=|--string=)  # format error: --string= "hello there"
+			printf "bad format\n"
+			exit 1
+			;;
+		# software version
+		-v|--version)
+			printf "${SCRIPT_NAME} ${SCRIPT_VERSION}\n"
+			exit
+			;;
+	# Non-flag Arguments
+		# debug output
+		debug|greet)
+			COMMAND="${1}"
+			shift
+			;;
+		# catch-all unknown flags
+		-?*)
+			printf "Unknown flag: ${1}\n"
+			exit 1
+			;;
+		# Catch-all undefined
+		*)
+			printf "Unknown command: ${1}\n"
+			exit 1
+			;;
+	esac
+done
+# Exit if COMMAND is required and not set
+#if [[ -z ${COMMAND} ]]; then
+#	printf "no command set\n"
+#	exit
+#fi
+
+# Command Processing ##########################################################
+#
+# TODO create a command processing function
+
+case ${COMMAND} in
+	debug) debug ;;
+	greet) greet ;;
+esac
+
+# String Substitution #########################################################
+#
+# TODO create a string substitution function
+
+# ${VARIABLE_STRING//OLD_SUB_STRING/NEW_SUB_STRING}
+IN_STRING="${IN_STRING//\%t/${TERM}}"  # replace %t with $TERM
+IN_STRING="${IN_STRING//\%u/${USER}}"  # replace %u with $USER
+
+# Main Logic ##################################################################
+#
+# TODO process commands (e.g. greet). See isdiwctl for reference.
+
+# Create a temporary directory
+TMP_DIR=$(mktemp -d) || { echo "Failed to create directory"; exit 1; }
+printf "TMP_DIR: ${RED}${TMP_DIR}${NORMAL}\n"
+
+# Create a temporary file within the temporary directory
+GREET_FILE="${TMP_DIR}/greet.txt"
+$(touch "${GREET_FILE}") || { echo "Failed to create file"; exit 1; }
+printf "GREET_FILE: ${GREEN}${GREET_FILE}${NORMAL}\n"
+
+# Send greeting to temporary file then read from file and print
+printf "${GREETING}" >  "${GREET_FILE}"
+printf "GREETING: ${BLUE}"  # Print the contents of the greeting file
+cat "${GREET_FILE}"
+printf "${NORMAL}\n"
+
+# TODO read and process config file
+printf "CONFIG_PATH: ${MAGENTA}${CONFIG_PATH}${NORMAL}\n"
+
+printf "IN_STRING: ${YELLOW}${IN_STRING}${NORMAL}\n"
+
+permaloop
+
+exit 0
+
+# The funciton 'cleanup' will be executed at the very end upon exit
