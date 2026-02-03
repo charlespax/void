@@ -1,21 +1,204 @@
 #!/usr/bin/env bash
 
-# battman battery information utility
+# Script Information ##########################################################
+
+# Script Name: battman
+# Description: Display battery and power information from /sys
+#
+# Author:
+# Email:
+# Project Homepage: https://github.com/systemdope/battman
 
 # Notes #######################################################################
-# TODO BATT_PERCENT = cat ${BATT_DIR}/capacity
-# TODO BATT_NOW = ${BATT_DIR}/energy_now
-# TODO BATT_MAX = cat ${BATT_DIR}/energy_full
+#
+# Battery information can be found in /sys/class/power_supply/BAT0/
+#
+# TODO look through the power_supply directory to detect all available batts:q
+# TODO BATT_NOW = ${PS_DIR}/energy_now
+# TODO BATT_MAX = cat ${PS_DIR}/energy_full
+# TODO keep a log of battery percentage and power
+# TODO check if the system has a battery, e.g. a desktop does not
+# TODO count the numer of batteries the system has, thinkpad x270 has two
+# TODO add commands
+# 	- 'sources' - AC, BAT0, BAT1, etc.
 
-BATT_DIR="/sys/class/power_supply/BAT0"
+# Error Handling ##############################################################
+
+# Bash Settings. See 'man bash' for more information
+set -o errexit  # -e: exit immediately if a pipeline fails
+set -o nounset  # -u: during command expansion, unset variables cause an errors
+set -o pipefail  # the return value is equal to the  value of the last command
+
+# Signal Traps
+trap cleanup ERR
+#trap cleanup EXIT  # do not trap EXIT, call cleanup explicitly
+trap cleanup SIGTERM
+trap cleanup SIGINT  # generated on ctrl-c
+
+# Metadata Constants ##########################################################
+
+SCRIPT_NAME="battman"
+SCRIPT_VERSION="0.0.1"
+SCRIPT_RELEASE="main"
+SCRIPT_LICENSE="gplv3"
+SYSTEM_DOPE_VERSION="0.0.1"
+SCRIPT_HOMEPAGE="https://github.com/systemdope/battman"
+DESCRIPTION="Display battery and power information from /sys"
+AUTHOR_NAME=""
+AUTHOR_EMAIL=""
+
+# Global Variables ############################################################
+
+CONFIG_PATH=""  # no config used at present
+TMP_DIR=""  # no temporary directory used at present
+COMMAND=""  # no commands implemented at present
+PS_DIR="/sys/class/power_supply/BAT0"
+STRING=""  # input string passed as argument
+STRING_SET="0"  # used to determine if the user has set the string manually
+
+# Battery information can be found in /sys/class/power_supply/BAT*/
+PS_CAPACITY="unknown"  # capacity: 0-100
+PS_NAME="unknown"  # name: BAT*
+PS_STATUS="unknown"  # status: Full, Discharging
+PS_TYPE="unknown"  # type: Battery
+
+# Usage #######################################################################
+
+USAGE="Usage: ${SCRIPT_NAME} [OPTION]...
+Description: ${DESCRIPTION}
+
+Example: ${SCRIPT_NAME}
+Output: Battery BAT0: 78%% and Charging
+
+Example: ${SCRIPT_NAME} -s \"%%n %%%% is %%c\"
+Output: BAT0 %% is 78
+
+Example: ${SCRIPT_NAME} -s \"%%t %%n is at %%c%%%% and is %%s\"
+Output: Battery BAT0 is at 78%% and is Discharging
+
+Note: To display a literal %%, you must use %%%%
+
+Flags:
+  -c, --config=CONFIG_PATH  define config file path
+  -h, --help                print this help message
+      --license             print license information
+  -s, --string=STRING       insert a string
+  -v, --version             print this script's name and version
+
+Other
+  %%c    PS_CAPACITY  percentage
+  %%n    PS_NAME      BAT0
+  %%s    PS_STATUS    Charging, Discharging, Full
+  %%t    PS_TYPE      Battery
+
+Author: ${AUTHOR_NAME}
+Source: ${SCRIPT_HOMEPAGE}"  # notice the closing quote on the last line here
+
+# Function Declarations #######################################################
+
+# Description: permaloop - loops forever, for testing and debugging
+# Arguments: none
+# Returns: none
+function permaloop {
+	while true; do
+		printf "This loop runs forever... Press Ctrl + C to stop.\n"
+		sleep 1
+	done
+}
+
+# Description: cleanup - performs multiple tasks before script exit
+#		- remove temporary files
+#		- kill background processes
+#		TODO release file locks
+#		TODO close open files
+#		TODO error reporting
+# Arguments: none
+# Returns: 0 if successful, non-zero otherwise
+function cleanup {
+	printf "cleaning up...\n"
+	# Remove Temporary Directory
+	if [[ -d "${TMP_DIR}" ]]; then
+		rm -rf "${TMP_DIR}"
+	else
+		printf "no directory ${TMP_DIR}\n"
+	fi
+	exit
+}
+
+# Description: usage - displays usage information
+# Arguments: none
+# Returns: none
+function usage {
+	printf "${USAGE}\n"
+	exit 0
+}
+
+# Argument Processing #########################################################
+
+# TODO improve importing these variables
+PS_NAME="$(basename ${PS_DIR})"
+PS_STATUS="$(cat "${PS_DIR}/status")"
+PS_CAPACITY="$(cat "${PS_DIR}/capacity")"
+PS_TYPE="$(cat "${PS_DIR}/type")"
+
+# TODO put argument processing in a function.
+while [[ $# -gt 0 ]]; do  # $# is the number of script arguments
+	case "${1}" in
+	# Flag Arguments
+		-c|--config)
+			shift
+			if [[ $# -gt 0 ]]; then
+				CONFIG_PATH="${1}"
+			else
+				printf "missing argument\n"
+				exit 1
+			fi
+			shift
+			;;
+		-h|--help)
+			printf "${USAGE}\n"
+			exit
+			;;
+		--license)
+			printf "${SCRIPT_LICENSE}\n"
+			exit
+			;;
+		-s|--string)
+			shift
+			STRING_SET="1"
+			STRING+="${1}"
+			shift
+			;;
+		-v|--version)
+			printf "${SCRIPT_NAME} ${SCRIPT_VERSION}\n"
+			exit
+			;;
+	# Non-flag Arguments
+		#test)
+		#	COMMAND="${1}"
+		#	shift
+		#	;;
+		*)
+			printf "Unknown command: ${1}\n"
+			exit
+			;;
+	esac
+done
+
+# Main Logic ##################################################################
+
+# if STRING is empty, replace it with a default string
+if [[ "${STRING_SET}" -eq "0" ]]; then
+	STRING="%t %n is at %c%% and %s"
+fi
+
+STRING="${STRING//\%s/${PS_STATUS}}"
+STRING="${STRING//\%c/${PS_CAPACITY}}"
+STRING="${STRING//\%n/${PS_NAME}}"
+STRING="${STRING//\%t/${PS_TYPE}}"
+#STRING="${STRING//'\%'/%%}"
+
+printf "${STRING}\n"
 
 
-BATT_PERCENT="$(cat ${BATT_DIR}/capacity)"
-BATT_NOW="$(cat ${BATT_DIR}/energy_now)"
-BATT_MAX="$(cat ${BATT_DIR}/energy_full)"
-BATT_ALARM="$(cat ${BATT_DIR}/alarm)"
-
-printf "Battery percentage: ${BATT_PERCENT}\n"
-printf "Battery energy: ${BATT_NOW}\n"
-printf "Battery maximum: ${BATT_MAX}\n"
-printf "Battery alarm: ${BATT_ALARM}\n"
+exit 0
