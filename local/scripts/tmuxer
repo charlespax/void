@@ -1,12 +1,21 @@
 #!/usr/bin/env bash
 
 # Notes #######################################################################
+
 # Present the user with a list of directories within PROJECTS_DIR
 # User selects from fzf list
 # If this script is run with a tmux session, switch to the selected session
+#
+# TODO implement a config file:
+# 	- PROJECTS_DIR
+# 	- specify a fuzzy finder
+# TODO take a look at 'tmux send-keys'
+# 	- send command when setting up a session
+# 	- when creating new session, vim opens a file specified in config file
+# TODO the script should terminate one we are attached to the session?
 
 # Header Information ##########################################################
-#
+
 # Name: System Dope tmux Sessionizer
 #
 # Description: Starts and connects to tmux sessions
@@ -16,17 +25,20 @@
 # Author: Charles Edward Pax <charles@pax.net>
 
 # Script Metadata and Constants ###############################################
+
 SCRIPT_NAME="dope_tmuxer"
 SCRIPT_VERSION="0.0.1"
 SCRIPT_LICENSE="gplv3"
 DOPE_VERSION="0.0.1"
 
 # Global Variables ############################################################
+
 PROJECTS_DIR=~/gits  # no quotes if using a tilde (~)
 DIR_PATH=""
 DIR_NAME=""
 
 # Usage #######################################################################
+
 USAGE="Usage: ${SCRIPT_NAME} [OPTION]... [COMMAND]...
 Starting and connecting to tmux sessions using fzf.
 Example: ${SCRIPT_NAME}
@@ -40,9 +52,45 @@ Flags:
   -v, --version     print this script's name and version"
 
 # Check dependencies ##########################################################
-# TODO check of fzf installation
+#
+# TODO check for fzf installation
+# TODO check for tmux installation
+
+# Function Declaration ########################################################
+
+# function: get_selection_fzf
+# Get a fzf selection from the user
+function get_selection_fzf {
+	local SEL=""
+	SEL=$(find "${PROJECTS_DIR}" -mindepth 1 -maxdepth 1 -type d | fzf)
+	printf "${SEL}"
+	return 0
+}
+
+# function: connect
+# Connect to an existing session
+function connect {
+	local CONNECT_NAME="${1}"
+	# TMUX is defined when inside of a tmux session
+	if [[ -z ${TMUX} ]]; then
+		tmux attach-session -t ${CONNECT_NAME}
+	else
+		tmux switch-client -t ${CONNECT_NAME}
+	fi
+	return 0
+}
+
+# function: create
+# Create a new session headlessly, then connect to it
+function create {
+	local CREATE_NAME="${1}"
+	local CREATE_PATH="${2}"
+	tmux new-session -d -s ${CREATE_NAME} -c ${CREATE_PATH}  # -d headless
+	return 0
+}
 
 # Argument Processing #########################################################
+
 while [[ $# -gt 0 ]]; do
 	case "${1}" in
 	# Flag Arguments
@@ -71,52 +119,20 @@ while [[ $# -gt 0 ]]; do
 	esac
 done
 
-# Function Declaration ########################################################
-
-# function: get_selection_fzf
-# Get a fzf selection from the user
-function get_selection_fzf {
-	local SEL=""
-	SEL=$(find "${PROJECTS_DIR}" -mindepth 1 -maxdepth 1 -type d | fzf)
-	printf "${SEL}"
-	return 0
-}
-
-# function: connect
-# Connect to an existing session
-function connect {
-	local CONNECT_NAME="${1}"
-	# TMUX is defined when inside of a tmux session
-	if [[ -z ${TMUX} ]]; then
-		tmux attach-session -t ${CONNECT_NAME}
-	else
-		tmux switch-client -t ${CONNECT_NAME}
-	fi
-	return 0
-}
-
-# function: create
-# Create a new session
-function create {
-	local CREATE_NAME="${1}"
-	local CREATE_PATH="${2}"
-	tmux new-session -s ${CREATE_NAME} -c ${CREATE_PATH}
-	exit 0
-	return 0
-}
-
 # Main Program Logic ##########################################################
+
 # If DIR_PATH is not defined, prompt user
 if [[ -z ${DIR_PATH} ]]; then
 	DIR_PATH="$(get_selection_fzf)"
 fi
+# TODO test that directory exists
 # If DIR_PATH is still not defined, exit
 if [[ -z ${DIR_PATH} ]]; then
-	exit 0
+	exit 1
 fi
 
 # DIR_NAME will be the name of the session, based on DIR_PATH
-DIR_NAME=$(basename "${DIR_PATH}" | tr . _)  # replace dots with '_'
+DIR_NAME=$(basename "${DIR_PATH}" | tr . _)  # tr replaces dots with '_'
 
 # Test if session DIR_NAME already exists. 0=yes, 1=no
 SESSION_TEST="$(tmux has-session -t=${DIR_NAME} 2> /dev/null; echo $?)"
@@ -126,6 +142,7 @@ if [[ "${SESSION_TEST}" == "0" ]]; then  # in this case 0 means session exists
 	connect ${DIR_NAME}
 else
 	create ${DIR_NAME} ${DIR_PATH}
+	connect ${DIR_NAME}
 fi
 
 exit 0
