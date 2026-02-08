@@ -66,22 +66,22 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 
 # Set colors for Linux term (Crlt+Shift+Fn)
 if [ "$TERM" = "linux" ]; then
-    echo -en "\e]P0232323" #black
-    echo -en "\e]P82B2B2B" #darkgrey
-    echo -en "\e]P1D75F5F" #darkred
-    echo -en "\e]P9E33636" #red
-    echo -en "\e]P287AF5F" #darkgreen
-    echo -en "\e]PA98E34D" #green
-    echo -en "\e]P3D7AF87" #brown
-    echo -en "\e]PBFFD75F" #yellow
-    echo -en "\e]P48787AF" #darkblue
-    echo -en "\e]PC7373C9" #blue
-    echo -en "\e]P5BD53A5" #darkmagenta
-    echo -en "\e]PDD633B2" #magenta
-    echo -en "\e]P65FAFAF" #darkcyan
-    echo -en "\e]PE44C9C9" #cyan
-    echo -en "\e]P7E5E5E5" #lightgrey
-    echo -en "\e]PFFFFFFF" #white
+    echo -en "\e]P1c1c1c" #black
+    echo -en "\e]P767676" #darkgrey
+    echo -en "\e]Paf5f5f" #darkred
+    echo -en "\e]Pd75f87" #red
+    echo -en "\e]P5faf5f" #darkgreen
+    echo -en "\e]P87d787" #green
+    echo -en "\e]Paf875f" #darkyellow
+    echo -en "\e]Pd7af87" #yellow
+    echo -en "\e]P5f87af" #darkblue
+    echo -en "\e]P5fafd7" #blue
+    echo -en "\e]Paf87af" #darkmagenta
+    echo -en "\e]Pd787d7" #magenta
+    echo -en "\e]P5f8787" #darkcyan
+    echo -en "\e]P87afaf" #cyan
+    echo -en "\e]P9e9e9e" #lightgrey
+    echo -en "\e]Pc7c7c7" #white
     clear #for background artifacting
 fi
 
