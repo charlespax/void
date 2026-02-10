@@ -1,6 +1,4 @@
-#
-# ~/.bashrc
-#
+# This file is ~/.bashrc
 
 # TODO Increase .bash_history size
 # TODO add description to .bashrc
@@ -8,14 +6,14 @@
 # TODO in bashrc, set a GIT_DIRECTORY environment variable
 
 # Key bindings ################################################################
-# command: ctrl-f
-# description: ctrl-f -> open fuzzy finder -> tmux <selection>
-# usage: ctrl-f
-# CODOC <CTRL>f             tmuxer
+
+# CODOC <CTRL>f             run tmuxer
 bind -x '"\C-f":"tmuxer"' # ~/.local/scripts/tmuxer
 
-# go through bash history via fzf
-bind -x '"\C-h":"cat ~/.bash_history | sort | uniq | fzf"'
+# CODOC <CTRL>h             copy line from bash_history to clipboard via fzf
+bind -x '"\C-h":"cat ~/.bash_history | \
+	fzf --scheme history | head -c -1 | \
+	xsel --clipboard"'
 
 # Command Aliases #############################################################
 # command: prt
@@ -35,11 +33,10 @@ alias prt='lp -o media=a4 -o cpi=12 -o lpi=7.2 -o page-left=48 \
 # CODOC ll                  alias ll='ls -GFh'
 alias ll='ls -GFh'
 
-# command: diff
-# description: Make diff better
-# usage: diff
-# CODOC diff                alias diff='diff --color'
+# Make common commands use color
 alias diff='diff --color'
+alias grep='grep --color'
+alias ls='ls --color'
 
 # command dmesg
 # description: Make dmesg better
@@ -59,13 +56,18 @@ alias weather='curl wttr.in/?n?p?2'
 # CODOC bc                  alias='bc -lq'
 alias bc='bc -lq'
 
-# Define colors to use in terminal ############################################
-export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
-export CLICOLOR=1
-export LSCOLORS=GxFxCxDxBxegedabagaced
+# COLORS ######################################################################
+
+# Define Colors
+
+
+# Reset Colors
+Color_Off='\[\033[0m\]'
 
 # Set colors for Linux term (Crlt+Shift+Fn)
-if [ "$TERM" = "linux" ]; then
+if [ "$TERM" == "linux" ]; then
+	echo ""
+else
     echo -en "\e]P1c1c1c" #black
     echo -en "\e]P767676" #darkgrey
     echo -en "\e]Paf5f5f" #darkred
@@ -84,6 +86,10 @@ if [ "$TERM" = "linux" ]; then
     echo -en "\e]Pc7c7c7" #white
     clear #for background artifacting
 fi
+
+export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
+#export CLICOLOR=1
+#export LSCOLORS=GxFxCxDxBxegedabagaced
 
 
 # PATH Variable ###############################################################
