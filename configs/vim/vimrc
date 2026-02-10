@@ -5,19 +5,19 @@
 " CODOC
 " CODOC GENERAL BEHAVIOR
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible             " vi compatability
+set nocompatible            " vi compatability
 "
-set history=5000             " command history
+set history=5000            " command history
 "
-"set encoding=utf8            " Set utf8 standard encoding
+"set encoding=utf8          " Set utf8 standard encoding
 "
-"set ffs=unix,dos,mac         " Use Unix as the standard file type
+"set ffs=unix,dos,mac       " Use Unix as the standard file type
 "
-set nobackup                 " backup before overwrite
-set nowritebackup            " backup before overwrite, remove backup
-set noswapfile               " wire buffer to a swapfile
+set nobackup                " backup before overwrite
+set nowritebackup           " backup before overwrite, remove backup
+set noswapfile              " wire buffer to a swapfile
 "
-" CODOC <SPACE>              <leader> is <SPACE> (do not remap this key)
+" CODOC <SPACE>             <leader> is <SPACE> (do not remap this key)
 let mapleader=" "
 nnoremap <SPACE> <Nop>
 "
@@ -30,22 +30,25 @@ set whichwrap+=<,>,h,l
 "
 " set viminfo location to ~/.config/vim/viminfo
 set viminfo+=n~/.config/vim/viminfo
+"
+" use the system clipboard when using y and p commands
+set clipboard=unnamedplus
 
 " CODOC
 " CODOC USER INTERFACE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set number                   " show line numbers
-set relativenumber           " line numbers are relative to cursor
+set number                  " show line numbers
+set relativenumber          " line numbers are relative to cursor
 " CODOC <leader>r           toggle relative line numers
 nnoremap <leader>r :set relativenumber!<cr>
 "
-set foldcolumn=1             " add column to indicate folded code
+set foldcolumn=1            " add column to indicate folded code
 "
-set cursorline               " horizontal line at cursor
+set cursorline              " horizontal line at cursor
 highlight CursorLine ctermbg=234
-set cursorcolumn             " vertical line at cursor
+set cursorcolumn            " vertical line at cursor
 highlight CursorColumn ctermbg=234
-set colorcolumn=80           " vertical line at column n
+set colorcolumn=80          " vertical line at column n
 highlight ColorColumn ctermbg=234
 " CODOC <leader>c           toggle cursor crosshairs
 nnoremap <leader>c :set cursorline! cursorcolumn!<cr>
@@ -55,20 +58,20 @@ nnoremap <leader>c :set cursorline! cursorcolumn!<cr>
 set scrolloff=999            " page scrolls to keep n lines around cursor
 "
 " CODOC <leader>l           toggle display of unprintable charachters
-set list                     " show unprintable characters described below
+set list                    " show unprintable characters described below
 set listchars=tab:⍿·,trail:X,eol:¬
 nnoremap <leader>l :set list!<cr>
 "
-set termguicolors            " use 24-bit colors (consistent across terms)
+set termguicolors           " use 24-bit colors (consistent across terms)
 "
-"colorscheme lunaperche       " default is lunaperche
-"colorscheme slate       " default is lunaperche
+"colorscheme lunaperche     " default is lunaperche
+"colorscheme slate          " default is lunaperche
 colorscheme habamax
-set background=dark          " dark background
+set background=dark         " dark background
 "
-syntax enable                " syntax highlighting
+syntax enable               " syntax highlighting
 "
-set laststatus=2             " Always show the status line
+set laststatus=2            " Always show the status line
 "
 " CODOC <leader><enter>     disable highlighting
 map <silent> <leader><cr> :nohlsearch<cr>
@@ -76,11 +79,11 @@ map <silent> <leader><cr> :nohlsearch<cr>
 " CODOC
 " CODOC SEARCH
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set hlsearch                 " highlight search results
-set incsearch                " highlight search results as you type
+set hlsearch                " highlight search results
+set incsearch               " highlight search results as you type
 "
-set ignorecase               " ignore case when searching
-set smartcase                " override ignorecase term has uppercase
+set ignorecase              " ignore case when searching
+set smartcase               " override ignorecase term has uppercase
 "
 set magic " needed for regex
 "
@@ -110,18 +113,18 @@ endfunction
 " CODOC
 " CODOC TEXT BEHAVIOR
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set smarttab                 " treat groups of spaces as tabs
-set tabstop=8                " should be same as shiftwidth
-set shiftwidth=8             " should be same at tabstop
+set smarttab                " treat groups of spaces as tabs
+set tabstop=8               " should be same as shiftwidth
+set shiftwidth=8            " should be same at tabstop
 "
-set autoindent               " current indent copied to new line
-set smartindent              " move (de)indent brackets automatically
+set autoindent              " current indent copied to new line
+set smartindent             " move (de)indent brackets automatically
 "
 " Enable code folding in syntax mode.
-" zc - Fold code block
-" zo - Unfold code block
-" zM - Folds all blocks
-" zR - Unforlds all blocks
+" CODOC zc                  fold code block
+" CODOC zo                  unfold code block
+" CODOC zM                  folds all blocks
+" CODOC zR                  unforlds all blocks
 set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
@@ -132,14 +135,14 @@ au FileType sh let g:sh_fold_enabled=5
 au FileType sh let g:is_bash=1
 "
 " filetype plugins
-filetype on                  " filetype detection
-filetype plugin on           " filetype plugins
-filetype indent on           " indentation plugins
+filetype on                 " filetype detection
+filetype plugin on          " filetype plugins
+filetype indent on          " indentation plugins
 
 " CODOC
 " CODOC FILE HANDLING 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set autoread                 " reload file if externally edited
+set autoread                " reload file if externally edited
 "
 " when opening a file, move cursor to the most recent position
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
