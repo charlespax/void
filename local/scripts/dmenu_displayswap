@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 
 
-temp=`autorandr | dmenu` ; sed 's/ [^ ]*//' <<< $temp ; autorandr -l $temp
+temp=`autorandr --detected | dmenu`
+
+sed 's/ [^ ]*//' <<< $temp
+
+autorandr -l $temp
