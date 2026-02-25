@@ -1,4 +1,4 @@
-" CODOC ~/.config/vim/vimrc Configuration File
+" CODOC ~/.config/vim/vimrc Vim Configuration File
 "
 " TODO command executed from within vim"
 
@@ -62,11 +62,15 @@ set list                    " show unprintable characters described below
 set listchars=tab:⍿·,trail:X,eol:¬
 nnoremap <leader>l :set list!<cr>
 "
-set termguicolors           " use 24-bit colors (consistent across terms)
-"
-"colorscheme lunaperche     " default is lunaperche
-"colorscheme slate          " default is lunaperche
-colorscheme habamax
+
+if &t_Co > 255
+	set termguicolors           " use 24-bit colors (consistent across terms
+	colorscheme habamax
+endif
+if &t_Co ==8
+	colorscheme darkblue
+endif
+
 set background=dark         " dark background
 "
 syntax enable               " syntax highlighting
