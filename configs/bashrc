@@ -5,6 +5,8 @@
 # TODO move alias prt to script in void/local/scripts
 # TODO in bashrc, set a GIT_DIRECTORY environment variable
 
+export VISUAL=vim
+export EDITOR="${VISUAL}"
 # Key bindings ################################################################
 
 # CODOC <CTRL>f             run tmuxer
