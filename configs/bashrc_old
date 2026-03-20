@@ -1,0 +1,124 @@
+# This file is ~/.bashrc
+
+# CODOC ~/.config/vim/vimrc Bash configuration File
+
+# TODO Increase .bash_history size
+# TODO add description to .bashrc
+# TODO move alias prt to script in void/local/scripts
+# TODO in bashrc, set a GIT_DIRECTORY environment variable
+
+# Key bindings ################################################################
+# CODOC
+# CODOC KEY BINDINGS
+
+# CODOC <CTRL>f             run tmuxer
+bind -x '"\C-f":"tmuxer"' # ~/.local/scripts/tmuxer
+
+# CODOC <CTRL>h             copy line from bash_history to clipboard via fzf
+bind -x '"\C-h":"cat ~/.bash_history | \
+	fzf --scheme history | head -c -1 | \
+	xsel --clipboard"'
+
+# Command Aliases #############################################################
+# CODOC
+# CODOC COMMAND ALIASES
+
+# CODOC bc                  alias='bc --mathlib --quiet'
+alias bc='bc --mathlib --quiet'
+
+# CODOC ll                  alias ll='ls -GFh --color=auto'
+alias ll='ls --color=auto --no-group --classify=auto --human-readable'
+
+# CODOC prt <file>          print a document
+alias prt='lp -o media=a4 -o cpi=12 -o lpi=7.2 -o page-left=48 \
+	-o page-right=48 -o page-top=48 -o page-bottom=48 < '
+
+# The info command should use vi keybindings
+alias info='info --vi-keys'
+
+# CODOC weather             display weather report
+alias weather='curl wttr.in/?n?p?2'
+
+# Make common commands use color
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+alias less='less -R'
+
+# COLORS ######################################################################
+
+# Define Colors
+
+
+# Reset Colors
+Color_Off='\[\033[0m\]'
+
+# Define 8-color variables for foreground (30-37) and reset (0)
+COLOR_OFF='\e[0m'       # Reset to default
+BLACK='\e[0;30m'
+RED='\e[0;31m'
+GREEN='\e[0;32m'
+YELLOW='\e[0;33m'
+BLUE='\e[0;34m'
+MAGENTA='\e[0;35m'
+CYAN='\e[0;36m'
+WHITE='\e[0;37m'
+# You can also use '\\e[1m' for bold/bright versions
+
+# Set colors for Linux term (Crlt+Shift+Fn)
+if [ "$TERM" == "linux" ]; then
+	echo "We are the a linux terminal"
+	echo -en "\e]P767676" #darkgrey
+	echo -en "\e]Paf5f5f" #darkred
+	echo -en "\e]P5faf5f" #darkgreen
+	echo -en "\e]Paf875f" #darkyellow
+	echo -en "\e]P5f87af" #darkblue
+	echo -en "\e]Paf87af" #darkmagenta
+	echo -en "\e]P5f8787" #darkcyan
+	echo -en "\e]P9e9e9e" #lightgrey
+else
+	echo "this is a test"
+	echo -en "\e]P1c1c1c" #black
+	echo -en "\e]P767676" #darkgrey
+	echo -en "\e]Paf5f5f" #darkred
+	echo -en "\e]Pd75f87" #red
+	echo -en "\e]P5faf5f" #darkgreen
+	echo -en "\e]P87d787" #green
+	echo -en "\e]Paf875f" #darkyellow
+	echo -en "\e]Pd7af87" #yellow
+	echo -en "\e]P5f87af" #darkblue
+	echo -en "\e]P5fafd7" #blue
+	echo -en "\e]Paf87af" #darkmagenta
+	echo -en "\e]Pd787d7" #magenta
+	echo -en "\e]P5f8787" #darkcyan
+	echo -en "\e]P87afaf" #cyan
+	echo -en "\e]P9e9e9e" #lightgrey
+	echo -en "\e]Pc7c7c7" #white
+	clear #for background artifacting
+fi
+export PS1="\[${CYAN}\]\u\[${COLOR_OFF}\]@\[${GREEN}\]\h:\[${YELLOW}\]\w\[${COLOR_OFF}\]\$ "
+# export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
+#export CLICOLOR=1
+#export LSCOLORS=GxFxCxDxBxegedabagaced
+
+
+# PATH Variable ###############################################################
+export PATH='' # clear PATH variable
+
+export PATH=$PATH:/bin
+export PATH=$PATH:/sbin
+
+export PATH=$PATH:/opt/local/bin
+export PATH=$PATH:/opt/local/sbin
+
+export PATH=$PATH:/usr/bin
+export PATH=$PATH:/usr/sbin
+export PATH=$PATH:/usr/games
+
+export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/sbin
+export PATH=$PATH:/usr/local/games
+
+export PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/.local/bin/
+export PATH=$PATH:$HOME/.local/scripts/

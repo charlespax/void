@@ -1,0 +1,60 @@
+#!/bin/sh
+
+# File information ############################################################
+#
+# Location: ~/.xinitrc
+
+# Check Dependencies ##########################################################
+#
+# TODO check for feh background setter
+
+# Notes #######################################################################
+#
+# This script is run when when the 'startx' command is executed
+
+# Main Program Logic ##########################################################
+
+# Source xprofile files
+if [ -f /etc/xprofile ]; then
+	source /etc/xprofile
+fi
+if [ -f "${HOME}/.xprofile" ]; then
+	source ~/.xprofile
+fi
+
+# Set the background
+if [ "$( command -v feh)" =="0" ]; then
+	feh --bg-fill ~/.local/wallpapers/sunset.jpg
+elif [ "$(command -v xsetbg)" ]; then
+	xsetbg /home/charles/sunset.jpg
+else
+	printf "xinitrv: background not set\n" >&2
+fi
+
+# CapsLock acts as Escape
+#xmodmap -e 'clear Lock'
+#	-e 'keycode 0x42 = Escape'
+
+# CapsLock acts as Hyper_L
+# keycode 66 - capslock
+# See sxhkd for shortcuts
+xmodmap -e 'clear lock' \
+	-e 'keycode 66 = Hyper_L' \
+	-e 'remove mod4 = Hyper_L' \
+	-e 'add mod3 = Hyper_L'
+
+# X Server Setting
+xset r rate 250 45  # xset r <wait time in ms> <keys per second>
+
+# put date and time in the dwm status bar
+slstatus &
+
+# Start dwm
+exec dwm &
+
+# start keyboard shortcut daemon
+sxhkd -c $HOME/.config/sxhkd/sxhkdrc
+
+
+
+
